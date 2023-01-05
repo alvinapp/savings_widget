@@ -3,6 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-text-base: #101010;
+    --color-text-primary: #04506e;
+    --color-text-neutral: #6f89a5;
+    --color-text-success: #297a22;
+    --color-text-title: #101010;
+    --color-text-subtitle: #878787;
+    --color-button-primary: #056489;
+    --color-button-neutral: #6f89a5;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #cde0e7;
+    --color-background-neutral: #6f89a5;
+    --color-background-tertiary: #f2f5f8;
+    --color-outline-primary: #056489;
+    --color-outline-neutral: #6f89a5;
+  }
+}
+
 .slick-slider.account_slider .slick-track {
   display: flex;
   flex-direction: row;
@@ -22,7 +41,7 @@
 .slick-slider.connect_slider .slick-center {
   transform: scale(1.1);
   transition: transform 300ms;
-} 
+}
 .slick-dots {
   display: flex !important;
   justify-content: center !important;
