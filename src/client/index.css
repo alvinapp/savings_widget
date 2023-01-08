@@ -13,12 +13,15 @@
     --color-text-subtitle: #878787;
     --color-button-primary: #056489;
     --color-button-neutral: #6f89a5;
-    --color-background-primary: #ffffff;
+    --color-background-base: #ffffff;
+    --color-background-primary: #056489;
     --color-background-secondary: #cde0e7;
+    --color-background-accent: #d0ddea;
     --color-background-neutral: #6f89a5;
     --color-background-tertiary: #f2f5f8;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
+    --color-outline-secondary: #d0ddea;
   }
 }
 

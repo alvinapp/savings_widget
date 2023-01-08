@@ -52,7 +52,9 @@ const App = () => {
   return (
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">
       <QueryClientProvider client={queryClient}>
-        <div className="overflow-x-hidden w-screen">{renderPage()}</div>
+        <div className="overflow-x-hidden w-screen">
+          <Overview />
+        </div>
       </QueryClientProvider>
     </SkeletonTheme>
   );

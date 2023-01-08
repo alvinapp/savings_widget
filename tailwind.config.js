@@ -15,10 +15,19 @@ module.exports = {
       },
       backgroundColor: {
         skin: {
+          base: "var(--color-background-base)",
           primary: "var(--color-background-primary)",
           secondary: "var(--color-background-secondary)",
+          accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
+        },
+      },
+      outlineColor: {
+        skin: {
+          primary: "var(--color-outline-primary)",
+          neutral: "var(--color-outline-neutral)",
+          secondary: "var(--color-outline-secondary)",
         },
       },
       fontFamily: {
@@ -37,6 +46,7 @@ module.exports = {
         18: "4.5rem",
         23: "5.5rem",
         100: "30rem",
+        130: "33.5rem",
       },
       letterSpacing: {
         listtile_subtitle: "0.013125em",
@@ -45,6 +55,7 @@ module.exports = {
         title: "0.009375em",
         subtitle: "0.025em",
         longtext: "0.066875em",
+        longest_text: "0.075em",
       },
       backgroundImage: {
         headerBackground: "url('client/assets/images/mono1-background.svg')",
@@ -54,6 +65,7 @@ module.exports = {
           "url('client/assets/images/background-green.webp')",
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
         mpesaIcon: "url('client/assets/images/mpesa.png')",
+        overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
       },
       backgroundSize: {
         auto: "auto",
