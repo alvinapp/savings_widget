@@ -1,17 +1,16 @@
-import Category from 'client/models/Category';
-import Merchant from 'client/models/Merchant';
+import Category from "client/models/Category";
+import Merchant from "client/models/Merchant";
 
-import Institution from './Institution';
+import Institution from "./Institution";
 
-type Transaction = {
-  id: number;
-  merchant: Merchant;
+type Goal = {
+  id?: number;
+  goalName?: string;
   transacted_at: Date;
-  category: Category;
   amount: number;
-  institution: Institution;
-  viewInstitutionLogo?: boolean;
-  type: string;
+  status?:string;
+  progress: number;
+  goalImage?:string;
 };
 
-export default Transaction;
+export default Goal;

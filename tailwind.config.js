@@ -7,7 +7,7 @@ module.exports = {
         skin: {
           base: "var(--color-text-base)",
           primary: "var(--color-text-primary)",
-          neutral: "var(--color-text-neutral",
+          neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
           title: "var(--color-text-title)",
           subtitle: "var(--color-text-subtitle)",
@@ -18,6 +18,7 @@ module.exports = {
           base: "var(--color-background-base)",
           primary: "var(--color-background-primary)",
           secondary: "var(--color-background-secondary)",
+          secondaryWithOpacity: "var(--color-background-secondary-withOpacity)",
           accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
@@ -56,15 +57,11 @@ module.exports = {
         subtitle: "0.025em",
         longtext: "0.066875em",
         longest_text: "0.075em",
+        tab_text: "0.00625em",
       },
       backgroundImage: {
-        headerBackground: "url('client/assets/images/mono1-background.svg')",
         cardOverlay: "url('client/assets/images/background-overlay.webp')",
-        backgroundImageBlue: "url('client/assets/images/background-blue.webp')",
-        backgroundImageGreen:
-          "url('client/assets/images/background-green.webp')",
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
-        mpesaIcon: "url('client/assets/images/mpesa.png')",
         overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
       },
       backgroundSize: {
