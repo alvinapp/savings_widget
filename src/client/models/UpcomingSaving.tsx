@@ -1,11 +1,10 @@
-type Goal = {
+
+type UpcomingSaving = {
   id?: number;
   goalName?: string;
   transacted_at: Date;
   amount: number;
-  status?:string;
-  progress: number;
   goalImage?:string;
 };
 
-export default Goal;
+export default UpcomingSaving;

@@ -19,6 +19,7 @@ module.exports = {
           primary: "var(--color-background-primary)",
           secondary: "var(--color-background-secondary)",
           secondaryWithOpacity: "var(--color-background-secondary-withOpacity)",
+          secondary1WithOpacity: "var(--color-background-secondary1-withOpacity)",
           accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",

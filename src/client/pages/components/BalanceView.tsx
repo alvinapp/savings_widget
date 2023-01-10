@@ -24,10 +24,10 @@ const BalanceView = ({
             Total savings
           </div>
         </div>
-        <div className="flex flex-col mt-2" id="al-balance-amount">
+        <div className="flex flex-col mt-2">
           {visible ? (
             <div className="flex flex-row items-center">
-              <div className="text-lg text-skin-base font-semibold font-workSans -translate-x-2 translate-y-1">
+              <div className="text-xl text-skin-base font-semibold font-workSans -translate-x-1 translate-y-1">
                 {currency}
               </div>
               <div className="text-4xl text-skin-base font-semibold font-workSans">
@@ -40,7 +40,7 @@ const BalanceView = ({
             </div>
           ) : (
             <div className="flex flex-row justify-evenly items-center">
-              <div className="text-lg text-skin-base font-bold font-workSans -translate-y-6">
+              <div className="text-xl text-skin-base font-semibold font-workSans -translate-y-6">
                 {currency}
               </div>
               <div className="text-4xl text-skin-base font-semibold font-workSans">
