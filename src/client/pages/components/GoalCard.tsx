@@ -36,10 +36,9 @@ const GoalCard = ({
   status,
   goalImage,
 }: Goal) => {
-  const accounts = useAccountStore((state: any) => state.accounts) as Accounts;
   const currencySymbol = "₦";
   return (
-    <div className="rounded-lg bg-white px-4 py-3 w-auto shadow-card mb-2">
+    <div className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2">
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col">
           <div className="flex flex-row items-center">
@@ -64,13 +63,13 @@ const GoalCard = ({
             </div>
             <div className="flex flex-col">
               <div
-                className="font-poppins text-sm font-medium text-black text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
+                className="font-workSans text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text"
                 id="al-transaction-card--merchant-name"
               >
                 {goalName}
               </div>
               <div
-                className={`font-poppins text-xs font-medium text-skin-subtitle tracking-wide text-start`}
+                className={`font-poppins text-xs font-medium text-skin-subtitle tracking-wide text-start mt-1`}
               >
                 {status === null ? "" : status}
               </div>

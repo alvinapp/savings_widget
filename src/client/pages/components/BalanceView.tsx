@@ -24,7 +24,7 @@ const BalanceView = ({
             Total savings
           </div>
         </div>
-        <div className="flex flex-col mt-2">
+        <div className="flex flex-col mt-1">
           {visible ? (
             <div className="flex flex-row items-center">
               <div className="text-xl text-skin-base font-semibold font-workSans -translate-x-1 translate-y-1">

@@ -16,7 +16,7 @@ export const UpcomingSavings = ({
             goalName={upcomingSaving.goalName}
             key={i}
             amount={upcomingSaving.amount}
-            transacted_at={upcomingSaving.transacted_at}
+            due_date={upcomingSaving.due_date}
             goalImage={upcomingSaving.goalImage}
           />
         );

@@ -2,7 +2,7 @@
 type UpcomingSaving = {
   id?: number;
   goalName?: string;
-  transacted_at: Date;
+  due_date: Date;
   amount: number;
   goalImage?:string;
 };

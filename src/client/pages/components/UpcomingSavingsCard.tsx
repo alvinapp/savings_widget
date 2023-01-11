@@ -10,7 +10,7 @@ import {
 } from "react-circular-progressbar";
 import Goal from "client/models/Transaction";
 import UpcomingSaving from "client/models/UpcomingSaving";
-import { dateFormat } from "client/utils/Formatters";
+import { dateFormat, isYesterday } from "client/utils/Formatters";
 import { DepositButton } from "./DepositButton";
 
 const UpcomingSavingsCard = ({
@@ -18,11 +18,13 @@ const UpcomingSavingsCard = ({
   goalName,
   amount,
   goalImage,
-  transacted_at,
+  due_date,
 }: UpcomingSaving) => {
   const currencySymbol = "₦";
+  const now = new Date();
+  const warning = isYesterday(due_date);
   return (
-    <div className="rounded-lg bg-white px-4 py-3 w-auto shadow-card mb-2">
+    <div className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2">
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col">
           <div className="flex flex-row items-center">
@@ -36,13 +38,10 @@ const UpcomingSavingsCard = ({
               </div>
             </div>
             <div className="flex flex-col">
-              <div
-                className="font-poppins text-sm font-medium text-black text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
-                id="al-transaction-card--merchant-name"
-              >
+              <div className="font-workSans text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text">
                 {goalName}
               </div>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center mt-1">
                 <div className="font-poppins text-xs font-medium text-skin-primary tracking-wide text-start mr-1">
                   {currencySymbol}
                 </div>
@@ -52,14 +51,14 @@ const UpcomingSavingsCard = ({
                   {amount}
                 </div>
                 <div className=" text-skin-subtitle font-medium text-xxxs">
-                  / {dateFormat(transacted_at)}
+                  / {dateFormat(due_date)}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start">
-          <DepositButton />
+        <div className="flex flex-col">
+          <DepositButton warning={warning} />
         </div>
       </div>
     </div>

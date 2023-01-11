@@ -16,7 +16,7 @@ const Overview = () => {
             <div className="flex flex-row justify-end">
               <div className="flex flex-row items-center justify-center">
                 <div>
-                  <NotificaitonsButton onClick={() => {}} />
+                  <NotificaitonsButton onClick={() => {}} notificationCount={1}/>
                 </div>
                 <div className="ml-6">
                   <SettingsButton onClick={() => {}} />
