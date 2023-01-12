@@ -6,8 +6,9 @@ import BalanceView from "../components/BalanceView";
 import OverviewTrackGoalCreationProgress from "client/pages/components/overview/OverviewTrackGoalCreationProgress";
 import { ShowGoalsInOverview } from "../components/overview/ShowGoalsInOverview";
 import { AddGoalButton } from "../components/AddGoalButton";
+import { useNavigate } from "react-router-dom";
 const Overview = () => {
-  console.log("running");
+  const navigate = useNavigate();
   return (
     <div className="h-screen bg-white overflow-y-auto overflow-x-hidden no-scrollbar px-3.5 relative">
       <div className="mt-6">
@@ -16,7 +17,10 @@ const Overview = () => {
             <div className="flex flex-row justify-end">
               <div className="flex flex-row items-center justify-center">
                 <div>
-                  <NotificaitonsButton onClick={() => {}} notificationCount={1}/>
+                  <NotificaitonsButton
+                    onClick={() => {}}
+                    notificationCount={1}
+                  />
                 </div>
                 <div className="ml-6">
                   <SettingsButton onClick={() => {}} />
@@ -32,7 +36,11 @@ const Overview = () => {
       {/* <OverviewTrackGoalCreationProgress /> */}
       <ShowGoalsInOverview />
       <div className="absolute bottom-4 right-4">
-        <AddGoalButton />
+        <AddGoalButton
+          onClick={() => {
+            navigate('/goal-creation');
+          }}
+        />
       </div>
     </div>
   );

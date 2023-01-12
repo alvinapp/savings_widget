@@ -13,7 +13,9 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import getToken from "client/api/token";
 import useUserStore from "client/store/userStore";
 import { fetchData } from "client/api/api";
+import { useNavigate } from "react-router-dom";
 const TermsCondition = () => {
+  const navigate = useNavigate();
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
@@ -64,27 +66,16 @@ const TermsCondition = () => {
       <div className="fixed top-0 left-0 right-0 bg-white pl-2 pr-6 pt-8 pb-3">
         <NavBar
           children={
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-row">
-                <div
-                  className="mr-5.5"
-                  onClick={() => {
-                    document.dispatchEvent(
-                      new CustomEvent("toPage", {
-                        detail: { page: Routes.CONNECT, replace: true },
-                      })
-                    );
-                  }}
-                >
-                  <BackButton />
-                </div>
-                <NavBarTitle title="Terms & Conditions" />
-              </div>
+            <div className="flex flex-row justify-between items-center">
+              <BackButton
+                onClick={() => {
+                  navigate(-1);
+                }}
+              />
+              <NavBarTitle title="Terms & Conditions" />
               <CloseButton
                 onClick={() => {
-                  document.dispatchEvent(
-                    new CustomEvent("toPage", { detail: { page: Routes.HOME } })
-                  );
+                  navigate(-2);
                 }}
               />
             </div>
@@ -93,11 +84,11 @@ const TermsCondition = () => {
       </div>
       <div className="flex flex-col pl-4 pr-6 mt-24">
         <div className="text-base font-poppins text-black tracking-paragraph leading-6 font-light pb-8">
-          {parse(data)}
+          {parse(data ?? "")}
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 px-3.5 bg-white">
-        <MainButton title="Ok" click={acceptTermsAndCondition} />
+        <MainButton title="Ok" click={() => {}} />
       </div>
     </div>
   );
