@@ -1,4 +1,4 @@
-import {validateLocaleAndSetLanguage} from 'typescript';
+import { validateLocaleAndSetLanguage } from "typescript";
 
 export const dateFormat = (date: Date) => {
   const date1 = new Date(Date.now());
@@ -9,23 +9,23 @@ export const dateFormat = (date: Date) => {
   // Calculating the no. of days between two dates
   const diffInDays = Math.round(diffInTime / oneDay);
   if (diffInDays == 0) {
-    return 'Today';
+    return "Today";
   }
   if (diffInDays == 1) {
-    return 'Yesterday';
+    return "Yesterday";
   }
   let formattedDate = date
-    .toLocaleDateString('en-au', {
-      day: 'numeric',
-      year: 'numeric',
-      month: 'short',
+    .toLocaleDateString("en-au", {
+      day: "numeric",
+      year: "numeric",
+      month: "short",
     })
-    .split(' ');
+    .split(" ");
   const resultDate =
     formattedDate.slice(0, 1) +
-    ' ' +
+    " " +
     formattedDate.slice(1, 2) +
-    ', ' +
+    ", " +
     formattedDate.slice(2, 3);
   return resultDate;
 };
@@ -37,12 +37,12 @@ export const checkNAN = (value: any) => {
   }
 };
 export const checkIfDebitCredit = (value: string) => {
-  if (value === 'debit') {
-    return '-';
-  } else if (value === 'credit') {
-    return '+';
+  if (value === "debit") {
+    return "-";
+  } else if (value === "credit") {
+    return "+";
   } else {
-    return '';
+    return "";
   }
 };
 //Hide account number
@@ -56,14 +56,29 @@ export const applyAsterix = ({
   mask: any;
   n: number;
 }) => {
-  let newval = '';
-  let unMaskedString = ('' + str).slice(0, -n).replace(/./g, mask);
-  unMaskedString = unMaskedString.replace(/\s/g, '');
+  let newval = "";
+  let unMaskedString = ("" + str).slice(0, -n).replace(/./g, mask);
+  unMaskedString = unMaskedString.replace(/\s/g, "");
   for (var i = 0; i < unMaskedString.length; i++) {
     //add space if modulus of 4 is 0
-    if (i % 3 == 0 && i > 0) newval = newval.concat(' ');
+    if (i % 3 == 0 && i > 0) newval = newval.concat(" ");
     newval = newval.concat(unMaskedString[i]);
   }
 
-  return newval + ' ' + ('' + str).slice(-n);
+  return newval + " " + ("" + str).slice(-n);
 };
+//Check if a date is yesterday
+
+export const isYesterday=(date: Date)=>{
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // 👇️ Yesterday's date
+  console.log(date);
+
+  if (yesterday.toDateString() === date.toDateString()) {
+    return true;
+  }
+
+  return false;
+}

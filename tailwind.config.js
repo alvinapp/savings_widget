@@ -7,18 +7,39 @@ module.exports = {
         skin: {
           base: "var(--color-text-base)",
           primary: "var(--color-text-primary)",
-          neutral: "var(--color-text-neutral",
+          neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
+          successNeutral: "var(--color-text-success-neutral)",
+          warning: "var(--color-text-warning)",
+          danger: "var(--color-text-danger)",
           title: "var(--color-text-title)",
           subtitle: "var(--color-text-subtitle)",
         },
       },
       backgroundColor: {
         skin: {
+          base: "var(--color-background-base)",
           primary: "var(--color-background-primary)",
           secondary: "var(--color-background-secondary)",
+          secondaryWithOpacity: "var(--color-background-secondary-withOpacity)",
+          secondary1WithOpacity:
+            "var(--color-background-secondary1-withOpacity)",
+          success: "var(--color-background-success)",
+          successNeutral: "var(--color-background-success-neutral)",
+          successWithOpacity:
+            "var(--color-background-success-neutral-withOpacity)",
+          danger: "var(--color-background-danger)",
+          warningWithOpacity: "var(--color-background-warning-withOpacity)",
+          accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
+        },
+      },
+      outlineColor: {
+        skin: {
+          primary: "var(--color-outline-primary)",
+          neutral: "var(--color-outline-neutral)",
+          secondary: "var(--color-outline-secondary)",
         },
       },
       fontFamily: {
@@ -37,6 +58,7 @@ module.exports = {
         18: "4.5rem",
         23: "5.5rem",
         100: "30rem",
+        130: "33.5rem",
       },
       letterSpacing: {
         listtile_subtitle: "0.013125em",
@@ -45,15 +67,13 @@ module.exports = {
         title: "0.009375em",
         subtitle: "0.025em",
         longtext: "0.066875em",
+        longest_text: "0.075em",
+        tab_text: "0.00625em",
       },
       backgroundImage: {
-        headerBackground: "url('client/assets/images/mono1-background.svg')",
         cardOverlay: "url('client/assets/images/background-overlay.webp')",
-        backgroundImageBlue: "url('client/assets/images/background-blue.webp')",
-        backgroundImageGreen:
-          "url('client/assets/images/background-green.webp')",
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
-        mpesaIcon: "url('client/assets/images/mpesa.png')",
+        overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
       },
       backgroundSize: {
         auto: "auto",

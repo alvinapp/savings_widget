@@ -2,23 +2,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "react-circular-progressbar/dist/styles.css";
 @layer base {
   :root {
     --color-text-base: #101010;
     --color-text-primary: #04506e;
     --color-text-neutral: #6f89a5;
     --color-text-success: #297a22;
+    --color-text-success-neutral: #d6ead4;
+    --color-text-danger: #f45625;
     --color-text-title: #101010;
     --color-text-subtitle: #878787;
+    --color-text-warning: #e08e31;
     --color-button-primary: #056489;
     --color-button-neutral: #6f89a5;
-    --color-background-primary: #ffffff;
+    --color-background-base: #ffffff;
+    --color-background-primary: #056489;
     --color-background-secondary: #cde0e7;
+    --color-background-warning: #e08e31;
+    --color-background-success: #297a22;
+    --color-background-success-neutral: #d6ead4;
+    --color-background-success-neutral-withOpacity: rgba(214, 234, 212, 0.2);
+    --color-background-warning-withOpacity: rgba(224, 142, 49, 0.1);
+    --color-background-danger: #f45625;
+    --color-background-secondary-withOpacity: rgba(205, 224, 231, 0.3);
+    --color-background-secondary1-withOpacity: rgba(205, 224, 231, 0.1);
+    --color-background-accent: #d0ddea;
     --color-background-neutral: #6f89a5;
     --color-background-tertiary: #f2f5f8;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
+    --color-outline-secondary: #d0ddea;
   }
 }
 
