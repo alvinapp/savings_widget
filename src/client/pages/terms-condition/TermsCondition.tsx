@@ -88,7 +88,7 @@ const TermsCondition = () => {
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 px-3.5 bg-white">
-        <MainButton title="Ok" click={() => {}} />
+        <MainButton title="Ok" click={() => navigate("/monthly-income")} />
       </div>
     </div>
   );

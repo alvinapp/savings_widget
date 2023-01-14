@@ -7,6 +7,7 @@
   :root {
     --color-text-base: #101010;
     --color-text-primary: #04506e;
+    --color-text-secondary: #4e6783;
     --color-text-neutral: #6f89a5;
     --color-text-success: #297a22;
     --color-text-success-neutral: #d6ead4;
@@ -30,6 +31,7 @@
     --color-background-accent: #d0ddea;
     --color-background-neutral: #6f89a5;
     --color-background-tertiary: #f2f5f8;
+    --color-background-input: #e6e9ed;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
     --color-outline-secondary: #d0ddea;
@@ -98,6 +100,17 @@ li.slick-active button {
       scrollbar-width: none; /* Firefox */
     }
   }
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 /* #al__nav-action-button {
   color: blueviolet;

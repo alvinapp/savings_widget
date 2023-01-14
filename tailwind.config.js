@@ -7,6 +7,7 @@ module.exports = {
         skin: {
           base: "var(--color-text-base)",
           primary: "var(--color-text-primary)",
+          secondary: "var(--color-text-secondary)",
           neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
           successNeutral: "var(--color-text-success-neutral)",
@@ -33,6 +34,7 @@ module.exports = {
           accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
+          input: "var(--color-background-input)",
         },
       },
       outlineColor: {
@@ -74,6 +76,7 @@ module.exports = {
         cardOverlay: "url('client/assets/images/background-overlay.webp')",
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
         overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
+        curvedBg: "url('client/assets/images/savings/monthly-income-bg.svg')",
       },
       backgroundSize: {
         auto: "auto",
