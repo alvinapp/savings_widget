@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import GoalCreationIntro from "client/pages/goal-creation/GoalCreationIntro";
 import { AddMonthlyIncome } from "./pages/goal-creation/AddMonthlyIncome";
 import { CreateSavingsGoal } from "./pages/goal-creation/CreateSavingsGoal";
+import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -57,10 +58,11 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
           <Routes>
-            <Route path="/" element={<CreateSavingsGoal/>} />
+            <Route path="/" element={<AddGoalDetails />} />
             <Route path="/goal-creation" element={<GoalCreationIntro />} />
             <Route path="/terms-and-conditons" element={<TermsCondition />} />
             <Route path="/monthly-income" element={<AddMonthlyIncome />} />
+            <Route path="/monthly-income" element={<AddGoalDetails />} />
             <Route
               path="/create-savings-goal"
               element={<CreateSavingsGoal />}

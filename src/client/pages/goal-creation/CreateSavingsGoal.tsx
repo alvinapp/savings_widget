@@ -7,6 +7,9 @@ import { Header } from "client/pages/components/goal-creation/Header";
 import { FiFlag } from "react-icons/fi";
 import MainButton from "client/pages/components/MainButton";
 import { BuildGoalCard } from "../components/goal-creation/BuildGoalCard";
+import { predefinedGoals } from "client/utils/MockData";
+import Goal from "client/models/Transaction";
+import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 
 export const CreateSavingsGoal = () => {
   const navigate = useNavigate();
@@ -47,9 +50,21 @@ export const CreateSavingsGoal = () => {
             Excepteur sint occaecat cupidatat non proident
           </div>
         </div>
-      </div>
-      <div className="fixed bottom-2 right-0 left-0 px-3.5">
-        <MainButton title="Continue" click={() => navigate("")} />
+        <div className=" mt-4.5 mx-3.5">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
+            {predefinedGoals.map((goal: Goal, index) => {
+              return (
+                <div className="mb-4">
+                  <CreateGoalCard
+                    key={index}
+                    goalImage={goal.goalImage}
+                    goalName={goal.goalName}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

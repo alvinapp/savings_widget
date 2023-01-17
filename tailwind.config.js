@@ -15,6 +15,7 @@ module.exports = {
           danger: "var(--color-text-danger)",
           title: "var(--color-text-title)",
           subtitle: "var(--color-text-subtitle)",
+          inputDisabled: "var(--color-text-input-disabled)",
         },
       },
       backgroundColor: {
@@ -35,10 +36,12 @@ module.exports = {
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
           input: "var(--color-background-input)",
+          inputButton: "var(--color-background-input-button)",
         },
       },
       outlineColor: {
         skin: {
+          base: "var(--color-outline-base)",
           primary: "var(--color-outline-primary)",
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
@@ -87,6 +90,7 @@ module.exports = {
       boxShadow: {
         card: "1px 1px 3px 2px rgba(0, 0, 0, 0.05)",
         button: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
+        input: "0 1px 6px -0.5px #9BC1D0",
       },
     },
     fontSize: {
