@@ -1,5 +1,4 @@
 import React from "react";
-import { FiBriefcase } from "react-icons/fi";
 import cloud from "client/assets/images/savings/cloud.png";
 type HeaderProps = {
   children?: React.ReactNode;

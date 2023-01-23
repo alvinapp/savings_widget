@@ -8,7 +8,7 @@ type CloseButtonProps = {
 const CloseButton = ({ onClick, background }: CloseButtonProps) => {
   return (
     <button
-      className={`rounded-full p-3 flex items-center justify-center ${background}`}
+      className={`rounded-full p-3 flex items-center justify-center outline outline-none ${background}`}
       onClick={onClick}
     >
       <FiX color="#6F89A5" size="1.4375rem" />

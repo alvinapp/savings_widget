@@ -1,4 +1,4 @@
-import Goal from "client/models/Transaction";
+import Goal from "client/models/Goal";
 import React, { useState } from "react";
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
 export const AddMonthlyIncomeInput = () => {
@@ -31,12 +31,14 @@ type GoalCreationInputProps = {
   leadingIcon?: React.ReactNode;
   inputValue?: string;
   hasValue?: boolean;
+  onClick?: () => void;
 };
 export const GoalCreationInput = ({
   label,
   leadingIcon,
   inputValue,
   hasValue = true,
+  onClick,
 }: GoalCreationInputProps) => {
   return (
     <div className="flex flex-col">
@@ -47,7 +49,7 @@ export const GoalCreationInput = ({
           {label}
         </div>
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row" onClick={hasValue ? () => {} : onClick}>
         <div
           className={`rounded flex flex-row items-center justify-between pl-3.5 pr-3  w-screen ${
             hasValue

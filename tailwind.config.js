@@ -80,6 +80,8 @@ module.exports = {
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
         overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
         curvedBg: "url('client/assets/images/savings/monthly-income-bg.svg')",
+        bottomSheetFooterBg:
+          "url('client/assets/images/savings/bottom-sheet-bg.svg')",
       },
       backgroundSize: {
         auto: "auto",
@@ -103,6 +105,7 @@ module.exports = {
       base: "1rem",
       lg: "1.125rem",
       xl: "1.25rem",
+      "1.5xl": "1.375rem",
       "2xl": "1.5rem",
       "3xl": "1.875rem",
       "4xl": "2.25rem",

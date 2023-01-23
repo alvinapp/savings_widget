@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360px" height="167px" viewBox="0 0 360 167" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>87146622-FDBB-440B-8329-54AC13DDA9CD@3x</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="360" height="167"></rect>
+        <path d="M-56.3799582,6.63903977 C-28.5102558,-6.73688662e-15 15.8798361,-1.65975994 76.7903175,1.65975994 C168.15604,6.63903977 172.688131,2.4766941 223.9215,1.99691549 C259.924803,1.65975994 278.930804,7.12699648 303.681055,13.4152412 C320.270901,17.6301889 344.269159,22.5285275 365.047794,38.7951177 C416.8259,79.3296961 428.26237,157.95759 313.475303,183.847688 C198.688237,209.737786 29.5603652,216.625023 -56.3799582,183.847688 C-105.568126,165.087495 -112.52683,81.1794979 -77.2560707,32.1236961 C-73.3813861,26.7346496 -66.4226819,18.2397642 -56.3799582,6.63903977 L-56.3799582,6.63903977 Z" id="path-3"></path>
+        <path d="M387.292846,189.66788 C404.007795,184.652516 419.316421,180.398628 433.381295,176.800967 L432.73208,0 C327.507863,0.0704770424 183.847528,0.166673263 1.75107588,0.288606646 L1.1971859,223 C13.1197928,220.548454 28.2686358,217.964046 47.4897556,215.315176 C165.667594,199.029042 218.448177,240.330166 387.292846,189.66788 Z" id="path-5"></path>
+        <filter x="-0.9%" y="-0.9%" width="101.9%" height="103.6%" filterUnits="objectBoundingBox" id="filter-6">
+            <feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.615686275   0 0 0 0 0.811764706   0 0 0 0 0.996078431  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="100%" y1="56.8123832%" x2="0%" y2="43.1792332%" id="linearGradient-7">
+            <stop stop-color="#E2EFF5" offset="0%"></stop>
+            <stop stop-color="#FBFBFB" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="🚀-General-flow.Firstbank" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="SB.ix" transform="translate(0.000000, -593.000000)">
+            <g id="Dynamic-view" transform="translate(0.000000, 50.000000)">
+                <g id="Success" transform="translate(0.381295, 506.000000)">
+                    <g id="BG" transform="translate(0.000000, 37.474576)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3" transform="translate(151.649880, 102.961630) scale(-1, 1) translate(-151.649880, -102.961630) "></use>
+                        </mask>
+                        <g id="Path-9" transform="translate(151.649880, 102.961630) scale(-1, 1) translate(-151.649880, -102.961630) "></g>
+                        <g mask="url(#mask-4)" id="Fill-1">
+                            <g transform="translate(-36.381295, -8.000000)">
+                                <g fill="none">
+                                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                                </g>
+                                <path d="M387.280597,189.405461 C404.001611,184.391287 419.314176,180.139283 433.381295,176.543984 L432.875074,0 C327.556791,0.07049766 183.714756,0.166757753 1.34897065,0.288798208 L0,223 C59.453057,210.556863 27.7293465,217.773846 47.7441381,215.017255 C165.829246,198.753664 218.568414,239.997617 387.280597,189.405461 Z" fill-opacity="0.5" fill="url(#linearGradient-7)" fill-rule="evenodd"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import overlay from "client/assets/images/savings/overlay.svg";
 import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
@@ -7,7 +7,10 @@ import { AddPhotoButton } from "../components/AddPhotoButton";
 import { GoalCreationInput } from "../components/goal-creation/Input";
 import { FiFlag, FiTarget, FiPocket, FiTrendingUp } from "react-icons/fi";
 import MainButton from "../components/MainButton";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import { AddContributionSettings } from "./AddContributionSettings";
 const AddGoalDetails = () => {
+  const [openContributionSheet, setOpenContributionSheet] = useState(false);
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -57,7 +60,20 @@ const AddGoalDetails = () => {
             label="How would you like to contribute?"
             inputValue="₦ 10k weekly, on Tuesday"
             leadingIcon={<FiPocket size="1.375rem" />}
+            hasValue={false}
+            onClick={() => {
+              setOpenContributionSheet(true);
+            }}
           />
+          <BottomSheet
+            open={openContributionSheet}
+            children={
+              <AddContributionSettings
+                onClick={() => setOpenContributionSheet(false)}
+              />
+            }
+            defaultSnap={300}
+          ></BottomSheet>
         </div>
         <div className="mb-6">
           <GoalCreationInput

@@ -1,7 +1,7 @@
 import { cleanup } from "@testing-library/react";
 
 import Category from "client/models/Category";
-import Goal from "client/models/Transaction";
+import Goal from "client/models/Goal";
 
 afterEach(cleanup);
 

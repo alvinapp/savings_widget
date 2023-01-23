@@ -8,7 +8,7 @@ import { FiFlag } from "react-icons/fi";
 import MainButton from "client/pages/components/MainButton";
 import { BuildGoalCard } from "../components/goal-creation/BuildGoalCard";
 import { predefinedGoals } from "client/utils/MockData";
-import Goal from "client/models/Transaction";
+import Goal from "client/models/Goal";
 import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 
 export const CreateSavingsGoal = () => {
