@@ -1,5 +1,5 @@
 import { Emoji } from "client/pages/components/Emoji";
-import Transaction from "client/models/Transaction";
+import Transaction from "client/models/Goal";
 import Category from "client/models/Category";
 import useAccountStore from "client/store/accountStore";
 import Accounts from "client/models/accounts";
@@ -8,7 +8,7 @@ import {
   buildStyles,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
-import Goal from "client/models/Transaction";
+import Goal from "client/models/Goal";
 import UpcomingSaving from "client/models/UpcomingSaving";
 import { dateFormat, isYesterday } from "client/utils/Formatters";
 import { DepositButton } from "./DepositButton";

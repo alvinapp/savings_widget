@@ -1,5 +1,5 @@
-import Goal from "client/models/Transaction";
-import Transaction from "client/models/Transaction";
+import Goal from "client/models/Goal";
+import Transaction from "client/models/Goal";
 import React from "react";
 import GoalCard from "client/pages/components/GoalCard";
 import TransactionCard from "../GoalCard";

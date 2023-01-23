@@ -17,7 +17,6 @@ const TabFilter = ({ tabs, activeTab, onClick }: TabFilterProps) => {
             children={element.icon}
             isActive={isActive}
             onClick={() => {
-              console.log(activeTab);
               if (onClick) {
                 onClick(element);
               }

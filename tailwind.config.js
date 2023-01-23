@@ -7,6 +7,7 @@ module.exports = {
         skin: {
           base: "var(--color-text-base)",
           primary: "var(--color-text-primary)",
+          secondary: "var(--color-text-secondary)",
           neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
           successNeutral: "var(--color-text-success-neutral)",
@@ -14,6 +15,7 @@ module.exports = {
           danger: "var(--color-text-danger)",
           title: "var(--color-text-title)",
           subtitle: "var(--color-text-subtitle)",
+          inputDisabled: "var(--color-text-input-disabled)",
         },
       },
       backgroundColor: {
@@ -33,10 +35,13 @@ module.exports = {
           accent: "var(--color-background-accent)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
+          input: "var(--color-background-input)",
+          inputButton: "var(--color-background-input-button)",
         },
       },
       outlineColor: {
         skin: {
+          base: "var(--color-outline-base)",
           primary: "var(--color-outline-primary)",
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
@@ -74,6 +79,9 @@ module.exports = {
         cardOverlay: "url('client/assets/images/background-overlay.webp')",
         connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
         overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
+        curvedBg: "url('client/assets/images/savings/monthly-income-bg.svg')",
+        bottomSheetFooterBg:
+          "url('client/assets/images/savings/bottom-sheet-bg.svg')",
       },
       backgroundSize: {
         auto: "auto",
@@ -84,6 +92,7 @@ module.exports = {
       boxShadow: {
         card: "1px 1px 3px 2px rgba(0, 0, 0, 0.05)",
         button: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
+        input: "0 1px 6px -0.5px #9BC1D0",
       },
     },
     fontSize: {
@@ -96,6 +105,7 @@ module.exports = {
       base: "1rem",
       lg: "1.125rem",
       xl: "1.25rem",
+      "1.5xl": "1.375rem",
       "2xl": "1.5rem",
       "3xl": "1.875rem",
       "4xl": "2.25rem",

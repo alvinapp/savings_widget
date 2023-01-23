@@ -1,4 +1,4 @@
-import Transaction from 'client/models/Transaction';
+import Transaction from "client/models/Goal";
 
 type Transactions = Transaction[];
 

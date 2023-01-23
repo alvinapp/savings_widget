@@ -1,6 +1,6 @@
-import create from 'zustand';
+import create from "zustand";
 
-import Transaction from 'client/models/Transaction';
+import Transaction from "client/models/Goal";
 
 const useTransactionStore = create((set) => ({
   transactions: [],

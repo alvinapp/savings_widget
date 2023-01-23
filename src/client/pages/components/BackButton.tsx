@@ -1,16 +1,16 @@
-import React from 'react';
-import {FiChevronLeft} from 'react-icons/fi';
+import React from "react";
+import { FiChevronLeft } from "react-icons/fi";
 type BackButtonProps = {
   onClick?: () => void;
+  background?: string;
 };
-const BackButton = ({onClick}: BackButtonProps) => {
+const BackButton = ({ onClick, background }: BackButtonProps) => {
   return (
     <button
-      className="rounded text-page_icon"
+      className={`rounded-full p-3 flex items-center justify-center ${background}`}
       onClick={onClick}
-      id="al__nav-action-button"
     >
-      <FiChevronLeft color="currentColor" size="1.4375rem" />
+      <FiChevronLeft color="#6F89A5" size="1.4375rem" />
       <i data-feather="chevron-left"></i>
     </button>
   );

@@ -3,10 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 @import "react-circular-progressbar/dist/styles.css";
+@import "react-spring-bottom-sheet/dist/style.css";
 @layer base {
   :root {
     --color-text-base: #101010;
     --color-text-primary: #04506e;
+    --color-text-secondary: #4e6783;
     --color-text-neutral: #6f89a5;
     --color-text-success: #297a22;
     --color-text-success-neutral: #d6ead4;
@@ -14,6 +16,7 @@
     --color-text-title: #101010;
     --color-text-subtitle: #878787;
     --color-text-warning: #e08e31;
+    --color-text-input-disabled: #9db1c6;
     --color-button-primary: #056489;
     --color-button-neutral: #6f89a5;
     --color-background-base: #ffffff;
@@ -30,6 +33,9 @@
     --color-background-accent: #d0ddea;
     --color-background-neutral: #6f89a5;
     --color-background-tertiary: #f2f5f8;
+    --color-background-input: #e6e9ed;
+    --color-background-input-button: #e7edf3;
+    --color-outline-base: #101010;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
     --color-outline-secondary: #d0ddea;
@@ -99,17 +105,40 @@ li.slick-active button {
     }
   }
 }
-/* #al__nav-action-button {
-  color: blueviolet;
-} */
-/* #al__navbar-title {
-  color:red;
-} */
-/* #al__secondary-button {
-  color: white;
-  background-color: blueviolet;
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-#al__filter-button:active {
-  color: white;
-  background-color: blueviolet;
-} */
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.horizontal-slider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 25px;
+}
+.example-thumb {
+  height: 2.75rem;
+  width: 2.75rem;
+  text-align: center;
+  background-color: #056489;
+  border-radius: 50%;
+  outline: none;
+  cursor: grab;
+  box-shadow: 0 2px 4px -1px #9bc1d0, 0 8px 16px -1px #9bc1d0;
+}
+.example-track {
+  position: relative;
+  background: #cde0e7;
+  height: 0.25rem;
+  border-radius: 4px;
+}
+.example-track-0 {
+  background: #056489;
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import { FiBriefcase } from "react-icons/fi";
 type GoalCreationProgressProps = {
   inProgress?: boolean;
   title?: string;
