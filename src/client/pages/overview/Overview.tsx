@@ -31,14 +31,14 @@ const Overview = () => {
         />
       </div>
       <div className="mt-6 flex flex-row justify-center">
-        <BalanceView balance={300000.0} currency="₦" />
+        <BalanceView balance={300000} currency="₦" />
       </div>
       {/* <OverviewTrackGoalCreationProgress /> */}
       <ShowGoalsInOverview />
       <div className="absolute bottom-4 right-4">
         <AddGoalButton
           onClick={() => {
-            navigate('/goal-creation');
+            navigate("/goal-creation");
           }}
         />
       </div>

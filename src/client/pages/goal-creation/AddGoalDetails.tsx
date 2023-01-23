@@ -9,8 +9,10 @@ import { FiFlag, FiTarget, FiPocket, FiTrendingUp } from "react-icons/fi";
 import MainButton from "../components/MainButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { AddContributionSettings } from "./AddContributionSettings";
+import { useNavigate } from "react-router-dom";
 const AddGoalDetails = () => {
   const [openContributionSheet, setOpenContributionSheet] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -34,7 +36,10 @@ const AddGoalDetails = () => {
         <NavBar
           children={
             <div className="flex flex-row justify-between items-center">
-              <BackButton background="bg-skin-base" />
+              <BackButton
+                background="bg-skin-base"
+                onClick={() => navigate(-1)}
+              />
               <CloseButton background="bg-skin-base" />
             </div>
           }

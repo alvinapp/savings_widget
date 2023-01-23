@@ -59,6 +59,7 @@ export const CreateSavingsGoal = () => {
                     key={index}
                     goalImage={goal.goalImage}
                     goalName={goal.goalName}
+                    onClick={() => navigate("/add-contribution-settings")}
                   />
                 </div>
               );

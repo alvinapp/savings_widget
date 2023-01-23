@@ -1,6 +1,7 @@
+import { checkNAN } from "client/utils/Formatters";
 import React from "react";
 type AmountProps = {
-  balance: number;
+  balance?: number;
 };
 export const Amount = ({ balance }: AmountProps) => {
   const currency = "₦";
@@ -10,7 +11,7 @@ export const Amount = ({ balance }: AmountProps) => {
         {currency}
       </div>
       <div className="text-4xl text-skin-base font-semibold font-workSans">
-        {Math.round(balance).toLocaleString("en-US")}
+        {checkNAN(Math.round(balance!)).toLocaleString()}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const BalanceView = ({
   viewBalance,
   currency,
 }: BalanceViewProps) => {
-  let accountBalance = checkNAN(Math.round(balance!)).toLocaleString();
+  let accountBalance = balance;
 
   return (
     <div className="flex flex-row">

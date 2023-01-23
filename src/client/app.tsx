@@ -14,6 +14,7 @@ import GoalCreationIntro from "client/pages/goal-creation/GoalCreationIntro";
 import { AddMonthlyIncome } from "./pages/goal-creation/AddMonthlyIncome";
 import { CreateSavingsGoal } from "./pages/goal-creation/CreateSavingsGoal";
 import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
+import { AddContributionSettings } from "./pages/goal-creation/AddContributionSettings";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -58,7 +59,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
           <Routes>
-            <Route path="/" element={<AddGoalDetails />} />
+            <Route path="/" element={<Overview />} />
             <Route path="/goal-creation" element={<GoalCreationIntro />} />
             <Route path="/terms-and-conditons" element={<TermsCondition />} />
             <Route path="/monthly-income" element={<AddMonthlyIncome />} />
@@ -66,6 +67,10 @@ const App = () => {
             <Route
               path="/create-savings-goal"
               element={<CreateSavingsGoal />}
+            />
+            <Route
+              path="/add-contribution-settings"
+              element={<AddGoalDetails />}
             />
           </Routes>
         </div>
