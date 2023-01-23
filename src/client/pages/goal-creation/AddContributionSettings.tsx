@@ -7,6 +7,8 @@ import WeekDay from "../components/goal-creation/WeeklyDaySelector";
 import CloseButton from "../components/CloseButton";
 import SelectDate from "../components/goal-creation/SelectDate";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
+import WeeklyContributionSelector from "../components/goal-creation/WeeklyContributionSelector";
+import { MonthlyContributionSelector } from "../components/goal-creation/MonthlyContributionSelector";
 type AddContributionSettingsProps = {
   onClick?: () => void;
 };
@@ -15,8 +17,6 @@ export const AddContributionSettings = ({
 }: AddContributionSettingsProps) => {
   const currency = "₦";
   const [tabIndex, setTabIndex] = useState(0);
-  const [activeDayIndex, setActiveDayIndex] = useState(0);
-  const [activeDateOption, setActiveDateOption] = useState(0);
   const contributionSettingsTabs = [
     {
       tab_id: 0,
@@ -66,19 +66,11 @@ export const AddContributionSettings = ({
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
       </div>
-      <div className="mb-3 flex flex-row justify-center">
-        <WeekDay
-          onClick={(day: number) => setActiveDayIndex(day)}
-          activeIndex={activeDayIndex}
-        />
-      </div>
-      <div className="flex flex-row justify-center">
-        <SelectDate
-          title="Starting from"
-          activeOption={activeDateOption}
-          onClick={(selected: number) => setActiveDateOption(selected)}
-        />
-      </div>
+      {tabIndex == 1 ? (
+        <MonthlyContributionSelector />
+      ) : (
+        <WeeklyContributionSelector />
+      )}
       <div className="mt-12">
         <BottomSheetFooter
           title={`Save weekly ${currency}10,000 by Thur, Jul 8th 2023.`}

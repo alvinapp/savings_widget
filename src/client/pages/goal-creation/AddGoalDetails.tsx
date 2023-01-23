@@ -67,6 +67,9 @@ const AddGoalDetails = () => {
           />
           <BottomSheet
             open={openContributionSheet}
+            style={{
+              borderRadius: 24,
+            }}
             children={
               <AddContributionSettings
                 onClick={() => setOpenContributionSheet(false)}
