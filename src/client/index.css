@@ -4,13 +4,17 @@
 @tailwind utilities;
 @import "react-circular-progressbar/dist/styles.css";
 @import "react-spring-bottom-sheet/dist/style.css";
+@import "rc-slider/assets/index.css";
+
 @layer base {
   :root {
     --color-text-base: #101010;
+    --color-text-white: #ffffff;
     --color-text-primary: #04506e;
     --color-text-secondary: #4e6783;
     --color-text-neutral: #6f89a5;
     --color-text-success: #297a22;
+    --color-text-success-secondary: #85c17f;
     --color-text-success-neutral: #d6ead4;
     --color-text-danger: #f45625;
     --color-text-title: #101010;
@@ -26,6 +30,7 @@
     --color-background-success: #297a22;
     --color-background-success-neutral: #d6ead4;
     --color-background-success-neutral-withOpacity: rgba(214, 234, 212, 0.2);
+    --color-background-success-secondary: #85c17f;
     --color-background-warning-withOpacity: rgba(224, 142, 49, 0.1);
     --color-background-danger: #f45625;
     --color-background-secondary-withOpacity: rgba(205, 224, 231, 0.3);
@@ -35,10 +40,12 @@
     --color-background-tertiary: #f2f5f8;
     --color-background-input: #e6e9ed;
     --color-background-input-button: #e7edf3;
+    --color-background-divider: #d3d3d3;
     --color-outline-base: #101010;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
     --color-outline-secondary: #d0ddea;
+    --color-outline-success-neutral: #d6ead4;
   }
 }
 
@@ -141,4 +148,28 @@ input[type="number"] {
 }
 .example-track-0 {
   background: #056489;
+}
+.barCompleted {
+  background: #85c17f;
+}
+.my-class {
+  border: 1px solid #056489 !important;
+  border-radius: 500px !important;
+  width: 100% !important;
+  height: 3.5rem !important;
+  color: #04506e !important;
+}
+.my-caret-class {
+  padding: 1.5rem !important;
+  height: 3.0625rem !important;
+  width: 3.0625rem !important;
+  border-radius: 500px !important;
+  background: #056489 !important;
+  color: white !important;
+}
+.my-overlay-class {
+  background: white !important;
+  padding-left: 50px !important;
+  padding-right: 5px !important;
+  color: white !important;
 }

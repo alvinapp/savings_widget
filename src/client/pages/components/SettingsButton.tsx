@@ -2,11 +2,15 @@ import React from "react";
 import settings from "client/assets/images/savings/settings.svg";
 type SettingsButtonProps = {
   onClick?: () => void;
+  background?: string;
+  icon?: string;
 };
-const SettingsButton = ({ onClick }: SettingsButtonProps) => {
+const SettingsButton = ({ onClick, background, icon }: SettingsButtonProps) => {
   return (
-    <button className="rounded-full" onClick={onClick}>
-      <img src={settings} />
+    <button
+      className={`rounded-full p-3 flex items-center justify-center ${background}`}
+    >
+      <img src={icon ?? settings} />
     </button>
   );
 };

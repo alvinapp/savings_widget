@@ -2,6 +2,7 @@ import React from "react";
 type SelectDateProps = {
   title?: string;
   activeOption: number;
+  selectDateOptions: Array<any>;
   onClick?: (tab: any) => void;
 };
 type SelectDateButtonProps = {
@@ -33,18 +34,22 @@ const SelectDateButton = ({
     </div>
   );
 };
-const SelectDate = ({ title, onClick, activeOption }: SelectDateProps) => {
-  const selectDateOptions = [
-    { id: 0, title: "Today" },
-    { id: 1, title: "Tomorrow" },
-    { id: 2, title: "Custom" },
-  ];
+const SelectDate = ({
+  title,
+  onClick,
+  activeOption,
+  selectDateOptions,
+}: SelectDateProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-center mb-4">
-        <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
-          {title}
-        </div>
+        {title ? (
+          <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
+            {title ?? ""}
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="flex flex-row">
         {selectDateOptions.map((option, i) => {

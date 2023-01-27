@@ -3,7 +3,6 @@ import NavBar from "client/pages/components/NavBar";
 import SettingsButton from "client/pages/components/SettingsButton";
 import NotificaitonsButton from "client/pages/components/NotificationButton";
 import BalanceView from "../components/BalanceView";
-import OverviewTrackGoalCreationProgress from "client/pages/components/overview/OverviewTrackGoalCreationProgress";
 import { ShowGoalsInOverview } from "../components/overview/ShowGoalsInOverview";
 import { AddGoalButton } from "../components/AddGoalButton";
 import { useNavigate } from "react-router-dom";

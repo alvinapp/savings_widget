@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import "client/index.css";
+import "client/style.scss";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // import Routes from "client/pages/routes";
 import TermsCondition from "client/pages/terms-condition/TermsCondition";
-import Connect from "client/pages/goal-creation/GoalCreationIntro";
-import ConnectSuccess from "client/pages/goal-creation/ConnectSuccess";
-import UnlinkSuccess from "./pages/goal-creation/UnlinkSuccess";
-import Overview from "client/pages/overview/overview";
 import { Route, Routes } from "react-router-dom";
 import GoalCreationIntro from "client/pages/goal-creation/GoalCreationIntro";
 import { AddMonthlyIncome } from "./pages/goal-creation/AddMonthlyIncome";
 import { CreateSavingsGoal } from "./pages/goal-creation/CreateSavingsGoal";
 import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
-import { AddContributionSettings } from "./pages/goal-creation/AddContributionSettings";
+import { GoalView } from "./pages/goal-view/GoalView";
+import { SavingsTrigger } from "./pages/triggers/SavingsTrigger";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -59,7 +57,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
           <Routes>
-            <Route path="/" element={<Overview />} />
+            <Route path="/" element={<GoalView />} />
             <Route path="/goal-creation" element={<GoalCreationIntro />} />
             <Route path="/terms-and-conditons" element={<TermsCondition />} />
             <Route path="/monthly-income" element={<AddMonthlyIncome />} />
@@ -72,6 +70,8 @@ const App = () => {
               path="/add-contribution-settings"
               element={<AddGoalDetails />}
             />
+            <Route path="/goal-view" element={<GoalView />} />
+            <Route path="/savings-trigger" element={<SavingsTrigger />} />
           </Routes>
         </div>
       </QueryClientProvider>

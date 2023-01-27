@@ -172,3 +172,51 @@ export const predefinedGoals = [
     transacted_at: date,
   },
 ];
+export const activities = [
+  {
+    id: 0,
+    goalName: "Spend responsibly",
+    amount: 21636.05,
+    activityName: "Deposit",
+    emoji: "🎯",
+    type: "debit",
+    transacted_at: date,
+  },
+  {
+    id: 1,
+    goalName: "Spend responsibly",
+    amount: 922.53,
+    activityName: "Carrefour",
+    emoji: "🎯",
+    type: "debit",
+    transacted_at: date,
+  },
+  {
+    id: 2,
+    goalName: "Spend responsibly",
+    amount: 1143,
+    activityName: "Love Kitchen",
+    emoji: "🎯",
+    type: "credit",
+    transacted_at: date,
+  },
+];
+
+export const triggers = [
+  {
+    id: 0,
+    percentage: 10,
+    appliedTo: "all merchant",
+    triggerName: "Round it up",
+    image: "",
+    created_at: date,
+  },
+  {
+    id: 1,
+    percentage: 1,
+    appliedTo: "Love kitchen",
+    triggerName: "Round it up",
+    image: "",
+    created_at: date,
+  },
+];

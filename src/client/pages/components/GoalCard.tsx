@@ -9,25 +9,6 @@ import {
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
 import Goal from "client/models/Goal";
-
-const CategoryEmoji = ({ category }: { category: Category }) => {
-  if (!category)
-    return (
-      <div
-        className="rounded-full bg-icon_bg/20 w-9 h-9 flex justify-center items-center
-      "
-      >
-        <img src={uncategorized} alt="" />
-      </div>
-    );
-
-  return (
-    <div className="rounded-full w-9 h-9 flex justify-center bg-icon_bg/20 items-center">
-      <Emoji symbol={category.emoji} label={category.name} />
-    </div>
-  );
-};
-
 const GoalCard = ({
   id,
   goalName,

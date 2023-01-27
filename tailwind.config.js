@@ -6,10 +6,12 @@ module.exports = {
       textColor: {
         skin: {
           base: "var(--color-text-base)",
+          white: "var(--color-text-white)",
           primary: "var(--color-text-primary)",
           secondary: "var(--color-text-secondary)",
           neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
+          successSecondary: "var(--color-text-success-secondary)",
           successNeutral: "var(--color-text-success-neutral)",
           warning: "var(--color-text-warning)",
           danger: "var(--color-text-danger)",
@@ -30,6 +32,7 @@ module.exports = {
           successNeutral: "var(--color-background-success-neutral)",
           successWithOpacity:
             "var(--color-background-success-neutral-withOpacity)",
+          successSecondary: "var(--color-background-success-secondary)",
           danger: "var(--color-background-danger)",
           warningWithOpacity: "var(--color-background-warning-withOpacity)",
           accent: "var(--color-background-accent)",
@@ -37,6 +40,7 @@ module.exports = {
           tertiary: "var(--color-background-tertiary)",
           input: "var(--color-background-input)",
           inputButton: "var(--color-background-input-button)",
+          divider: "var(--color-background-divider)",
         },
       },
       outlineColor: {
@@ -45,6 +49,7 @@ module.exports = {
           primary: "var(--color-outline-primary)",
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
+          successNeutral: "var(--color-outline-success-neutral)",
         },
       },
       fontFamily: {
