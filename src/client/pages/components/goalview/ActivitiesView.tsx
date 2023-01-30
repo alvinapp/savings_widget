@@ -6,7 +6,7 @@ type ActivitiesViewProps = {
 };
 export const ActivitiesView = ({activities }: ActivitiesViewProps) => {
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-y-auto px-3.5">
       {activities.map((activity:Transaction, i) => {
         return (
           <TransactionCard

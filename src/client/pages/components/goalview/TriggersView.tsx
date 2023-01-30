@@ -9,7 +9,7 @@ type TriggersViewProps = {
 export const TriggersView = ({ triggers }: TriggersViewProps) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-3.5">
       <div>
         {triggers.map((trigger: Trigger, i) => {
           return (

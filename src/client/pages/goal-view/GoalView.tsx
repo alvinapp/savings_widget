@@ -75,8 +75,8 @@ export const GoalView = () => {
           }
         />
       </div>
-      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-72 bottom-0 px-3.5 pt-9">
-        <div className="flex flex-row justify-center">
+      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-72 bottom-0 pt-9">
+        <div className="flex flex-row justify-center px-3.5">
           <ActionComponent
             child={
               <AddFundsButton
@@ -120,7 +120,7 @@ export const GoalView = () => {
             defaultSnap={300}
           ></BottomSheet>
         </div>
-        <div className="border rounded-2xl mt-6 bg-skin-divider"></div>
+        <div className="border rounded-2xl mt-6 bg-skin-divider mx-3.5"></div>
         <div className="mt-4">
           <TabFilter
             tabs={goalviewTabs}

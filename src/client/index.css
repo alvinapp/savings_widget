@@ -16,11 +16,14 @@
     --color-text-success: #297a22;
     --color-text-success-secondary: #85c17f;
     --color-text-success-neutral: #d6ead4;
+    --color-text-success-tertiary: #33982a;
     --color-text-danger: #f45625;
     --color-text-title: #101010;
     --color-text-subtitle: #878787;
     --color-text-warning: #e08e31;
     --color-text-input-disabled: #9db1c6;
+    --color-text-icon-secondary: #555466;
+    --color-text-icon-tertiary: #8b714f;
     --color-button-primary: #056489;
     --color-button-neutral: #6f89a5;
     --color-background-base: #ffffff;
@@ -41,6 +44,9 @@
     --color-background-input: #e6e9ed;
     --color-background-input-button: #e7edf3;
     --color-background-divider: #d3d3d3;
+    --color-background-icon-primary: rgba(214, 234, 212, 0.2);
+    --color-background-icon-secondary: rgba(213, 212, 217, 0.2);
+    --color-background-icon-tertiary: rgba(232, 227, 220, 0.2);
     --color-outline-base: #101010;
     --color-outline-primary: #056489;
     --color-outline-neutral: #6f89a5;
