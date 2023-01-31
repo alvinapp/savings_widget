@@ -6,10 +6,10 @@ type AddGoalButtonProps = {
 export const AddGoalButton = ({ onClick }: AddGoalButtonProps) => {
   return (
     <button
-      className={`rounded-full ${"h-14 w-14"} bg-skin-primary shadow-button`}
+      className={`rounded-full h-14 w-14 bg-skin-primary shadow-button`}
       onClick={onClick}
     >
-      <div className="p-2.5">
+      <div className="p-3">
         <img src={addButtonFlag} />
       </div>
     </button>

@@ -8,7 +8,6 @@ const AddButton = ({onClick}: AddButtonProps) => {
     <button
       className="rounded-full text-page_icon"
       onClick={onClick}
-      id="al__nav-action-button"
     >
       <FiPlus color="currentColor" size="1.4375rem" />
     </button>

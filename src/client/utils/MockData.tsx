@@ -1,4 +1,10 @@
-import { FiFlag, FiCalendar } from "react-icons/fi";
+import {
+  FiFlag,
+  FiCalendar,
+  FiLayers,
+  FiTarget,
+  FiPauseCircle,
+} from "react-icons/fi";
 const date = new Date();
 const yesterday = new Date(date.getTime());
 yesterday.setDate(date.getDate() - 1);
@@ -218,5 +224,31 @@ export const triggers = [
     triggerName: "Round it up",
     image: "",
     created_at: date,
+  },
+];
+export const goalSettingTabs = [
+  {
+    tab_id: 0,
+    name: "All",
+    icon: <FiLayers />,
+  },
+  {
+    tab_id: 1,
+    name: "Active",
+    icon: (
+      <div className="-scale-x-100">
+        <FiFlag />
+      </div>
+    ),
+  },
+  {
+    tab_id: 2,
+    name: "Paused",
+    icon: <FiPauseCircle />,
+  },
+  {
+    tab_id: 3,
+    name: "Achieved",
+    icon: <FiTarget />,
   },
 ];

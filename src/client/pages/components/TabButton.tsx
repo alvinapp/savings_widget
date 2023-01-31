@@ -15,9 +15,9 @@ const TabButton = ({
     <div
       className={`${
         isActive
-          ? " bg-skin-secondaryWithOpacity rounded-full"
+          ? " bg-skin-secondaryWithOpacity rounded-full mr-2.5"
           : "bg-transparent"
-      } px-6 py-3 mr-3.5`}
+      } px-6 py-3`}
       onClick={onClick}
     >
       <div className="flex flex-row items-center">
