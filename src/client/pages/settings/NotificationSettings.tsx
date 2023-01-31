@@ -8,7 +8,7 @@ import { NotificationsSettingsCard } from "../components/settings/NotificationsS
 export const NotificationSettings = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col relative pt-6">
+    <div className="flex flex-col relative pt-6 w-screen h-screen">
       <NavBar
         children={
           <div className="flex flex-row items-center justify-between mr-3.5">
@@ -28,7 +28,7 @@ export const NotificationSettings = () => {
         }
       />
       <div className="flex flex-row mx-3.5 mt-7">
-        <NotificationsSettingsCard/>
+        <NotificationsSettingsCard />
       </div>
     </div>
   );

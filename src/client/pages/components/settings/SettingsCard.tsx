@@ -7,6 +7,7 @@ type SettingCardProps = {
   title?: string;
   subtitle?: string;
   trailingColor?: string;
+  onClick?: () => void;
 };
 export const SettingsCard = ({
   iconBackground,
@@ -16,9 +17,10 @@ export const SettingsCard = ({
   subtitle,
   iconColor,
   trailingColor,
+  onClick
 }: SettingCardProps) => {
   return (
-    <div className="shadow-card flex flex-row items-center pt-4.5 pb-3.5 pr-4 pl-3 rounded-lg relative">
+    <div className="shadow-card flex flex-row items-center pt-4.5 pb-3.5 pr-4 pl-3 rounded-lg relative" onClick={onClick}>
       <div className="flex flex-col items-center mr-3">
         <div
           className={`h-10 w-10 rounded-full flex items-center justify-center ${iconBackground} ${iconColor}`}

@@ -19,12 +19,16 @@ const UpcomingSavingsCard = ({
   amount,
   goalImage,
   due_date,
+  onClick,
 }: UpcomingSaving) => {
   const currencySymbol = "₦";
   const now = new Date();
   const warning = isYesterday(due_date);
   return (
-    <div className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2">
+    <div
+      className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2"
+      onClick={onClick}
+    >
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col">
           <div className="flex flex-row items-center">

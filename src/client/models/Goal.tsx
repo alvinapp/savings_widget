@@ -3,9 +3,10 @@ type Goal = {
   goalName?: string;
   transacted_at: Date;
   amount: number;
-  status?:string;
+  status?: string;
   progress: number;
-  goalImage?:string;
+  goalImage?: string;
+  onClick?: () => void;
 };
 
 export default Goal;

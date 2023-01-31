@@ -16,10 +16,14 @@ const GoalCard = ({
   progress,
   status,
   goalImage,
+  onClick,
 }: Goal) => {
   const currencySymbol = "₦";
   return (
-    <div className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2">
+    <div
+      className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2"
+      onClick={onClick}
+    >
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col">
           <div className="flex flex-row items-center">

@@ -8,7 +8,7 @@ type SettingsButtonProps = {
 const SettingsButton = ({ onClick, background, icon }: SettingsButtonProps) => {
   return (
     <button
-      className={`rounded-full p-3 flex items-center justify-center ${background}`}
+      className={`rounded-full p-3 flex items-center justify-center ${background}`} onClick={onClick}
     >
       <img src={icon ?? settings} />
     </button>

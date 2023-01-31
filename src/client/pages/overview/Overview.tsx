@@ -17,12 +17,12 @@ const Overview = () => {
               <div className="flex flex-row items-center justify-center">
                 <div>
                   <NotificaitonsButton
-                    onClick={() => {}}
+                    onClick={() => navigate("/notifications")}
                     notificationCount={1}
                   />
                 </div>
                 <div className="ml-6">
-                  <SettingsButton onClick={() => {}} />
+                  <SettingsButton onClick={() => navigate("/settings")} />
                 </div>
               </div>
             </div>

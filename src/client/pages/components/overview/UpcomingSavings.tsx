@@ -1,6 +1,7 @@
 import React from "react";
 import UpcomingSavingsCard from "client/pages/components/UpcomingSavingsCard";
 import UpcomingSaving from "client/models/UpcomingSaving";
+import { useNavigate } from "react-router-dom";
 
 type MyUpcomingSavingsProps = {
   upcomingSavings: Array<UpcomingSaving>;
@@ -8,6 +9,7 @@ type MyUpcomingSavingsProps = {
 export const UpcomingSavings = ({
   upcomingSavings,
 }: MyUpcomingSavingsProps) => {
+  const navigate = useNavigate();
   return (
     <div>
       {upcomingSavings.map((upcomingSaving: UpcomingSaving, i) => {

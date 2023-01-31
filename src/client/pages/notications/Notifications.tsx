@@ -4,12 +4,13 @@ import BackButton from "../components/BackButton";
 import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { NotificaitonCard } from "../components/notificaitons/NotificaitonCard";
+import { NotificationEmptyState } from "./NotificationEmptyState";
 
 export const Notifications = () => {
   const navigate = useNavigate();
   const currentDate = new Date();
   return (
-    <div className="flex flex-col relative pt-6">
+    <div className="flex flex-col relative pt-6 h-screen w-screen">
       <NavBar
         children={
           <div className="flex flex-row items-center justify-between mr-3.5">
@@ -29,10 +30,11 @@ export const Notifications = () => {
         }
       />
       <div className="flex flex-col mt-9 mx-3.5">
-        <NotificaitonCard
+        {/* <NotificaitonCard
           date={currentDate}
           description="Resume your Marie store goal today to stay on 🎯track!"
-        />
+        /> */}
+        <NotificationEmptyState />
       </div>
     </div>
   );

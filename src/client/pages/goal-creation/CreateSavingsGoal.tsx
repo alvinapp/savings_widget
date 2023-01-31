@@ -18,7 +18,7 @@ export const CreateSavingsGoal = () => {
       <div className="bg-curvedBg pt-8 bg-no-repeat h-64 bg-cover">
         <NavBar
           children={
-            <div className="flex flex-row justify-between items-center px-3.5">
+            <div className="flex flex-row justify-between items-center">
               <BackButton
                 onClick={() => {
                   navigate(-1);

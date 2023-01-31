@@ -76,6 +76,7 @@ export const Settings = () => {
           iconBackground={"bg-skin-iconSecondary"}
           iconColor="text-skin-iconSecondaryy"
           trailing={<FiChevronRight />}
+          onClick={() => navigate("/goal-settings")}
         />
         <div className="mt-2">
           <SettingsCard
@@ -85,6 +86,7 @@ export const Settings = () => {
             iconBackground={"bg-skin-iconSecondary"}
             iconColor="text-skin-iconSecondary"
             trailing={<FiChevronRight />}
+            onClick={() => navigate("/savings-trigger")}
           />
         </div>
         <div className="mt-2">
@@ -94,6 +96,7 @@ export const Settings = () => {
             iconBackground={"bg-skin-iconSecondary"}
             iconColor="text-skin-iconSecondary"
             trailing={<FiChevronRight />}
+            onClick={() => navigate("/notification-settings")}
           />
         </div>
       </div>
