@@ -15,6 +15,9 @@ import { GoalView } from "./pages/goal-view/GoalView";
 import { SavingsTrigger } from "./pages/triggers/SavingsTrigger";
 import { Settings } from "./pages/settings/Settings";
 import { GoalSettings } from "./pages/settings/GoalSettings";
+import { SavingsTriggersSettings } from "./pages/settings/SavingsTriggersSettings";
+import { NotificationSettings } from "./pages/settings/NotificationSettings";
+import { Notifications } from "./pages/notications/Notifications";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -59,7 +62,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
           <Routes>
-            <Route path="/" element={<GoalSettings />} />
+            <Route path="/" element={<Notifications />} />
             <Route path="/goal-creation" element={<GoalCreationIntro />} />
             <Route path="/terms-and-conditons" element={<TermsCondition />} />
             <Route path="/monthly-income" element={<AddMonthlyIncome />} />
@@ -74,8 +77,17 @@ const App = () => {
             />
             <Route path="/goal-view" element={<GoalView />} />
             <Route path="/savings-trigger" element={<SavingsTrigger />} />
+            <Route path="/notification-settings" element={<Notifications />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/goal-settings" element={<GoalSettings />} />
+            <Route
+              path="/savings-triggers-settings"
+              element={<SavingsTriggersSettings />}
+            />
+            <Route
+              path="/notification-settings"
+              element={<NotificationSettings />}
+            />
           </Routes>
         </div>
       </QueryClientProvider>

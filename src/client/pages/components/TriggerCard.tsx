@@ -32,7 +32,7 @@ const TriggerCard = ({
             </div>
             <div className="flex flex-col">
               <div
-                className="font-poppins text-sm font-medium text-black text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
+                className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
               >
                 {triggerName}
               </div>
