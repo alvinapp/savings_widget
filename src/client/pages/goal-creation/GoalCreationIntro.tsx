@@ -51,7 +51,7 @@ const GoalCreationIntro = () => {
   return (
     <div className="h-screen ">
       <div className="flex flex-col bg-white">
-        <div className="mt-6 mx-3.5">
+        <div className="mt-4 mx-3.5">
           <NavBar
             children={
               <div className="flex flex-row justify-end">

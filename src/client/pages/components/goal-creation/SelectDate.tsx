@@ -16,11 +16,9 @@ const SelectDateButton = ({
   onClick,
 }: SelectDateButtonProps) => {
   return (
-    <div
-      className="rounded-3xl outline outline-1 outline-skin-primary p-px mx-1"
-      onClick={onClick}
-    >
+    <div className="rounded-3xl border border-1 border-skin-primary p-px mx-1">
       <div
+        onClick={onClick}
         className={`rounded-3xl py-3 px-3.5 flex items-center justify-center ${
           isActive
             ? "bg-skin-primary text-white"

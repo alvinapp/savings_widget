@@ -7,19 +7,19 @@ export const AddMonthlyIncomeInput = () => {
   const finalValue = `${value}`;
   return (
     <div className="flex flex-row items-center">
-      <div className="flex justify-center items-center p-3.5 rounded-full outline outline-1 outline-skin-secondary">
+      <div className="flex justify-center items-center p-3.5 rounded-full border border-1 border-skin-secondary">
         <FiMinus color="#6F89A5" />
       </div>
       <div className="relative rounded-full p-3.5 bg-skin-input mx-2 flex flex-row justify-center items-center">
         <div>{currencySymbol}</div>
         <input
-          className="bg-transparent font-workSans text-xl tracking-title text-skin-base text-center font-semibold focus:outline-none w-48"
+          className="bg-transparent font-workSans text-xl tracking-title text-skin-base text-center font-semibold focus:border-none w-48"
           type="number"
           value={value}
           max={25}
         />
       </div>
-      <div className="flex justify-center items-center rounded-full p-4 outline outline-1 outline-skin-primary">
+      <div className="flex justify-center items-center rounded-full p-4 border border-1 border-skin-primary">
         <FiPlus color="#04506e" />
       </div>
     </div>
@@ -53,7 +53,7 @@ export const GoalCreationInput = ({
         <div
           className={`rounded flex flex-row items-center justify-between pl-3.5 pr-3  w-screen ${
             hasValue
-              ? "outline outline-1 outline-skin-base py-2"
+              ? "border border-1 border-skin-base py-2"
               : "shadow-input py-3"
           }`}
         >

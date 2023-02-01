@@ -15,7 +15,7 @@ export const CreateSavingsGoal = () => {
   const navigate = useNavigate();
   return (
     <div className="h-screen w-screen relative">
-      <div className="bg-curvedBg pt-8 bg-no-repeat h-64 bg-cover">
+      <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
         <NavBar
           children={
             <div className="flex flex-row justify-between items-center">

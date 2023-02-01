@@ -10,7 +10,7 @@ const Overview = () => {
   const navigate = useNavigate();
   return (
     <div className="h-screen bg-white overflow-y-auto overflow-x-hidden no-scrollbar px-3.5 relative">
-      <div className="mt-6">
+      <div className="mt-4">
         <NavBar
           children={
             <div className="flex flex-row justify-end">

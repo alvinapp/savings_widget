@@ -17,7 +17,7 @@ export default function GoalCreationProgress({
     <div className="flex flex-col mt-3 relative">
       <div className="flex flex-row pt-4">
         <div className="relative">
-          <div className="w-12 h-12 rounded-full outline outline-1 outline-skin-secondary text-center bg-white flex justify-center items-center">
+          <div className="w-12 h-12 rounded-full border border-1 border-skin-secondary text-center bg-white flex justify-center items-center">
             {children}
           </div>
           <div className="">

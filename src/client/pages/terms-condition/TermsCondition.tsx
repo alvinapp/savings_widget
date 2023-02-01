@@ -63,7 +63,7 @@ const TermsCondition = () => {
 
   return (
     <div className="h-screen bg-white">
-      <div className="fixed top-0 left-0 right-0 bg-white pl-2 pr-6 pt-8 pb-3">
+      <div className="fixed top-0 left-0 right-0 bg-white pl-2 pr-4 pt-4 pb-3">
         <NavBar
           children={
             <div className="flex flex-row justify-between items-center">

@@ -13,7 +13,7 @@ const MonthlyDayCircle = ({
   isActive,
 }: MonthlyDayCircleProps) => {
   return (
-    <div className="rounded-full outline outline-1 outline-skin-primary p-px mx-1">
+    <div className="rounded-full border border-1 border-skin-primary p-px mx-1">
       <div
         className={`rounded-full h-9 w-9 flex items-center justify-center ${
           isActive
@@ -75,7 +75,7 @@ const MonthlyDay = ({
             id="day-dropdown"
             aria-expanded="true"
             aria-haspopup="true"
-            className="text-skin-base outline outline-1 outline-skin-primary text-base font-medium font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
+            className="text-skin-base border border-1 border-skin-primary text-base font-medium font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
             type="button"
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -97,7 +97,7 @@ const MonthlyDay = ({
             </svg>
           </button>
           {isOpen ? (
-            <div className="absolute right-0 left-0 rounded-2xl bg-skin-base p-3.5 w-32 outline outline-1 outline-skin-primary h-28 overflow-y-auto">
+            <div className="absolute right-0 left-0 rounded-2xl bg-skin-base p-3.5 w-32 border border-1 border-skin-primary h-28 overflow-y-auto">
               <ul className="">
                 {exactDaysOfTheWeek.map((day, i) => {
                   return (

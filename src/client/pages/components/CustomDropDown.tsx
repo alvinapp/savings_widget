@@ -12,7 +12,7 @@ export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
         id="day-dropdown"
         aria-expanded="true"
         aria-haspopup="true"
-        className="text-skin-base outline outline-1 outline-skin-primary text-base font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
+        className="text-skin-base border border-1 border-skin-primary text-base font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -38,7 +38,7 @@ export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
         </div>
       </button>
       {isOpen ? (
-        <div className="absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto outline outline-1 outline-skin-primary overflow-y-auto">
+        <div className="absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto border border-1 border-skin-primary overflow-y-auto">
           <ul className="">
             {dataset.map((data, i) => {
               return (

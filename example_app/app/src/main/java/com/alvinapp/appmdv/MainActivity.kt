@@ -1,4 +1,4 @@
-package com.alvinapp.appmdv
+package com.alvinapp.apprbs
 
 import android.net.Uri
 import android.os.Bundle
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         webSettings.loadWithOverviewMode = true
         webSettings.useWideViewPort = true
         webSettings.cacheMode = WebSettings.LOAD_DEFAULT
-        val url = Uri.parse("http://192.168.0.102:8080").buildUpon()
+        val url = Uri.parse(" http://192.168.0.100:8080").buildUpon()
 //            .appendQueryParameter("publicKey", "E6CN-A7CqjU9hb86prRw9FQWg9jrLUqTo7M8sljfAdA")
 //            .appendQueryParameter("email", "harry@alvinapp.com")
 //            .appendQueryParameter("settings","{\"balanceView\":true,\"cardView\":true,\"transactionsView\":true}")

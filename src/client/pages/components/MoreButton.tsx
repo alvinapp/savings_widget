@@ -9,7 +9,7 @@ export const MoreButton = ({ onClick, size }: MoreButtonProps) => {
     <button
       className={`rounded-full ${
         size ? size : "h-14 w-14"
-      } outline outline-1 outline-skin-primary text-skin-primary flex items-center justify-center`}
+      } border border-1 border-skin-primary text-skin-primary flex items-center justify-center focus:outline-none focus:rounded-full`}
       onClick={onClick}
     >
       <div className="p-2.5">

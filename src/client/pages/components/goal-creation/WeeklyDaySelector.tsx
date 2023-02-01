@@ -9,7 +9,7 @@ type WeekdayCircleProps = {
 };
 const WeekdayCircle = ({ day, onClick, isActive }: WeekdayCircleProps) => {
   return (
-    <div className="rounded-full outline outline-1 outline-skin-primary p-px mx-1">
+    <div className="rounded-full border border-1 border-skin-primary p-px mx-1">
       <div
         className={`rounded-full h-9 w-9 flex items-center justify-center ${
           isActive

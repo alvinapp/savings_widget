@@ -58,6 +58,15 @@ module.exports = {
           successNeutral: "var(--color-outline-success-neutral)",
         },
       },
+      borderColor: {
+        skin: {
+          base: "var(--color-outline-base)",
+          primary: "var(--color-outline-primary)",
+          neutral: "var(--color-outline-neutral)",
+          secondary: "var(--color-outline-secondary)",
+          successNeutral: "var(--color-outline-success-neutral)",
+        },
+      },
       fontFamily: {
         workSans: "'Work Sans', sans-serif",
         poppins: "'Poppins', sans-serif",
