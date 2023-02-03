@@ -13,7 +13,7 @@ export const AddMonthlyIncomeInput = () => {
       <div className="relative rounded-full p-3.5 bg-skin-input mx-2 flex flex-row justify-center items-center">
         <div>{currencySymbol}</div>
         <input
-          className="bg-transparent font-workSans text-xl tracking-title text-skin-base text-center font-semibold focus:border-none w-48"
+          className="bg-transparent font-workSans text-xl tracking-title text-skin-base text-center font-semibold w-48 focus:border-none focus:outline-none"
           type="number"
           value={value}
           max={25}

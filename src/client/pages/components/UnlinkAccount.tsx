@@ -105,7 +105,7 @@ export const UnlinkAccount = ({
                     className="rounded-lg text-base font-semibold tracking-longtext font-poppins text-gray_light py-3.5 mx-3.5 mb-4"
                     onClick={handleOnClose}
                   >
-                    No, let's keep it
+                    No, let's keep it 
                   </button>
                 </div>
               </div>

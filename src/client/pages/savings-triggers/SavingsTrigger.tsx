@@ -120,7 +120,7 @@ export const SavingsTrigger = () => {
             savings goal
           </div>
         </div>
-        <div className="flex flex-row mx-3.5 mt-1 mb-6 font-poppins tracking-widest text-skin-primary">
+        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary">
           <SlideButton
             mainText="Swipe to activate"
             caret={<FiArrowRight color="#ffffff" className="absolute" />}

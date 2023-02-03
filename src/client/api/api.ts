@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 
 declare var AppConfig: AppConfig;
 
@@ -13,18 +13,18 @@ const get = async ({
   token?: string | null;
   publicKey?: string | null;
 }) => {
-  const domain = `${AppConfig.API_URL}${endpoint.replace('//', '/')}`;
-  const url = params ? domain + new URLSearchParams({...params}) : domain;
+  const domain = `${AppConfig.API_URL}${endpoint.replace("//", "/")}`;
+  const url = params ? domain + new URLSearchParams({ ...params }) : domain;
   var headers = {
-    'Content-Type': 'application/json',
-    cache: 'force-cache',
+    "Content-Type": "application/json",
+    cache: "force-cache",
   };
-  if (publicKey) headers = {...headers, ...{sdk_key: publicKey}};
-  if (token) headers = {...headers, ...{Authorization: `Bearer ${token}`}};
+  if (publicKey) headers = { ...headers, ...{ sdk_key: publicKey } };
+  if (token) headers = { ...headers, ...{ Authorization: `Bearer ${token}` } };
   try {
     const response: any = await fetch(url, {
-      method: 'GET',
-      credentials: 'omit',
+      method: "GET",
+      credentials: "omit",
       headers: headers,
     });
     return response.json();
@@ -47,18 +47,18 @@ async function post({
   publicKey?: string | null;
 }) {
   var headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
-  if (token) headers = {...headers, ...{Authorization: `Bearer ${token}`}};
-  if (publicKey) headers = {...headers, ...{sdk_key: publicKey}};
+  if (token) headers = { ...headers, ...{ Authorization: `Bearer ${token}` } };
+  if (publicKey) headers = { ...headers, ...{ sdk_key: publicKey } };
   const request: RequestInit = {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'omit',
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "omit",
     headers: headers,
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     body: JSON.stringify(data),
   };
 
@@ -72,4 +72,4 @@ async function post({
   }
 }
 
-export {get as fetchData, post as postData};
+export { get as fetchData, post as postData };
