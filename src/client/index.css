@@ -34,6 +34,7 @@
     --color-background-success-neutral: #d6ead4;
     --color-background-success-neutral-withOpacity: rgba(214, 234, 212, 0.2);
     --color-background-success-secondary: #85c17f;
+    --color-background-success-tertiary: #33982a;
     --color-background-warning-withOpacity: rgba(224, 142, 49, 0.1);
     --color-background-danger: #f45625;
     --color-background-secondary-withOpacity: rgba(205, 224, 231, 0.3);
@@ -52,6 +53,8 @@
     --color-outline-neutral: #6f89a5;
     --color-outline-secondary: #d0ddea;
     --color-outline-success-neutral: #d6ead4;
+    --color-outline-success-tertiary: #33982a;
+     --color-outline-danger: #f45625;
   }
 }
 

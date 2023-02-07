@@ -36,6 +36,7 @@ module.exports = {
           successWithOpacity:
             "var(--color-background-success-neutral-withOpacity)",
           successSecondary: "var(--color-background-success-secondary)",
+          successTertiary: "var(--color-background-success-tertiary)",
           danger: "var(--color-background-danger)",
           warningWithOpacity: "var(--color-background-warning-withOpacity)",
           accent: "var(--color-background-accent)",
@@ -65,6 +66,8 @@ module.exports = {
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
           successNeutral: "var(--color-outline-success-neutral)",
+          successTertiary: "var(--color-outline-success-tertiary)",
+          danger: "var(--color-outline-danger)",
         },
       },
       fontFamily: {

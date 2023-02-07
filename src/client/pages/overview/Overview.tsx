@@ -10,21 +10,35 @@ import { useQuery } from "react-query";
 import getToken from "client/api/token";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { postData } from "client/api/api";
+import OverviewTrackGoalCreationProgress from "../components/overview/OverviewTrackGoalCreationProgress";
+import checkStatusOfGoalCreation from "client/api/user-goal-creation-status";
+import useGoalCreationStore from "client/store/goalCreationStatus";
 const Overview = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
   const setToken = useConfigurationStore((state: any) => state.setToken);
+  const setGoalCreationStatus = useGoalCreationStore(
+    (state: any) => state.setGoalCreationStatus
+  );
   const authenticateUser = async () => {
     getToken(configuration).then((res) => {
       setToken(res.token);
     });
   };
+  const checkUserStatus = async () => {
+    checkStatusOfGoalCreation(configuration).then((res) => {
+      setGoalCreationStatus(res);
+    });
+  };
   const navigate = useNavigate();
-  const { isLoading, isError, data, error } = useQuery(
-    ["token"],
-    () => authenticateUser,
-    { refetchOnWindowFocus: false }
+  const { data } = useQuery(["token"], () => authenticateUser, {
+    refetchOnWindowFocus: false,
+  });
+  const { data: goalCreationStatusData } = useQuery(
+    ["checkStatusOfGoalCreation"],
+    () => checkUserStatus,
+    { enabled: !!configuration.token }
   );
   return (
     <div className="h-screen bg-white overflow-y-auto overflow-x-hidden no-scrollbar px-3.5 relative">

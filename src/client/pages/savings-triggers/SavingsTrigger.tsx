@@ -57,10 +57,7 @@ export const SavingsTrigger = () => {
           <Slider
             value={sliderValue}
             onChange={(value: any) => setSliderValue(value)}
-            ariaValueTextFormatterForHandle={(value) => {
-              console.log(value);
-              return `${value}%`;
-            }}
+            ariaLabelledByForHandle="2"
             step={33.33}
             dots
             dotStyle={{
@@ -89,6 +86,7 @@ export const SavingsTrigger = () => {
               boxShadow: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
               top: "-10px",
               border: "none",
+              opacity: 1,
             }}
           />
         </div>

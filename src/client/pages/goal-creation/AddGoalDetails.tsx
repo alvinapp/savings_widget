@@ -99,7 +99,7 @@ const AddGoalDetails = () => {
             leadingIcon={<FiTrendingUp size="1.375rem" />}
           />
         </div>
-        <MainButton title="Start saving" />
+        <MainButton title="Start saving" click={() => navigate("/")} />
       </div>
     </div>
   );

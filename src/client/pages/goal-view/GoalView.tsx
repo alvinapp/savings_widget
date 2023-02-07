@@ -21,11 +21,14 @@ import { activities, triggers } from "client/utils/MockData";
 import { TriggersView } from "../components/goalview/TriggersView";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { PauseGoal } from "./PauseGoal";
+import { PauseDeleteGoal } from "./PauseDeleteGoal";
 
 export const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
   const [openPauseGoalSheet, setOpenPauseGoalSheet] = useState(false);
+  const [openPauseDeleteGoalSheet, setOpenPauseDeleteGoalSheet] =
+    useState(false);
   const goalviewTabs = [
     {
       tab_id: 0,
@@ -92,7 +95,7 @@ export const GoalView = () => {
               <PauseButton
                 size="h-12 w-12"
                 onClick={() => {
-                  setOpenPauseGoalSheet(true);
+                  setOpenPauseDeleteGoalSheet(true);
                 }}
               />
             }
@@ -116,6 +119,19 @@ export const GoalView = () => {
             }}
             children={
               <PauseGoal onClick={() => setOpenPauseGoalSheet(false)} />
+            }
+            defaultSnap={300}
+          ></BottomSheet>
+          <BottomSheet
+            open={openPauseDeleteGoalSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={
+              <PauseDeleteGoal
+                pauseGoal={() => setOpenPauseGoalSheet(true)}
+                onClick={() => setOpenPauseDeleteGoalSheet(false)}
+              />
             }
             defaultSnap={300}
           ></BottomSheet>

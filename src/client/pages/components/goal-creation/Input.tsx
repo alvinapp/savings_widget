@@ -1,13 +1,26 @@
 import Goal from "client/models/Goal";
 import React, { useState } from "react";
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
-export const AddMonthlyIncomeInput = () => {
+type AddMonthlyIncomeInputProps = {
+  increment?: () => void;
+  decrement?: () => void;
+  value?: number;
+  addValue: (e: any) => void;
+};
+export const AddMonthlyIncomeInput = ({
+  value,
+  increment,
+  decrement,
+  addValue,
+}: AddMonthlyIncomeInputProps) => {
   const currencySymbol = "₦";
-  const [value, setValue] = useState(35000);
-  const finalValue = `${value}`;
+
   return (
     <div className="flex flex-row items-center">
-      <div className="flex justify-center items-center p-3.5 rounded-full border border-1 border-skin-secondary">
+      <div
+        className="flex justify-center items-center p-3.5 rounded-full border border-1 border-skin-primary"
+        onClick={decrement}
+      >
         <FiMinus color="#6F89A5" />
       </div>
       <div className="relative rounded-full p-3.5 bg-skin-input mx-2 flex flex-row justify-center items-center">
@@ -17,9 +30,15 @@ export const AddMonthlyIncomeInput = () => {
           type="number"
           value={value}
           max={25}
+          onChange={(e) => {
+            addValue(e.target.value);
+          }}
         />
       </div>
-      <div className="flex justify-center items-center rounded-full p-4 border border-1 border-skin-primary">
+      <div
+        className="flex justify-center items-center rounded-full p-4 border border-1 border-skin-primary"
+        onClick={increment}
+      >
         <FiPlus color="#04506e" />
       </div>
     </div>

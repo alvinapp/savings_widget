@@ -67,7 +67,7 @@ const App = () => {
             <Route path="/goal-creation" element={<GoalCreationIntro />} />
             <Route path="/terms-and-conditons" element={<TermsCondition />} />
             <Route path="/monthly-income" element={<AddMonthlyIncome />} />
-            <Route path="/monthly-income" element={<AddGoalDetails />} />
+            <Route path="/goal-details" element={<AddGoalDetails />} />
             <Route
               path="/create-savings-goal"
               element={<CreateSavingsGoal />}
