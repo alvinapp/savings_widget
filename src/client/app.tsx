@@ -73,7 +73,7 @@ const App = () => {
               element={<CreateSavingsGoal />}
             />
             <Route
-              path="/add-contribution-settings"
+              path="/add-goal-details"
               element={<AddGoalDetails />}
             />
             <Route path="/goal-view" element={<GoalView />} />

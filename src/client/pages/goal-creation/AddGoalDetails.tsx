@@ -10,15 +10,23 @@ import MainButton from "../components/MainButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { AddContributionSettings } from "./AddContributionSettings";
 import { useNavigate } from "react-router-dom";
+import useGoalStore from "client/store/goalStore";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
 const AddGoalDetails = () => {
+  const currencySymbol = useMonthlyIncomeStore(
+    (state: any) => state.currencySymbol
+  );
   const [openContributionSheet, setOpenContributionSheet] = useState(false);
+  const goal = useGoalStore((state: any) => state.selectedGoal);
   const navigate = useNavigate();
+  const [goalName, setGoalname] = useState(goal.goalName);
+  const [amount, setAmount] = useState(`${currencySymbol} ${goal.amount}`);
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
           <img
-            src="https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
+            src={goal.goalImage ?? ""}
             className="absolute top-0 right-0 left-0"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
@@ -49,26 +57,29 @@ const AddGoalDetails = () => {
         <div className="mb-6">
           <GoalCreationInput
             label="Let’s name your goal"
-            inputValue="Spend responsibly"
+            value={goalName}
             leadingIcon={<FiFlag size="1.375rem" />}
+            addValue={(e) => setGoalname(e)}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
             label="What’s your target amount?"
-            inputValue="₦ 1,085,776"
+            value={amount}
             leadingIcon={<FiTarget size="1.375rem" />}
+            addValue={(e) => setAmount(e)}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
             label="How would you like to contribute?"
-            inputValue="₦ 10k weekly, on Tuesday"
+            value="₦ 10k weekly, on Tuesday"
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={false}
             onClick={() => {
               setOpenContributionSheet(true);
             }}
+            addValue={(e) => e}
           />
           <BottomSheet
             open={openContributionSheet}
@@ -87,16 +98,18 @@ const AddGoalDetails = () => {
           <GoalCreationInput
             hasValue={false}
             label="Link an account and track savings with ease"
-            inputValue="Link bank or wallet"
+            value="Link bank or wallet"
             leadingIcon={<FiPocket size="1.375rem" />}
+            addValue={(e) => e}
           />
         </div>
         <div className="mb-10">
           <GoalCreationInput
             hasValue={false}
             label="Boost your savings journey with rules"
-            inputValue="Apply savings rule"
+            value="Apply savings rule"
             leadingIcon={<FiTrendingUp size="1.375rem" />}
+            addValue={(e) => e}
           />
         </div>
         <MainButton title="Start saving" click={() => navigate("/")} />

@@ -72,41 +72,4 @@ async function post({
   }
 }
 
-async function put({
-  endpoint,
-  token,
-  data = {},
-  publicKey,
-}: {
-  endpoint: string;
-  token?: string | null;
-  data: any;
-  publicKey?: string | null;
-}) {
-  var headers = {
-    "Content-Type": "application/json",
-  };
-  if (token) headers = { ...headers, ...{ Authorization: `Bearer ${token}` } };
-  if (publicKey) headers = { ...headers, ...{ sdk_key: publicKey } };
-  const request: RequestInit = {
-    method: "PUT",
-    // mode: "cors",
-    cache: "no-cache",
-    credentials: "omit",
-    headers: headers,
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
-  };
-
-  try {
-    const response = await fetch(`${AppConfig.API_URL}${endpoint}`, request);
-    return response.json();
-  } catch (error) {
-    // console.debug('post', JSON.stringify(request));
-    Sentry.captureException(error);
-    return Promise.reject(error);
-  }
-}
-
-export { get as fetchData, post as postData, put as putData };
+export { get as fetchData, post as postData };

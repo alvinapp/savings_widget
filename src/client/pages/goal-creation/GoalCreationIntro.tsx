@@ -35,10 +35,12 @@ const GoalCreationIntro = () => {
   const slidePages = () => {
     if (slideIndex >= 1) {
       if (userStore.user.tc_accepted) {
-        document.dispatchEvent(
-          new CustomEvent("toPage", { detail: { page: Routes.MONO } })
-        );
         slideInfoStore.setSlideIndex(0);
+        if (userStore.user.income != null) {
+          navigate("/create-savings-goal");
+        } else {
+          navigate("/monthly-income");
+        }
       } else {
         navigate("/terms-and-conditons");
         slideInfoStore.setSlideIndex(0);

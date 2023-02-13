@@ -15,14 +15,14 @@ export const AddMonthlyIncome = () => {
     (state: any) => state.configuration
   ) as IConfig;
   const navigate = useNavigate();
-  const [value, setValue] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
   const saveIncome = () => {
-    saveMonthlyIncome({ configuration: configuration, amount: value }).then(
-      (result) => {
-        console.log(result);
-        if (result) navigate("/create-savings-goal");
-      }
-    );
+    saveMonthlyIncome({
+      configuration: configuration,
+      amount: finalAmount,
+    }).then((result) => {
+      if (result) navigate("/create-savings-goal");
+    });
   };
   const { data, refetch } = useQuery(["saveIncome"], () => saveIncome, {
     enabled: false,
@@ -54,24 +54,21 @@ export const AddMonthlyIncome = () => {
         </div>
         <div className="mt-24 mx-3.5 flex flex-row justify-center">
           <AddMonthlyIncomeInput
-            addValue={(e) => setValue(e)}
-            value={value}
+            addValue={(e) => setFinalAmount(e)}
+            value={finalAmount}
             increment={() => {
-              setValue(value + 1000);
+              setFinalAmount(finalAmount + 1000);
             }}
             decrement={() => {
-              if (value > 0) {
-                setValue(value - 10000);
+              if (finalAmount > 0) {
+                setFinalAmount(finalAmount - 1000);
               }
             }}
           />
         </div>
       </div>
       <div className="fixed bottom-2 right-0 left-0 px-3.5">
-        <MainButton
-          title="Continue"
-          click={() => navigate("/create-savings-goal")}
-        />
+        <MainButton title="Continue" click={() => refetch()} />
       </div>
     </div>
   );

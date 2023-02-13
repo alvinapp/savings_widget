@@ -100,7 +100,7 @@ export const predefinedGoals = [
   {
     id: 0,
     goalName: "Rainy day fund",
-    amount: 21636.05,
+    amount: 500000,
     status: "",
     progress: 10,
     goalImage:
@@ -110,7 +110,7 @@ export const predefinedGoals = [
   {
     id: 1,
     goalName: "Spend responsibly",
-    amount: 21636.05,
+    amount: 100000,
     status: "🪴 Resume goal, N 44.4M",
     progress: 30,
     goalImage:
@@ -120,7 +120,7 @@ export const predefinedGoals = [
   {
     id: 2,
     goalName: "Car",
-    amount: 1143323,
+    amount: 500000,
     status: "🚀 Halfway there",
     progress: 60,
     goalImage:
@@ -130,27 +130,27 @@ export const predefinedGoals = [
   {
     id: 3,
     goalName: "Home",
-    amount: 10043323,
+    amount: 3000000,
     status: "",
     progress: 100,
     goalImage:
-      "https://images.unsplash.com/photo-1523217582562-09d0def993a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1523217582562-09d0def993a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3Mzg5Njc4OQ&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080",
     transacted_at: date,
   },
   {
     id: 4,
     goalName: "Kids",
-    amount: 10043323,
+    amount: 1000000,
     status: "",
     progress: 100,
     goalImage:
-      "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1592106680408-e7e63efbc7ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3MzkyMjM1NA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080",
     transacted_at: date,
   },
   {
     id: 5,
     goalName: "Land",
-    amount: 10043323,
+    amount: 1000000,
     status: "",
     progress: 100,
     goalImage:
@@ -160,7 +160,7 @@ export const predefinedGoals = [
   {
     id: 6,
     goalName: "Holiday",
-    amount: 10043323,
+    amount: 50000,
     status: "",
     progress: 100,
     goalImage:

@@ -28,11 +28,7 @@ const TermsCondition = () => {
           if (result) {
             getToken(configuration).then((result) => {
               userStore.setUser(result.user);
-              document.dispatchEvent(
-                new CustomEvent("toPage", {
-                  detail: { page: Routes.MONO, replace: true },
-                })
-              );
+              navigate("/monthly-income");
             });
           }
         })
@@ -57,9 +53,6 @@ const TermsCondition = () => {
       refetchOnWindowFocus: false,
     }
   );
-  const acceptTermsAndCondition = () => {
-    refetch();
-  };
 
   return (
     <div className="h-screen bg-white">
@@ -88,7 +81,7 @@ const TermsCondition = () => {
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 px-3.5 bg-white">
-        <MainButton title="Ok" click={() => navigate("/monthly-income")} />
+        <MainButton title="Ok" click={() => refetch()} />
       </div>
     </div>
   );

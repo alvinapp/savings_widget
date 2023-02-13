@@ -9,7 +9,7 @@ import SettingsButton from "../components/SettingsButton";
 import settingNeutral from "../../assets/images/savings/settings-neutral.svg";
 import { GoalViewBalanceView } from "../components/goalview/GoalViewBalanceView";
 import { CustomProgressBar } from "../components/ProgressBar";
-import { AddGoalButton } from "../components/AddGoalButton";
+import { AddGoalButton } from "../components/AddGoalButton"; 
 import { ActionComponent } from "../components/goalview/ActionComponent";
 import { PauseButton } from "../components/PauseButton";
 import { MoreButton } from "../components/MoreButton";

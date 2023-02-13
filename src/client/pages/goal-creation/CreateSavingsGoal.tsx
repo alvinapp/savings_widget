@@ -10,9 +10,12 @@ import { BuildGoalCard } from "../components/goal-creation/BuildGoalCard";
 import { predefinedGoals } from "client/utils/MockData";
 import Goal from "client/models/Goal";
 import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
+import useGoalCreationStore from "client/store/goalCreationStatus";
+import useGoalStore from "client/store/goalStore";
 
 export const CreateSavingsGoal = () => {
   const navigate = useNavigate();
+  const setChosenGoal = useGoalStore((state: any) => state.setGoal);
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
@@ -59,7 +62,10 @@ export const CreateSavingsGoal = () => {
                     key={index}
                     goalImage={goal.goalImage}
                     goalName={goal.goalName}
-                    onClick={() => navigate("/add-contribution-settings")}
+                    onClick={() => {
+                      setChosenGoal(goal);
+                      navigate("/add-goal-details");
+                    }}
                   />
                 </div>
               );

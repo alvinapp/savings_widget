@@ -13,16 +13,19 @@ import { postData } from "client/api/api";
 import OverviewTrackGoalCreationProgress from "../components/overview/OverviewTrackGoalCreationProgress";
 import checkStatusOfGoalCreation from "client/api/user-goal-creation-status";
 import useGoalCreationStore from "client/store/goalCreationStatus";
+import useUserStore from "client/store/userStore";
 const Overview = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
   const setToken = useConfigurationStore((state: any) => state.setToken);
+  const setUser = useUserStore((state: any) => state.setUser);
   const setGoalCreationStatus = useGoalCreationStore(
     (state: any) => state.setGoalCreationStatus
   );
   const authenticateUser = async () => {
     getToken(configuration).then((res) => {
+      setUser(res.user);
       setToken(res.token);
     });
   };

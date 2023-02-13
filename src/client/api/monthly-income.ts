@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/browser";
 
 import { IConfig } from "client/store/configuration";
-import { putData } from "client/api/api";
+import { postData } from "client/api/api";
 
 const saveMonthlyIncome = async ({
   configuration,
@@ -10,7 +10,7 @@ const saveMonthlyIncome = async ({
   configuration: IConfig;
   amount: number;
 }) => {
-  const res = await putData({
+  const res = await postData({
     endpoint: "/users/income/",
     data: { amount: amount },
     token: configuration.token,

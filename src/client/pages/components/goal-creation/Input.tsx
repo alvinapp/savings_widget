@@ -1,4 +1,5 @@
 import Goal from "client/models/Goal";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import React, { useState } from "react";
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
 type AddMonthlyIncomeInputProps = {
@@ -13,7 +14,9 @@ export const AddMonthlyIncomeInput = ({
   decrement,
   addValue,
 }: AddMonthlyIncomeInputProps) => {
-  const currencySymbol = "₦";
+  const currencySymbol = useMonthlyIncomeStore(
+    (state: any) => state.currencySymbol
+  );
 
   return (
     <div className="flex flex-row items-center">
@@ -31,7 +34,7 @@ export const AddMonthlyIncomeInput = ({
           value={value}
           max={25}
           onChange={(e) => {
-            addValue(e.target.value);
+            addValue(parseInt(e.target.value));
           }}
         />
       </div>
@@ -48,16 +51,18 @@ export const AddMonthlyIncomeInput = ({
 type GoalCreationInputProps = {
   label?: string;
   leadingIcon?: React.ReactNode;
-  inputValue?: string;
+  value?: any;
   hasValue?: boolean;
   onClick?: () => void;
+  addValue: (e: any) => void;
 };
 export const GoalCreationInput = ({
   label,
   leadingIcon,
-  inputValue,
+  value,
   hasValue = true,
   onClick,
+  addValue,
 }: GoalCreationInputProps) => {
   return (
     <div className="flex flex-col">
@@ -68,7 +73,10 @@ export const GoalCreationInput = ({
           {label}
         </div>
       </div>
-      <div className="flex flex-row" onClick={hasValue ? () => {} : onClick}>
+      <div
+        className="flex flex-row relative"
+        onClick={hasValue ? () => {} : onClick}
+      >
         <div
           className={`rounded flex flex-row items-center justify-between pl-3.5 pr-3  w-screen ${
             hasValue
@@ -88,7 +96,14 @@ export const GoalCreationInput = ({
               hasValue ? "text-skin-base" : "text-skin-inputDisabled"
             }`}
           >
-            {inputValue}
+            <input
+              value={value}
+              className={`w-64 outline-none text-center`}
+              onChange={(e) => {
+                addValue(e.target.value);
+              }}
+              type="text"
+            />
           </div>
           {hasValue ? (
             <div className="rounded-full flex items-center bg-skin-secondary p-2">
