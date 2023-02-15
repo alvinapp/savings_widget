@@ -12,6 +12,10 @@ import { AddContributionSettings } from "./AddContributionSettings";
 import { useNavigate } from "react-router-dom";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
+import { useQuery } from "react-query";
+import saveAGoal from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 const AddGoalDetails = () => {
   const currencySymbol = useMonthlyIncomeStore(
     (state: any) => state.currencySymbol
@@ -21,6 +25,29 @@ const AddGoalDetails = () => {
   const navigate = useNavigate();
   const [goalName, setGoalname] = useState(goal.goalName);
   const [amount, setAmount] = useState(`${currencySymbol} ${goal.amount}`);
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const saveGoalNameAndAmount = () => {
+    saveAGoal({
+      configuration: configuration,
+      data: {
+        extern_id: "",
+        name: goalName,
+        title: "",
+        amount: parseFloat(amount.replace("₦ ", "").trim()),
+        contribute_from: "",
+        is_customized: false,
+      },
+    }).then((result) => {
+      console.log(result.id);
+      if (result) setOpenContributionSheet(true);
+    });
+  };
+  const { refetch } = useQuery("saving-goals", () => saveGoalNameAndAmount, {
+    refetchOnWindowFocus: true,
+    enabled: false,
+  });
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -76,9 +103,7 @@ const AddGoalDetails = () => {
             value="₦ 10k weekly, on Tuesday"
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={false}
-            onClick={() => {
-              setOpenContributionSheet(true);
-            }}
+            onClick={() => setOpenContributionSheet(true)}
             addValue={(e) => e}
           />
           <BottomSheet

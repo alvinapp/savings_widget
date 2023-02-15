@@ -7,6 +7,8 @@ import CloseButton from "../components/CloseButton";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
 import WeeklyContributionSelector from "../components/goal-creation/WeeklyContributionSelector";
 import { MonthlyContributionSelector } from "../components/goal-creation/MonthlyContributionSelector";
+import useUserStore from "client/store/userStore";
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 type AddContributionSettingsProps = {
   onClick?: () => void;
 };
@@ -27,6 +29,11 @@ export const AddContributionSettings = ({
       icon: <FiToggleRight />,
     },
   ];
+  const monthlyIncome = useUserStore((state: any) => state.user.income);
+  const [percentageOfMonthlyIncome, setPercentageOfMonthlyIncome] = useState(0);
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -48,7 +55,7 @@ export const AddContributionSettings = ({
         />
       </div>
       <div className="mb-2.5 flex flex-row justify-center items-center">
-        <Amount balance={10000} />
+        <Amount balance={goalContributionSettings.contributionAmount} />
       </div>
       <div className="mb-6 px-10">
         <ReactSlider
@@ -56,10 +63,19 @@ export const AddContributionSettings = ({
           thumbClassName="example-thumb"
           trackClassName="example-track"
           marks={20}
+          renderThumb={(props, state) => (
+            <div {...props}>{`${state.valueNow}%`}</div>
+          )}
+          onChange={(value, index) => {
+            goalContributionSettings.setContributionAmount(
+              (monthlyIncome * value) / 100
+            );
+            setPercentageOfMonthlyIncome(value);
+          }}
         />
       </div>
       <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
-        5% of my monthly net income
+        {`${percentageOfMonthlyIncome}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On

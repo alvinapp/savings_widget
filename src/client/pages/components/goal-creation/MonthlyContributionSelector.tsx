@@ -8,7 +8,6 @@ export const MonthlyContributionSelector = () => {
   const selectDateOptions = [
     { id: 0, title: "Today" },
     { id: 1, title: "Tomorrow" },
-    { id: 2, title: "Custom" },
   ];
   return (
     <div className="mb-3">

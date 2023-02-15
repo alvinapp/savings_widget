@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FiFlag } from "react-icons/fi";
 import CloseButton from "../components/CloseButton";
-import SampleDatePicker from "../components/DatePicker";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
 import SelectDate from "../components/goal-creation/SelectDate";
 /* @ts-ignore */

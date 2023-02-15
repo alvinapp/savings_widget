@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { CustomDateButton } from "./CustomDateButton";
 type SelectDateProps = {
   title?: string;
   activeOption: number;
@@ -10,7 +11,7 @@ type SelectDateButtonProps = {
   isActive?: boolean;
   onClick?: () => void;
 };
-const SelectDateButton = ({
+export const SelectDateButton = ({
   label,
   isActive,
   onClick,
@@ -38,6 +39,7 @@ const SelectDate = ({
   activeOption,
   selectDateOptions,
 }: SelectDateProps) => {
+  const [customButton, selectCustomButton] = useState(false);
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-center mb-4">
@@ -65,6 +67,13 @@ const SelectDate = ({
             />
           );
         })}
+        <CustomDateButton
+          isActive={customButton}
+          click={() => {
+            console.log(customButton);
+            selectCustomButton(!customButton);
+          }}
+        />
       </div>
     </div>
   );

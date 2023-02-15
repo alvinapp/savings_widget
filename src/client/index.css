@@ -5,6 +5,7 @@
 @import "react-circular-progressbar/dist/styles.css";
 @import "react-spring-bottom-sheet/dist/style.css";
 @import "rc-slider/assets/index.css";
+@import "react-datepicker/dist/react-datepicker.css";
 
 @layer base {
   :root {
@@ -54,7 +55,7 @@
     --color-outline-secondary: #d0ddea;
     --color-outline-success-neutral: #d6ead4;
     --color-outline-success-tertiary: #33982a;
-     --color-outline-danger: #f45625;
+    --color-outline-danger: #f45625;
   }
 }
 
@@ -140,6 +141,11 @@ input[type="number"] {
   height: 25px;
 }
 .example-thumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 0.75rem;
   height: 2.75rem;
   width: 2.75rem;
   text-align: center;
