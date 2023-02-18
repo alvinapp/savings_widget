@@ -1,3 +1,4 @@
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { useState } from "react";
 import MonthlyDay from "./MonthlyDaySelector";
 import SelectDate from "./SelectDate";
@@ -8,12 +9,25 @@ export const MonthlyContributionSelector = () => {
   const selectDateOptions = [
     { id: 0, title: "Today" },
     { id: 1, title: "Tomorrow" },
+    { id: 2, title: "" },
   ];
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
+  const weeksOfTheMonthInWords = ["", "first", "second", "third", "fourth"];
+  let tomorrow = new Date();
+  const today = new Date();
+  tomorrow.setDate(today.getDate() + 1);
   return (
     <div className="mb-3">
       <div className="flex flex-row justify-center mb-4">
         <MonthlyDay
-          onClick={(day: number) => setActiveDayIndex(day)}
+          onClick={(week: number) => {
+            goalContributionSettings.setMonthlyWeek(
+              weeksOfTheMonthInWords[week]
+            );
+            setActiveDayIndex(week);
+          }}
           activeIndex={activeDayIndex}
         />
       </div>
@@ -21,7 +35,15 @@ export const MonthlyContributionSelector = () => {
         <SelectDate
           title="Starting from"
           activeOption={activeDateOption}
-          onClick={(selected: number) => setActiveDateOption(selected)}
+          onClick={(selected: number) => {
+            if (selected === 0) {
+              goalContributionSettings.setStartFromDate(today);
+            } else if (selected === 1) {
+              goalContributionSettings.setStartFromDate(tomorrow);
+            } else {
+            }
+            setActiveDateOption(selected);
+          }}
           selectDateOptions={selectDateOptions}
         />
       </div>

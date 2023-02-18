@@ -10,18 +10,24 @@ import { AddMonthlyIncomeInput } from "../components/goal-creation/Input";
 import { useQuery } from "react-query";
 import saveMonthlyIncome from "client/api/monthly-income";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
 export const AddMonthlyIncome = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
   const navigate = useNavigate();
   const [finalAmount, setFinalAmount] = useState(0);
+  const monthlyIncome = useMonthlyIncomeStore((state: any) => state);
   const saveIncome = () => {
     saveMonthlyIncome({
       configuration: configuration,
       amount: finalAmount,
     }).then((result) => {
-      if (result) navigate("/create-savings-goal");
+      if (result) {
+        result.income;
+        monthlyIncome.setMonthlyIncome(result.income);
+      }
+      navigate("/create-savings-goal");
     });
   };
   const { data, refetch } = useQuery(["saveIncome"], () => saveIncome, {

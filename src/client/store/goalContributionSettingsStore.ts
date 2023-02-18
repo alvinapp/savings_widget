@@ -5,6 +5,8 @@ const useGoalContributionSettingsStore = create((set) => ({
   monthlyWeek: "",
   weekDayOfTheMonth: "",
   startingFromDate: new Date(),
+  openContributionSettingsSheet: false,
+  contributionFrequency: "",
   setContributionAmount: (amount: number) => {
     return set((state: any) => {
       const result = {
@@ -41,6 +43,22 @@ const useGoalContributionSettingsStore = create((set) => ({
     return set((state: any) => {
       const result = {
         startingFromDate: startingFromDate,
+      };
+      return result;
+    });
+  },
+  openContributionSettingsBottomSheet: (openBottomSheet: boolean) => {
+    return set((state: any) => {
+      const result = {
+        openContributionSettingsSheet: openBottomSheet,
+      };
+      return result;
+    });
+  },
+  setContributionFrequency: (frequencyText: string) => {
+    return set((state: any) => {
+      const result = {
+        openContributionSettingsSheet: frequencyText,
       };
       return result;
     });

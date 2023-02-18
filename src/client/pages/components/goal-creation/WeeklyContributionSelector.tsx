@@ -7,17 +7,16 @@ import { CustomDateButton } from "./CustomDateButton";
 const WeeklyContributionSelector = () => {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
   const [activeDateOption, setActiveDateOption] = useState(0);
-  const [customDateValue, setCustomDateValue] = useState(new Date());
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
   let tomorrow = new Date();
   const today = new Date();
   tomorrow.setDate(today.getDate() + 1);
-  const [customDate, setCustomDate] = useState(new Date());
   const selectDateOptions = [
     { id: 0, title: "Today" },
     { id: 1, title: "Tomorrow" },
+    { id: 2, title: "" },
   ];
   return (
     <div className="mb-3">

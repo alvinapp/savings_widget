@@ -78,7 +78,7 @@ export const GoalCreationInput = ({
         onClick={hasValue ? () => {} : onClick}
       >
         <div
-          className={`rounded flex flex-row items-center justify-between pl-3.5 pr-3  w-screen ${
+          className={`rounded flex flex-row items-center  pl-3.5 w-screen ${
             hasValue
               ? "border border-1 border-skin-base py-2"
               : "shadow-input py-3"
@@ -106,7 +106,7 @@ export const GoalCreationInput = ({
             />
           </div>
           {hasValue ? (
-            <div className="rounded-full flex items-center bg-skin-secondary p-2">
+            <div className="rounded-full flex items-center bg-skin-secondary p-2 absolute right-2">
               <FiX color="#4E6783" />
             </div>
           ) : (

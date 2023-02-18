@@ -1,3 +1,4 @@
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { useState } from "react";
 import { CustomDateButton } from "./CustomDateButton";
 type SelectDateProps = {
@@ -55,25 +56,31 @@ const SelectDate = ({
         {selectDateOptions.map((option, i) => {
           const active = option.id === activeOption;
           return (
-            <SelectDateButton
-              key={i}
-              label={option.title}
-              isActive={active}
-              onClick={() => {
-                if (onClick) {
-                  onClick(option.id);
-                }
-              }}
-            />
+            <div>
+              {i === 2 ? (
+                <CustomDateButton
+                  isActive={active}
+                  click={() => {
+                    if (onClick) {
+                      onClick(option.id);
+                    }
+                  }}
+                />
+              ) : (
+                <SelectDateButton
+                  key={i}
+                  label={option.title}
+                  isActive={active}
+                  onClick={() => {
+                    if (onClick) {
+                      onClick(option.id);
+                    }
+                  }}
+                />
+              )}
+            </div>
           );
         })}
-        <CustomDateButton
-          isActive={customButton}
-          click={() => {
-            console.log(customButton);
-            selectCustomButton(!customButton);
-          }}
-        />
       </div>
     </div>
   );

@@ -16,18 +16,24 @@ import { useQuery } from "react-query";
 import saveAGoal from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 const AddGoalDetails = () => {
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   const currencySymbol = useMonthlyIncomeStore(
     (state: any) => state.currencySymbol
   );
-  const [openContributionSheet, setOpenContributionSheet] = useState(false);
-  const goal = useGoalStore((state: any) => state.selectedGoal);
+  const goal = useGoalStore((state: any) => state);
   const navigate = useNavigate();
-  const [goalName, setGoalname] = useState(goal.goalName);
-  const [amount, setAmount] = useState(`${currencySymbol} ${goal.amount}`);
+  const [goalName, setGoalname] = useState(goal.selectedGoal.goalName);
+  const [amount, setAmount] = useState(
+    `${currencySymbol} ${goal.selectedGoal.amount}`
+  );
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
+
   const saveGoalNameAndAmount = () => {
     saveAGoal({
       configuration: configuration,
@@ -40,20 +46,33 @@ const AddGoalDetails = () => {
         is_customized: false,
       },
     }).then((result) => {
-      console.log(result.id);
-      if (result) setOpenContributionSheet(true);
+      if (result.id) {
+        goal.setContributionSettingsGoalId(result.id);
+        goalContributionSettings.openContributionSettingsBottomSheet(true);
+      }
     });
+  };
+  const deleteUnconfirmedGoals = () => {
+    deleteUnconfirmed(configuration).then((res) => console.log(res));
   };
   const { refetch } = useQuery("saving-goals", () => saveGoalNameAndAmount, {
     refetchOnWindowFocus: true,
     enabled: false,
   });
+  const { refetch: unconfirmedGoals } = useQuery(
+    "delete-unconfirmed-goals",
+    () => deleteUnconfirmedGoals,
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
           <img
-            src={goal.goalImage ?? ""}
+            src={goal.selectedGoal.goalImage ?? ""}
             className="absolute top-0 right-0 left-0"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
@@ -73,9 +92,18 @@ const AddGoalDetails = () => {
             <div className="flex flex-row justify-between items-center">
               <BackButton
                 background="bg-skin-base"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  unconfirmedGoals();
+                  navigate(-1);
+                }}
               />
-              <CloseButton background="bg-skin-base" />
+              <CloseButton
+                background="bg-skin-base"
+                onClick={() => {
+                  unconfirmedGoals();
+                  navigate(-3);
+                }}
+              />
             </div>
           }
         />
@@ -103,17 +131,22 @@ const AddGoalDetails = () => {
             value="₦ 10k weekly, on Tuesday"
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={false}
-            onClick={() => setOpenContributionSheet(true)}
+            onClick={() => refetch()}
             addValue={(e) => e}
           />
           <BottomSheet
-            open={openContributionSheet}
+            open={goalContributionSettings.openContributionSettingsSheet}
             style={{
               borderRadius: 24,
             }}
             children={
               <AddContributionSettings
-                onClick={() => setOpenContributionSheet(false)}
+                onClick={() => {
+                  goalContributionSettings.openContributionSettingsBottomSheet(
+                    false
+                  );
+                  goalContributionSettings.setContributionAmount(0);
+                }}
               />
             }
             defaultSnap={300}

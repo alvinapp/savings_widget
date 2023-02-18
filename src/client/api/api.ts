@@ -71,5 +71,30 @@ async function post({
     return Promise.reject(error);
   }
 }
+const deleting = async ({
+  endpoint,
+  token,
+  params,
+  publicKey,
+}: {
+  endpoint: string;
+  params?: object;
+  token?: string | null;
+  publicKey?: string | null;
+}) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
 
-export { get as fetchData, post as postData };
+  var requestOptions: any = {
+    method: "POST",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`${AppConfig.API_URL}${endpoint.replace("//", "/")}`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
+
+export { get as fetchData, post as postData, deleting as deleteData };

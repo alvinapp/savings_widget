@@ -1,14 +1,15 @@
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { useState } from "react";
 
-const daysOfWeek = ["", "1st", "2nd", "3rd", "Last"];
+const weekOfTheMonth = ["", "1st", "2nd", "3rd", "Last"];
 
 type MonthlyDayCircleProps = {
-  day: number;
+  week: number;
   onClick?: () => void;
   isActive: boolean;
 };
 const MonthlyDayCircle = ({
-  day,
+  week,
   onClick,
   isActive,
 }: MonthlyDayCircleProps) => {
@@ -23,7 +24,7 @@ const MonthlyDayCircle = ({
         onClick={onClick}
       >
         <div className="font-semibold font-poppins text-xs">
-          {daysOfWeek[day]}
+          {weekOfTheMonth[week]}
         </div>
       </div>
     </div>
@@ -35,8 +36,11 @@ const MonthlyDay = ({
   onClick,
 }: {
   activeIndex: number;
-  onClick?: (day: number) => void;
+  onClick?: (week: number) => void;
 }) => {
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   const exactDaysOfTheWeek = [
     "",
     "Sunday",
@@ -46,23 +50,22 @@ const MonthlyDay = ({
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
-  const [exactDay, selectExactDay] = useState("");
+  const [exactDay, selectExactDay] = useState("Select day");
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex flex-col">
       <div className="flex flex-row mb-4">
-        {[1, 2, 3, 4].map((day: any, i) => {
-          const active = day === activeIndex;
+        {[1, 2, 3, 4].map((week: any, i) => {
+          const active = week === activeIndex;
           return (
             <MonthlyDayCircle
               key={i}
-              day={day}
+              week={week}
               isActive={active}
               onClick={() => {
                 if (onClick) {
-                  onClick(day);
+                  onClick(week);
                 }
               }}
             />
@@ -106,6 +109,7 @@ const MonthlyDay = ({
                       key={i}
                       onClick={() => {
                         selectExactDay(day);
+                        goalContributionSettings.setWeekDayOfTheMonth(day);
                         setIsOpen(false);
                       }}
                     >

@@ -4,13 +4,13 @@ import DatePicker from "react-datepicker";
 type CustomDateButtonProps = {
   isActive: boolean;
   click?: () => void;
+  onSelectedOutside?: () => void;
 };
 
 export const CustomDateButton = ({
   isActive,
   click,
 }: CustomDateButtonProps) => {
-  const [startDate, setStartDate] = useState(new Date());
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
@@ -37,11 +37,8 @@ export const CustomDateButton = ({
   );
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date: Date) => {
-        console.log(date);
-        goalContributionSettings.setStartFromDate(date);
-      }}
+      selected={goalContributionSettings.startingFromDate}
+      onChange={(date: Date) => goalContributionSettings.setStartFromDate(date)}
       customInput={<ExampleCustomInput />}
     />
   );

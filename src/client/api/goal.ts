@@ -24,4 +24,27 @@ const saveAGoal = async ({
       return Promise.reject(reason);
     });
 
+export const saveGoalContributionSettings = async ({
+  configuration,
+  data,
+  goalId,
+}: {
+  configuration: IConfig;
+  data: any;
+  goalId: number;
+}) =>
+  postData({
+    endpoint: `/goals/${goalId}/schedule`,
+    token: configuration.token,
+    data: data,
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((reason: any) => {
+      Sentry.captureException(reason);
+      console.debug(reason);
+      return Promise.reject(reason);
+    });
+
 export default saveAGoal;
