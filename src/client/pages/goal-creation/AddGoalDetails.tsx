@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import { useQuery } from "react-query";
-import saveAGoal from "client/api/goal";
+import { confirmGoal, saveAGoal, saveGoalImage } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
@@ -33,7 +33,15 @@ const AddGoalDetails = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-
+  const saveTheGoalImage = () => {
+    saveGoalImage({
+      configuration: configuration,
+      data: {
+        image_url: goal.selectedGoal.imageUrl,
+      },
+      goalId: goal.contributionSettingsGoalId,
+    });
+  };
   const saveGoalNameAndAmount = () => {
     saveAGoal({
       configuration: configuration,
@@ -52,8 +60,21 @@ const AddGoalDetails = () => {
       }
     });
   };
+  const confirmingAGoal = () => {
+    confirmGoal({
+      configuration: configuration,
+      goalId: goal.contributionSettingsGoalId,
+      data: {},
+    }).then((result) => {
+      if (result) navigate("/");
+    });
+  };
   const deleteUnconfirmedGoals = () => {
-    deleteUnconfirmed(configuration).then((res) => console.log(res));
+    deleteUnconfirmed(configuration).then((result: any) => {
+      if (result) {
+        goalContributionSettings.contributionFrequency("");
+      }
+    });
   };
   const { refetch } = useQuery("saving-goals", () => saveGoalNameAndAmount, {
     refetchOnWindowFocus: true,
@@ -67,12 +88,29 @@ const AddGoalDetails = () => {
       enabled: false,
     }
   );
+  const { isLoading, refetch: confirmGoals } = useQuery(
+    "confirmed-goals",
+    () => confirmingAGoal,
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
+  const { data: saveImage } = useQuery(
+    "save-goal-image",
+    () => saveTheGoalImage,
+    {
+      refetchOnWindowFocus: true,
+      enabled: !!goal.contributionSettingsGoalId,
+    }
+  );
+
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
           <img
-            src={goal.selectedGoal.goalImage ?? ""}
+            src={goal.selectedGoal.imageUrl ? goal.selectedGoal.imageUrl : ""}
             className="absolute top-0 right-0 left-0"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
@@ -112,25 +150,31 @@ const AddGoalDetails = () => {
         <div className="mb-6">
           <GoalCreationInput
             label="Let’s name your goal"
-            value={goalName}
+            value={goalName ? goalName : "Add goal name"}
             leadingIcon={<FiFlag size="1.375rem" />}
             addValue={(e) => setGoalname(e)}
+            hasValue={!!goalName}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
             label="What’s your target amount?"
-            value={amount}
+            value={amount ? amount : "Add target amount"}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => setAmount(e)}
+            hasValue={!!amount}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
             label="How would you like to contribute?"
-            value="₦ 10k weekly, on Tuesday"
+            value={
+              goalContributionSettings.contributionFrequency
+                ? goalContributionSettings.contributionFrequency
+                : "Add contribution"
+            }
             leadingIcon={<FiPocket size="1.375rem" />}
-            hasValue={false}
+            hasValue={!!goalContributionSettings.contributionFrequency}
             onClick={() => refetch()}
             addValue={(e) => e}
           />
@@ -170,7 +214,7 @@ const AddGoalDetails = () => {
             addValue={(e) => e}
           />
         </div>
-        <MainButton title="Start saving" click={() => navigate("/")} />
+        <MainButton title="Start saving" click={() => confirmGoals()} />
       </div>
     </div>
   );

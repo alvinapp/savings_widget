@@ -1,6 +1,6 @@
 import { checkIfDebitCredit, dateFormat } from "client/utils/Formatters";
 import useAccountStore from "client/store/accountStore";
-import Accounts from "client/models/accounts";
+import Accounts from "client/models/Accounts";
 import Transaction from "client/models/Transaction";
 
 const TransactionCard = ({

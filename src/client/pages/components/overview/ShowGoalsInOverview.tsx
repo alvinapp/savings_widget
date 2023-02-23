@@ -4,13 +4,12 @@ import { MyGoals } from "./MyGoals";
 import { UpcomingSavings } from "./UpcomingSavings";
 import { NotificationCard } from "./NotificationCard";
 import { upcomingSavings, goals, tabs } from "client/utils/MockData";
+import useGoalStore from "client/store/goalStore";
 export const ShowGoalsInOverview = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const confirmedGoals = useGoalStore((state: any) => state.confirmedGoals);
   return (
     <div className="mt-6">
-      <div className="mb-6">
-        <NotificationCard amount={250000.54} />
-      </div>
       <TabFilter
         tabs={tabs}
         activeTab={tabIndex}
@@ -20,7 +19,7 @@ export const ShowGoalsInOverview = () => {
         {tabIndex == 1 ? (
           <UpcomingSavings upcomingSavings={upcomingSavings} />
         ) : (
-          <MyGoals goals={goals} />
+          <MyGoals goals={confirmedGoals} />
         )}
       </div>
     </div>

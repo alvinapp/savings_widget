@@ -53,19 +53,21 @@ export const CreateSavingsGoal = () => {
         </div>
         <div className=" mt-4.5 mx-3.5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {predefinedGoals.map((goal: Goal, index) => (
-              <div className="mb-4">
-                <CreateGoalCard
-                  key={index}
-                  goalImage={goal.goalImage}
-                  goalName={goal.goalName}
-                  onClick={() => {
-                    setChosenGoal(goal);
-                    navigate("/add-goal-details");
-                  }}
-                />
-              </div>
-            ))}
+            {predefinedGoals.map((goal: Goal, index) => {
+              return (
+                <div className="mb-4">
+                  <CreateGoalCard
+                    key={index}
+                    goalImage={goal.imageUrl}
+                    goalName={goal.name}
+                    onClick={() => {
+                      setChosenGoal(goal);
+                      navigate("/add-goal-details");
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@
 @import "react-spring-bottom-sheet/dist/style.css";
 @import "rc-slider/assets/index.css";
 @import "react-datepicker/dist/react-datepicker.css";
+@import "react-toastify/dist/ReactToastify.css";
 
 @layer base {
   :root {
@@ -187,4 +188,20 @@ input[type="number"] {
   padding-left: 50px !important;
   padding-right: 5px !important;
   color: white !important;
+}
+.toast {
+  background-color: #2c3f53;
+  box-sizing: border-box;
+  height: 3.937rem;
+  border: 1px solid #056489;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  line-height: 13px;
+  margin-bottom: 1.5rem;
+  margin-left: 0.937rem;
+  margin-right: 0.937rem;
 }

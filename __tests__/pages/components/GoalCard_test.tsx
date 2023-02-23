@@ -8,15 +8,15 @@ describe("", () => {
     const now = new Date();
     const props = {
       id: 0,
-      goalName: "Spend responsibly",
+      name: "Spend responsibly",
       amount: 21636.05,
       status: "",
       progress: 40,
-      goalImage: "",
+      imageUrl: "",
       transacted_at: now,
     };
     render(<GoalCard {...props} />);
-    const merchant = screen.getByText("Memphis Tech");
-    expect(merchant).toBeInTheDocument();
+    const name = screen.getByText("Spend responsibly");
+    expect(name).toBeInTheDocument();
   });
 });

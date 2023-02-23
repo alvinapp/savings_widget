@@ -1,4 +1,3 @@
-import Institution from 'client/models/Institution';
 
 type Account = {
   account_number: string;

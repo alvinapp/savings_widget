@@ -122,9 +122,7 @@ export const SavingsTrigger = () => {
           <SlideButton
             mainText="Swipe to activate"
             caret={<FiArrowRight color="#ffffff" className="absolute" />}
-            onSlideDone={function () {
-              console.log("Done!");
-            }}
+            onSlideDone={function () {}}
             classList="my-class"
             caretClassList="my-caret-class"
             overlayClassList="my-overlay-class"

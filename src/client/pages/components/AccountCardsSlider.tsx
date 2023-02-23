@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 import getAccounts from 'client/api/accounts';
 import {UnlinkAccount} from './UnlinkAccount';
 import useAccountStore from 'client/store/accountStore';
-import Accounts from 'client/models/accounts';
+import Accounts from 'client/models/Accounts';
 
 type AccountCardProps = {
   accounts?: Array<Account>;

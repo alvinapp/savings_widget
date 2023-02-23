@@ -13,7 +13,7 @@ export const GoalViewBalanceView = ({
 }: GoalCreationIntroProps) => {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-center">
         <Amount balance={contributedAmount} textColor="text-white" />
       </div>
       <div className="flex flex-row text-white/80 font-semibold font-poppins text-xs tracking-subtitle justify-center">

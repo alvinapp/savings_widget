@@ -58,7 +58,7 @@ const useGoalContributionSettingsStore = create((set) => ({
   setContributionFrequency: (frequencyText: string) => {
     return set((state: any) => {
       const result = {
-        openContributionSettingsSheet: frequencyText,
+        contributionFrequency: frequencyText,
       };
       return result;
     });

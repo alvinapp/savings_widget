@@ -14,7 +14,12 @@ import OverviewTrackGoalCreationProgress from "../components/overview/OverviewTr
 import checkStatusOfGoalCreation from "client/api/user-goal-creation-status";
 import useGoalCreationStore from "client/store/goalCreationStatus";
 import useUserStore from "client/store/userStore";
+import { getConfirmedGoals } from "client/api/goal";
+import useGoalStore from "client/store/goalStore";
+import { NotificationCard } from "../components/overview/NotificationCard";
 const Overview = () => {
+    const navigate = useNavigate();
+  const goal = useGoalStore((state: any) => state);
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
@@ -34,13 +39,24 @@ const Overview = () => {
       setGoalCreationStatus(res);
     });
   };
-  const navigate = useNavigate();
+  const fetchConfimedGoals = async () => {
+    getConfirmedGoals({ configuration: configuration }).then((result) => {
+      if (result) {
+        goal.setConfirmedGoals(result);
+      }
+    });
+  };
   const { data } = useQuery(["token"], () => authenticateUser, {
     refetchOnWindowFocus: false,
   });
   const { data: goalCreationStatusData } = useQuery(
     ["checkStatusOfGoalCreation"],
     () => checkUserStatus,
+    { enabled: !!configuration.token }
+  );
+  const { data: confirmedGoals } = useQuery(
+    "confirmed-goals",
+    () => fetchConfimedGoals,
     { enabled: !!configuration.token }
   );
   return (
@@ -63,10 +79,13 @@ const Overview = () => {
         />
       </div>
       <div className="mt-6 flex flex-row justify-center">
-        <BalanceView balance={300000} currency="₦" />
+        <BalanceView balance={0} currency="₦" />
       </div>
-      {/* <OverviewTrackGoalCreationProgress /> */}
+      <div className="mt-6">
+        <NotificationCard amount={250000.54} />
+      </div>
       <ShowGoalsInOverview />
+      {/* <OverviewTrackGoalCreationProgress /> */}
       <div className="absolute bottom-4 right-4">
         <AddGoalButton
           onClick={() => {

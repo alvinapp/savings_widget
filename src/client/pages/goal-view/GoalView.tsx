@@ -9,7 +9,7 @@ import SettingsButton from "../components/SettingsButton";
 import settingNeutral from "../../assets/images/savings/settings-neutral.svg";
 import { GoalViewBalanceView } from "../components/goalview/GoalViewBalanceView";
 import { CustomProgressBar } from "../components/ProgressBar";
-import { AddGoalButton } from "../components/AddGoalButton"; 
+import { AddGoalButton } from "../components/AddGoalButton";
 import { ActionComponent } from "../components/goalview/ActionComponent";
 import { PauseButton } from "../components/PauseButton";
 import { MoreButton } from "../components/MoreButton";
@@ -22,13 +22,20 @@ import { TriggersView } from "../components/goalview/TriggersView";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { PauseGoal } from "./PauseGoal";
 import { PauseDeleteGoal } from "./PauseDeleteGoal";
-
+import useGoalStore from "client/store/goalStore";
+import { ResumeButton } from "../components/ResumeButton";
+import { getConfirmedGoals, resumeGoal } from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import { useQuery } from "react-query";
+import { ToastContainer } from "react-toastify";
 export const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
-  const [openPauseGoalSheet, setOpenPauseGoalSheet] = useState(false);
-  const [openPauseDeleteGoalSheet, setOpenPauseDeleteGoalSheet] =
-    useState(false);
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  // const [openPauseDeleteGoalSheet, setOpenPauseDeleteGoalSheet] =
+  //   useState(false);
   const goalviewTabs = [
     {
       tab_id: 0,
@@ -41,6 +48,30 @@ export const GoalView = () => {
       icon: <FiTrendingUp />,
     },
   ];
+  const goal = useGoalStore((state: any) => state);
+  const currentGoal = goal.confirmedGoals.find(
+    (element: any) => element.id === goal.confirmedGoal.id
+  );
+
+  const resumeAGoal = async () => {
+    resumeGoal({
+      configuration: configuration,
+      goalId: goal.confirmedGoal.id,
+      data: {},
+    }).then((result) => {
+      if (result) {
+        getConfirmedGoals({ configuration: configuration }).then((result) => {
+          goal.setConfirmedGoals(result);
+        });
+      }
+    });
+  };
+  const { refetch: resumeTheGoal } = useQuery(
+    "resume-goal",
+    () => resumeAGoal,
+    { refetchOnWindowFocus: true, enabled: false }
+  );
+  // const { contribution } = goal.confirmedGoal.ledger;
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -54,12 +85,18 @@ export const GoalView = () => {
             className="absolute object-cover w-screen"
           />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
-            <GoalViewBalanceView contributedAmount={20000} amount={1085776} />
+            <GoalViewBalanceView
+              contributedAmount={0}
+              amount={goal.confirmedGoal.amount}
+            />
             <div className="mt-8 w-screen px-3.5">
-              <CustomProgressBar progressPercentage={30} />
+              <CustomProgressBar
+                progressPercentage={0}
+                isActive={currentGoal.is_active}
+              />
             </div>
             <div className="text-white/80 font-semibold font-poppins text-xs tracking-subtitle text-center mt-5">
-              12months
+              {``}
             </div>
           </div>
         </div>
@@ -72,7 +109,10 @@ export const GoalView = () => {
                 background="bg-skin-base"
                 onClick={() => navigate(-1)}
               />
-              <NavBarTitle title="Spend responsibly" titleColor="text-white" />
+              <NavBarTitle
+                title={`${goal.confirmedGoal.name}`}
+                titleColor="text-white"
+              />
               <SettingsButton background="bg-skin-base" icon={settingNeutral} />
             </div>
           }
@@ -92,14 +132,21 @@ export const GoalView = () => {
           />
           <ActionComponent
             child={
-              <PauseButton
-                size="h-12 w-12"
-                onClick={() => {
-                  setOpenPauseDeleteGoalSheet(true);
-                }}
-              />
+              currentGoal.is_active ? (
+                <PauseButton
+                  size="h-12 w-12"
+                  onClick={() => {
+                    goal.openPauseDeleteBottomSheet(true);
+                  }}
+                />
+              ) : (
+                <ResumeButton
+                  size="h-12 w-12"
+                  onClick={() => resumeTheGoal()}
+                />
+              )
             }
-            title="Pause goal"
+            title={currentGoal.is_active ? "Pause goal" : "Resume goal"}
           />
           <ActionComponent
             child={
@@ -113,24 +160,24 @@ export const GoalView = () => {
             title="More"
           />
           <BottomSheet
-            open={openPauseGoalSheet}
+            open={goal.pauseGoalBottomSheet}
             style={{
               borderRadius: 24,
             }}
             children={
-              <PauseGoal onClick={() => setOpenPauseGoalSheet(false)} />
+              <PauseGoal onClick={() => goal.openPauseGoalBottomSheet(false)} />
             }
             defaultSnap={300}
           ></BottomSheet>
           <BottomSheet
-            open={openPauseDeleteGoalSheet}
+            open={goal.pauseDeleteBottomSheet}
             style={{
               borderRadius: 24,
             }}
             children={
               <PauseDeleteGoal
-                pauseGoal={() => setOpenPauseGoalSheet(true)}
-                onClick={() => setOpenPauseDeleteGoalSheet(false)}
+                pauseGoal={() => goal.openPauseGoalBottomSheet(true)}
+                onClick={() => goal.openPauseDeleteBottomSheet(false)}
               />
             }
             defaultSnap={300}
@@ -152,6 +199,7 @@ export const GoalView = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

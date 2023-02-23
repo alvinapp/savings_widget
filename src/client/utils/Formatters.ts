@@ -1,6 +1,6 @@
 import { validateLocaleAndSetLanguage } from "typescript";
 
-export const dateFormat = (date: Date) => {
+export const dateFormat = (date: Date, includeYear?: boolean) => {
   const date1 = new Date(Date.now());
   // One day in milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
@@ -14,12 +14,18 @@ export const dateFormat = (date: Date) => {
   if (diffInDays == 1) {
     return "Yesterday";
   }
+  const dateProperties: any = includeYear
+    ? {
+        day: "numeric",
+        year: "numeric",
+        month: "short",
+      }
+    : {
+        month: "short",
+        day: "numeric",
+      };
   let formattedDate = date
-    .toLocaleDateString("en-au", {
-      day: "numeric",
-      year: "numeric",
-      month: "short",
-    })
+    .toLocaleDateString("en-au", dateProperties)
     .split(" ");
   const resultDate =
     formattedDate.slice(0, 1) +
@@ -74,7 +80,6 @@ export const isYesterday = (date: Date) => {
   yesterday.setDate(yesterday.getDate() - 1);
 
   // 👇️ Yesterday's date
-  console.log(date);
 
   if (yesterday.toDateString() === date.toDateString()) {
     return true;
@@ -101,4 +106,11 @@ export const convertDate = (dateString: string): string => {
   const timezoneSign = timezoneOffset < 0 ? "+" : "-";
   const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezone}`;
+};
+export const nthNumber = (number:any) => {
+  return number > 0
+    ? ["th", "st", "nd", "rd"][
+        (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
+      ]
+    : "";
 };

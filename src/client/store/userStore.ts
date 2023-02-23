@@ -1,4 +1,4 @@
-import create from 'zustand';
+import create from "zustand";
 
 const useUserStore = create((set) => ({
   user: {},
@@ -7,7 +7,6 @@ const useUserStore = create((set) => ({
       const result = {
         user: user,
       };
-
       return result;
     });
   },
