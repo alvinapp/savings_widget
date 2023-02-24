@@ -48,6 +48,7 @@ module.exports = {
           iconPrimary: "var(--color-background-icon-primary)",
           iconSecondary: "var(--color-background-icon-secondary)",
           iconTertiary: "var( --color-background-icon-tertiary)",
+          path: "var( --color-background-path)",
         },
       },
       outlineColor: {

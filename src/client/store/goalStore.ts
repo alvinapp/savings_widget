@@ -8,6 +8,7 @@ const useGoalStore = create((set) => ({
   resume_at: new Date(),
   pauseGoalBottomSheet: false,
   pauseDeleteBottomSheet: false,
+  deleteGoalBottomSheet: false,
   setGoal: (goal: Goal) => {
     return set((state: any) => {
       const result = {
@@ -60,6 +61,14 @@ const useGoalStore = create((set) => ({
     return set((state: any) => {
       const result = {
         pauseDeleteBottomSheet: open,
+      };
+      return result;
+    });
+  },
+  openDeleteBottomSheet: (open: boolean) => {
+    return set((state: any) => {
+      const result = {
+        deleteGoalBottomSheet: open,
       };
       return result;
     });

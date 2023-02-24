@@ -19,6 +19,7 @@ import { SavingsTriggersSettings } from "./pages/settings/SavingsTriggersSetting
 import { NotificationSettings } from "./pages/settings/NotificationSettings";
 import { Notifications } from "./pages/notications/Notifications";
 import Overview from "./pages/overview/Overview";
+import { DeleteGoalSuccess } from "./pages/goal-view/DeleteGoalSuccess";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -72,10 +73,7 @@ const App = () => {
               path="/create-savings-goal"
               element={<CreateSavingsGoal />}
             />
-            <Route
-              path="/add-goal-details"
-              element={<AddGoalDetails />}
-            />
+            <Route path="/add-goal-details" element={<AddGoalDetails />} />
             <Route path="/goal-view" element={<GoalView />} />
             <Route path="/savings-trigger" element={<SavingsTrigger />} />
             <Route path="/notifications" element={<Notifications />} />
@@ -89,6 +87,7 @@ const App = () => {
               path="/notification-settings"
               element={<NotificationSettings />}
             />
+            <Route path="/delete-goal" element={<DeleteGoalSuccess />} />
           </Routes>
         </div>
       </QueryClientProvider>

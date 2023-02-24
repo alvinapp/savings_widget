@@ -24,10 +24,11 @@ import { PauseGoal } from "./PauseGoal";
 import { PauseDeleteGoal } from "./PauseDeleteGoal";
 import useGoalStore from "client/store/goalStore";
 import { ResumeButton } from "../components/ResumeButton";
-import { getConfirmedGoals, resumeGoal } from "client/api/goal";
+import { deleteGoal, getConfirmedGoals, resumeGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
+import { DeleteGoal } from "./DeleteGoal";
 export const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
@@ -66,9 +67,31 @@ export const GoalView = () => {
       }
     });
   };
+  const deleteAGoal = async () => {
+    deleteGoal({
+      configuration: configuration,
+      goalId: goal.confirmedGoal.id,
+      data: {},
+    }).then((result) => {
+      if (result) {
+        goal.openDeleteBottomSheet(false);
+        goal.openPauseDeleteBottomSheet(false);
+        navigate(-1);
+        getConfirmedGoals({ configuration: configuration }).then((result) => {
+          goal.setConfirmedGoals(result);
+        });
+      }
+    });
+  };
+
   const { refetch: resumeTheGoal } = useQuery(
     "resume-goal",
     () => resumeAGoal,
+    { refetchOnWindowFocus: true, enabled: false }
+  );
+  const { refetch: deleteTheGoal } = useQuery(
+    "delete goal",
+    () => deleteAGoal,
     { refetchOnWindowFocus: true, enabled: false }
   );
   // const { contribution } = goal.confirmedGoal.ledger;
@@ -160,6 +183,20 @@ export const GoalView = () => {
             title="More"
           />
           <BottomSheet
+            open={goal.deleteGoalBottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={
+              <DeleteGoal
+                onClick={() => goal.openDeleteBottomSheet(false)}
+                deleteGoal={() => deleteTheGoal()}
+                goalName={`${goal.confirmedGoal.name}`}
+              />
+            }
+            defaultSnap={300}
+          ></BottomSheet>
+          <BottomSheet
             open={goal.pauseGoalBottomSheet}
             style={{
               borderRadius: 24,
@@ -177,6 +214,7 @@ export const GoalView = () => {
             children={
               <PauseDeleteGoal
                 pauseGoal={() => goal.openPauseGoalBottomSheet(true)}
+                deleteGoal={() => goal.openDeleteBottomSheet(true)}
                 onClick={() => goal.openPauseDeleteBottomSheet(false)}
               />
             }

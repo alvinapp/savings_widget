@@ -1,5 +1,5 @@
 import React from "react";
-import { FiDelete, FiPause, FiPauseCircle, FiTrash2 } from "react-icons/fi";
+import { FiPauseCircle, FiTrash2 } from "react-icons/fi";
 import CloseButton from "../components/CloseButton";
 type PauseDeleteGoalProps = {
   pauseGoal?: () => void;
@@ -21,7 +21,7 @@ export const PauseDeleteGoal = ({
         />
       </div>
       <button
-        className="rounded-lg border border-1 border-skin-primary text-skin-primary py-3.5"
+        className="rounded-lg border border-1 border-skin-primary text-skin-primary py-3.5 mt-5"
         onClick={pauseGoal}
       >
         <div className="flex flex-row justify-center items-center">
@@ -32,7 +32,7 @@ export const PauseDeleteGoal = ({
         </div>
       </button>
       <button
-        className="rounded-lg text-skin-danger py-3.5 mt-7"
+        className="rounded-lg text-skin-danger py-3.5 mt-3"
         onClick={deleteGoal}
       >
         <div className="flex flex-row justify-center items-center">
