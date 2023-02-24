@@ -28,7 +28,9 @@ const AddGoalDetails = () => {
   const navigate = useNavigate();
   const [goalName, setGoalname] = useState(goal.selectedGoal.goalName);
   const [amount, setAmount] = useState(
-    `${currencySymbol} ${goal.selectedGoal.amount}`
+    `${goal.selectedGoal.amount ? currencySymbol : ""} ${
+      goal.selectedGoal.amount ?? ""
+    }`
   );
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
@@ -37,7 +39,7 @@ const AddGoalDetails = () => {
     saveGoalImage({
       configuration: configuration,
       data: {
-        image_url: goal.selectedGoal.imageUrl,
+        image_url: goal.goalImageUrl,
       },
       goalId: goal.contributionSettingsGoalId,
     });
@@ -110,13 +112,13 @@ const AddGoalDetails = () => {
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
           <img
-            src={goal.selectedGoal.imageUrl ? goal.selectedGoal.imageUrl : ""}
+            src={goal.goalImageUrl ? goal.goalImageUrl : ""}
             className="absolute top-0 right-0 left-0"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <div className="mb-3">
-              <AddPhotoButton />
+              <AddPhotoButton onClick={() => navigate("/image-selection")} />
             </div>
             <div className="font-poppins font-medium text-xs text-white tracking-subtitle">
               Tap to personalize cover photo
@@ -159,10 +161,10 @@ const AddGoalDetails = () => {
         <div className="mb-6">
           <GoalCreationInput
             label="What’s your target amount?"
-            value={amount ? amount : "Add target amount"}
+            value={goal.selectedGoal.amount ? amount : "Add target amount"}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => setAmount(e)}
-            hasValue={!!amount}
+            hasValue={!!goal.selectedGoal.amount}
           />
         </div>
         <div className="mb-6">

@@ -9,6 +9,7 @@ const webPackConfig = (env) => {
   const SERVER_HOST = config.HOST || "http://localhost";
   const SERVER_PORT = config.PORT || 8000;
   const SERVER_DOMAIN = `${SERVER_HOST}:${SERVER_PORT}`;
+  const ACCESS_KEY = config.ACCESS_KEY || "";
 
   console.log("configuration", config);
   console.log("SERVER_HOST", SERVER_HOST);

@@ -20,6 +20,7 @@ import { NotificationSettings } from "./pages/settings/NotificationSettings";
 import { Notifications } from "./pages/notications/Notifications";
 import Overview from "./pages/overview/Overview";
 import { DeleteGoalSuccess } from "./pages/goal-view/DeleteGoalSuccess";
+import { CustomImageSelection } from "./pages/goal-creation/CustomImageSelection";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -88,6 +89,7 @@ const App = () => {
               element={<NotificationSettings />}
             />
             <Route path="/delete-goal" element={<DeleteGoalSuccess />} />
+            <Route path="image-selection" element={<CustomImageSelection />} />
           </Routes>
         </div>
       </QueryClientProvider>

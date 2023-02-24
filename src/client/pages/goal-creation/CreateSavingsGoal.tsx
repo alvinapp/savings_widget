@@ -13,7 +13,8 @@ import useGoalStore from "client/store/goalStore";
 
 export const CreateSavingsGoal = () => {
   const navigate = useNavigate();
-  const setChosenGoal = useGoalStore((state: any) => state.setGoal);
+  const goalStore = useGoalStore((state: any) => state);
+  const setChosenGoal = goalStore.setGoal;
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
@@ -61,6 +62,7 @@ export const CreateSavingsGoal = () => {
                     goalImage={goal.imageUrl}
                     goalName={goal.name}
                     onClick={() => {
+                      goalStore.setGoalImageUrl(goal.imageUrl);
                       setChosenGoal(goal);
                       navigate("/add-goal-details");
                     }}

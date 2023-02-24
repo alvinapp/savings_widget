@@ -9,6 +9,8 @@ const useGoalStore = create((set) => ({
   pauseGoalBottomSheet: false,
   pauseDeleteBottomSheet: false,
   deleteGoalBottomSheet: false,
+  goalImageUrl: "",
+  customImageUrl: "",
   setGoal: (goal: Goal) => {
     return set((state: any) => {
       const result = {
@@ -69,6 +71,22 @@ const useGoalStore = create((set) => ({
     return set((state: any) => {
       const result = {
         deleteGoalBottomSheet: open,
+      };
+      return result;
+    });
+  },
+  setCustomImageUrl: (image: string) => {
+    return set((state: any) => {
+      const result = {
+        customImageUrl: image,
+      };
+      return result;
+    });
+  },
+  setGoalImageUrl: (image: string) => {
+    return set((state: any) => {
+      const result = {
+        goalImageUrl: image,
       };
       return result;
     });

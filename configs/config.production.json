@@ -4,5 +4,6 @@
   "TOKEN": null,
   "IDENTIFIER": null,
   "HOST": "https://mdv.app.alvinapp.com",
-  "PORT": "443"
+  "PORT": "443",
+  "ACCESS_KEY":"7-an9au7YLuvLfHHzNcM65-2BuToVWvWHXTsMjOAdrI"
 }

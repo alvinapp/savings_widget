@@ -4,5 +4,6 @@
   "TOKEN": null ,
   "IDENTIFIER": null,
   "HOST": "52.72.25.150",
-  "PORT": "8080"
+  "PORT": "8080",
+  "ACCESS_KEY":"7-an9au7YLuvLfHHzNcM65-2BuToVWvWHXTsMjOAdrI"
 }
