@@ -1,3 +1,5 @@
+import useGoalStore from "client/store/goalStore";
+import useUserStore from "client/store/userStore";
 import React from "react";
 import {
   FiBell,
@@ -15,10 +17,11 @@ import { SettingsCard } from "../components/settings/SettingsCard";
 
 export const Settings = () => {
   const navigate = useNavigate();
+  const user = useUserStore((state: any) => state.user);
+  const goalStore = useGoalStore((state: any) => state);
   const currencySymbol = "₦";
-  const amount = 200000;
   const goals = 10;
-  const accounts = 3;
+  const accounts = 0;
   const activeSavigsTriggers = 4;
   return (
     <div className="pt-6 flex flex-col h-screen w-screen">
@@ -48,11 +51,12 @@ export const Settings = () => {
         </div>
         <SettingsCard
           title="Monthly income"
-          subtitle={`${currencySymbol} ${amount}`}
+          subtitle={`${currencySymbol} ${user.income}`}
           leading={<FiBriefcase />}
           iconBackground={"bg-skin-iconPrimary"}
           iconColor="text-skin-successTertiary"
           trailing={<FiChevronRight />}
+          onClick={() => navigate("/settings-monthly-income")}
         />
         <div className="mt-2">
           <SettingsCard
@@ -71,7 +75,11 @@ export const Settings = () => {
         </div>
         <SettingsCard
           title="Goals"
-          subtitle={`${goals} goals`}
+          subtitle={`${
+            goalStore.confirmedGoals.length > 0
+              ? goalStore.confirmedGoals.length
+              : 0
+          } goals`}
           leading={<FiFlag />}
           iconBackground={"bg-skin-iconSecondary"}
           iconColor="text-skin-iconSecondaryy"

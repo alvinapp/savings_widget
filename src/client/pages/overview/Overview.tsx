@@ -18,7 +18,7 @@ import { getConfirmedGoals } from "client/api/goal";
 import useGoalStore from "client/store/goalStore";
 import { NotificationCard } from "../components/overview/NotificationCard";
 const Overview = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
@@ -86,7 +86,7 @@ const Overview = () => {
       </div>
       <ShowGoalsInOverview />
       {/* <OverviewTrackGoalCreationProgress /> */}
-      <div className="absolute bottom-4 right-4">
+      <div className="fixed bottom-4 right-4">
         <AddGoalButton
           onClick={() => {
             navigate("/goal-creation");

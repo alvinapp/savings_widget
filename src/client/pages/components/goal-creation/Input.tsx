@@ -55,6 +55,9 @@ type GoalCreationInputProps = {
   hasValue?: boolean;
   onClick?: () => void;
   addValue: (e: any) => void;
+  placeHolder?: string;
+  type?: any;
+  hasCurrencySymbol?: boolean;
 };
 export const GoalCreationInput = ({
   label,
@@ -63,7 +66,11 @@ export const GoalCreationInput = ({
   hasValue = true,
   onClick,
   addValue,
+  placeHolder,
+  type = "text",
+  hasCurrencySymbol = false,
 }: GoalCreationInputProps) => {
+  const [initialValue, setInitialValue] = useState(value);
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
@@ -92,17 +99,23 @@ export const GoalCreationInput = ({
             {leadingIcon}
           </div>
           <div
-            className={`font-medium font-poppins text-base tracking-progress_label ${
+            className={`font-medium font-poppins text-base tracking-progress_label flex flex-row justify-center items-center ${
               hasValue ? "text-skin-base" : "text-skin-inputDisabled"
             }`}
           >
+            {hasCurrencySymbol ? (
+              <div className="translate-x-12">{hasValue ? "₦ " : ""}</div>
+            ) : (
+              <div></div>
+            )}
             <input
+              type={type}
+              placeholder={placeHolder}
               value={value}
-              className={`w-64 outline-none text-center`}
+              className={`w-52 outline-none text-center`}
               onChange={(e) => {
                 addValue(e.target.value);
               }}
-              type="text"
             />
           </div>
           {hasValue ? (

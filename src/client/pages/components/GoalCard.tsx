@@ -25,10 +25,18 @@ const GoalCard = ({
     (state: any) => state.configuration
   ) as IConfig;
   const goal = useGoalStore((state: any) => state);
+  const handleResume = (event: any) => {
+    console.log("clicked");
+    event.stopPropagation();
+    resumeTheGoal();
+  };
+  const handleClick = (event: any) => {
+    onClick;
+  };
   const resumeAGoal = async () => {
     resumeGoal({
       configuration: configuration,
-      goalId: goal.confirmedGoal.id,
+      goalId: id,
       data: {},
     }).then((result) => {
       if (result) {
@@ -38,11 +46,9 @@ const GoalCard = ({
       }
     });
   };
-  const { data, refetch } = useQuery(
+  const { data, refetch: resumeTheGoal } = useQuery(
     "resume a goal",
-    () => {
-      resumeAGoal;
-    },
+    () => resumeAGoal,
     {
       refetchOnWindowFocus: true,
       enabled: false,
@@ -109,15 +115,12 @@ const GoalCard = ({
               {Math.round(amount).toLocaleString("en-US")}
             </div>
           ) : (
-            <div
+            <button
               className="h-8 w-8 rounded-full bg-skin-primary flex justify-center items-center"
-              onClick={(event: any) => {
-                event.stopImmediatePropagation();
-                refetch();
-              }}
+              onClick={handleResume}
             >
               <FiPlay fill="#ffffff" color="#ffffff" />
-            </div>
+            </button>
           )}
         </div>
       </div>

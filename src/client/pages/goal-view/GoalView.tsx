@@ -35,8 +35,6 @@ export const GoalView = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  // const [openPauseDeleteGoalSheet, setOpenPauseDeleteGoalSheet] =
-  //   useState(false);
   const goalviewTabs = [
     {
       tab_id: 0,
@@ -76,7 +74,6 @@ export const GoalView = () => {
       if (result) {
         goal.openDeleteBottomSheet(false);
         goal.openPauseDeleteBottomSheet(false);
-        navigate(-1);
         getConfirmedGoals({ configuration: configuration }).then((result) => {
           goal.setConfirmedGoals(result);
         });
@@ -94,27 +91,24 @@ export const GoalView = () => {
     () => deleteAGoal,
     { refetchOnWindowFocus: true, enabled: false }
   );
-  // const { contribution } = goal.confirmedGoal.ledger;
+  const { image_url } = goal.confirmedGoal.image_url;
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
-          <img
-            src="https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
-            className="absolute top-0 right-0 left-0"
-          />
+          <img src={image_url} className="absolute top-0 right-0 left-0" />
           <img
             src={goalviewOverlay}
             className="absolute object-cover w-screen"
           />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <GoalViewBalanceView
-              contributedAmount={0}
+              contributedAmount={goal.confirmedGoal.total_contributed}
               amount={goal.confirmedGoal.amount}
             />
             <div className="mt-8 w-screen px-3.5">
               <CustomProgressBar
-                progressPercentage={0}
+                progressPercentage={goal.confirmedGoal.progress}
                 isActive={currentGoal.is_active}
               />
             </div>
@@ -190,7 +184,10 @@ export const GoalView = () => {
             children={
               <DeleteGoal
                 onClick={() => goal.openDeleteBottomSheet(false)}
-                deleteGoal={() => deleteTheGoal()}
+                deleteGoal={() => {
+                  navigate("/delete-goal");
+                  deleteTheGoal();
+                }}
                 goalName={`${goal.confirmedGoal.name}`}
               />
             }

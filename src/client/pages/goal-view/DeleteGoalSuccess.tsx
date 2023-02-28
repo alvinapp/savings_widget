@@ -10,7 +10,9 @@ import {
 import { FiThumbsUp } from "react-icons/fi";
 import { useStore } from "zustand";
 import useGoalStore from "client/store/goalStore";
+import { useNavigate } from "react-router-dom";
 export const DeleteGoalSuccess = () => {
+  const navigate = useNavigate();
   const [timer, setTimer] = useState(12);
   const [percentage, setPercentage] = useState(0);
   const timeOutCallback = useCallback(() => {
@@ -30,6 +32,7 @@ export const DeleteGoalSuccess = () => {
   useEffect(() => {
     timer > 0 && setTimeout(timeOutCallback, 1000);
     if (timer === 0) {
+      navigate(-2);
     }
   }, [timer, timeOutCallback]);
   return (

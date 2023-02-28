@@ -23,7 +23,7 @@ export const tabs = [
 export const goals = [
   {
     id: 0,
-    goalName: "Spend responsibly",
+    name: "Spend responsibly",
     amount: 21636.05,
     status: "",
     progress: 10,
@@ -33,7 +33,7 @@ export const goals = [
   },
   {
     id: 1,
-    goalName: "Dream villa",
+    name: "Dream villa",
     amount: 21636.05,
     status: "🪴 Resume goal, N 44.4M",
     progress: 30,
@@ -43,7 +43,7 @@ export const goals = [
   },
   {
     id: 2,
-    goalName: "Travel to Bali",
+    name: "Travel to Bali",
     amount: 1143323,
     status: "🚀 Halfway there",
     progress: 60,
@@ -53,7 +53,7 @@ export const goals = [
   },
   {
     id: 3,
-    goalName: "Kid’s college",
+    name: "Kid’s college",
     amount: 10043323,
     status: "",
     progress: 100,
@@ -65,7 +65,7 @@ export const goals = [
 export const upcomingSavings = [
   {
     id: 0,
-    goalName: "Dream wedding",
+    name: "Dream wedding",
     amount: 50000,
     goalImage:
       "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
@@ -73,7 +73,7 @@ export const upcomingSavings = [
   },
   {
     id: 1,
-    goalName: "Spend responsibly",
+    name: "Spend responsibly",
     amount: 17500,
     goalImage:
       "https://images.unsplash.com/photo-1523217582562-09d0def993a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
@@ -81,7 +81,7 @@ export const upcomingSavings = [
   },
   {
     id: 2,
-    goalName: "Travel to Bali",
+    name: "Travel to Bali",
     amount: 1143323,
     goalImage:
       "https://images.unsplash.com/photo-1509233725247-49e657c54213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
@@ -89,7 +89,7 @@ export const upcomingSavings = [
   },
   {
     id: 3,
-    goalName: "Kid’s college",
+    name: "Kid’s college",
     amount: 10043323,
     goalImage:
       "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
@@ -99,7 +99,7 @@ export const upcomingSavings = [
 export const predefinedGoals = [
   {
     id: 0,
-    goalName: "Rainy day fund",
+    name: "Rainy day fund",
     amount: 500000,
     status: "",
     progress: 10,
@@ -109,7 +109,7 @@ export const predefinedGoals = [
   },
   {
     id: 1,
-    goalName: "Spend responsibly",
+    name: "Spend responsibly",
     amount: 100000,
     status: "🪴 Resume goal, N 44.4M",
     progress: 30,
@@ -119,17 +119,17 @@ export const predefinedGoals = [
   },
   {
     id: 2,
-    goalName: "Car",
+    name: "Car",
     amount: 500000,
     status: "🚀 Halfway there",
     progress: 60,
     imageUrl:
-      "https://images.unsplash.com/photo-1509233725247-49e657c54213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3MzkxNjc1NA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080",
     transacted_at: date,
   },
   {
     id: 3,
-    goalName: "Home",
+    name: "Home",
     amount: 3000000,
     status: "",
     progress: 100,
@@ -139,7 +139,7 @@ export const predefinedGoals = [
   },
   {
     id: 4,
-    goalName: "Kids",
+    name: "Kids",
     amount: 1000000,
     status: "",
     progress: 100,
@@ -149,32 +149,32 @@ export const predefinedGoals = [
   },
   {
     id: 5,
-    goalName: "Land",
+    name: "Land",
     amount: 1000000,
     status: "",
     progress: 100,
     imageUrl:
-      "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1588067444250-50f27842c0b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NzQ5MzcxMA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080",
     transacted_at: date,
   },
   {
     id: 6,
-    goalName: "Holiday",
+    name: "Holiday",
     amount: 50000,
     status: "",
     progress: 100,
     imageUrl:
-      "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1509233725247-49e657c54213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
     transacted_at: date,
   },
   {
     id: 7,
-    goalName: "Large purchase",
+    name: "Large purchase",
     amount: 10043323,
     status: "",
     progress: 100,
     imageUrl:
-      "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit",
+      "https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NDIwMTk0Mw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080",
     transacted_at: date,
   },
 ];

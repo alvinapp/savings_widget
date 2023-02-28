@@ -35,7 +35,7 @@ const GoalCreationIntro = () => {
   const slidePages = () => {
     if (slideIndex >= 1) {
       if (userStore.user.tc_accepted) {
-        slideInfoStore.setSlideIndex(0);
+        slideInfoStore.setSlideIndex(0); 
         if (userStore.user.income != null) {
           navigate("/create-savings-goal");
         } else {
@@ -45,7 +45,7 @@ const GoalCreationIntro = () => {
         navigate("/terms-and-conditons");
         slideInfoStore.setSlideIndex(0);
       }
-    } else {
+    } else { 
       slideInfoStore.setSlideIndex(slideIndex + 1);
     }
   };

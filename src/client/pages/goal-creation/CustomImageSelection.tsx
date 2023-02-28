@@ -51,7 +51,7 @@ export const CustomImageSelection = () => {
                 <input
                   type="text"
                   className="outline-none"
-                  placeholder={`Search '${goal.selectedGoal.goalName ?? ""}'`}
+                  placeholder={`Search ${goal.goalName}`}
                   value={search}
                   onChange={inputChanged}
                 />
@@ -65,7 +65,7 @@ export const CustomImageSelection = () => {
           }
         />
       </div>
-      <div className="pl-6 pr-2 pt-3.5 grid grid-cols-3 gap-x-0 gap-y-5 md:grid-cols-3 lg:grid-cols-4">
+      <div className="pl-3 pr-3 pt-3.5 grid grid-cols-3 gap-x-0 gap-y-5 md:grid-cols-3 lg:grid-cols-4">
         {isLoading ? (
           <div className="flex flex-row justify-center w-screen">
             <TailSpin

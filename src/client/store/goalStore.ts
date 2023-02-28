@@ -10,6 +10,8 @@ const useGoalStore = create((set) => ({
   pauseDeleteBottomSheet: false,
   deleteGoalBottomSheet: false,
   goalImageUrl: "",
+  goalName: "",
+  goalAmount: "",
   customImageUrl: "",
   setGoal: (goal: Goal) => {
     return set((state: any) => {
@@ -87,6 +89,22 @@ const useGoalStore = create((set) => ({
     return set((state: any) => {
       const result = {
         goalImageUrl: image,
+      };
+      return result;
+    });
+  },
+  setGoalName: (name: string) => {
+    return set((state: any) => {
+      const result = {
+        goalName: name,
+      };
+      return result;
+    });
+  },
+  setGoalAmount: (amount: number) => {
+    return set((state: any) => {
+      const result = {
+        goalAmount: amount,
       };
       return result;
     });

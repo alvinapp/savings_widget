@@ -13,6 +13,7 @@ const OverviewTrackGoalCreationProgress = () => {
   );
   const { has_linked_account, has_income, has_goal } = goalCreationStatus;
   const navigate = useNavigate();
+
   return (
     <>
       <div className="rounded-2xl my-6 pt-6 pb-4 px-3.5 shadow-card bg-overviewBg">

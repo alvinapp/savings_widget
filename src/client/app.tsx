@@ -21,6 +21,7 @@ import { Notifications } from "./pages/notications/Notifications";
 import Overview from "./pages/overview/Overview";
 import { DeleteGoalSuccess } from "./pages/goal-view/DeleteGoalSuccess";
 import { CustomImageSelection } from "./pages/goal-creation/CustomImageSelection";
+import { SettingsMonthlyIncome } from "./pages/settings/SettingsMonthlyIncome";
 const pageHistory: string[] = [];
 
 const App = () => {
@@ -42,23 +43,6 @@ const App = () => {
       setPage(page);
     });
   });
-
-  // const renderPage = () => {
-  //   switch (page) {
-  //     case Routes.HOME:
-  //       return <Overview />;
-  //     case Routes.CONNECT:
-  //       return <Connect />;
-  //     case Routes.TERMSANDCONDITIONS:
-  //       return <TermsCondition />;
-  //     case Routes.CONNECTSUCCESS:
-  //       return <ConnectSuccess />;
-  //     case Routes.UNLINKSUCCESS:
-  //       return <UnlinkSuccess />;
-  //     default:
-  //       return <Overview />;
-  //   }
-  // };
 
   return (
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">
@@ -90,6 +74,10 @@ const App = () => {
             />
             <Route path="/delete-goal" element={<DeleteGoalSuccess />} />
             <Route path="image-selection" element={<CustomImageSelection />} />
+            <Route
+              path="/settings-monthly-income"
+              element={<SettingsMonthlyIncome />}
+            />
           </Routes>
         </div>
       </QueryClientProvider>

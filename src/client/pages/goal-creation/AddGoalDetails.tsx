@@ -26,12 +26,6 @@ const AddGoalDetails = () => {
   );
   const goal = useGoalStore((state: any) => state);
   const navigate = useNavigate();
-  const [goalName, setGoalname] = useState(goal.selectedGoal.goalName);
-  const [amount, setAmount] = useState(
-    `${goal.selectedGoal.amount ? currencySymbol : ""} ${
-      goal.selectedGoal.amount ?? ""
-    }`
-  );
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
@@ -49,9 +43,9 @@ const AddGoalDetails = () => {
       configuration: configuration,
       data: {
         extern_id: "",
-        name: goalName,
+        name: goal.goalName,
         title: "",
-        amount: parseFloat(amount.replace("₦ ", "").trim()),
+        amount: parseFloat(goal.goalAmount),
         contribute_from: "",
         is_customized: false,
       },
@@ -67,9 +61,17 @@ const AddGoalDetails = () => {
       configuration: configuration,
       goalId: goal.contributionSettingsGoalId,
       data: {},
-    }).then((result) => {
-      if (result) navigate("/");
-    });
+    })
+      .then((result) => {
+        if (result) {
+          goal.setGoalImageUrl("");
+          goal.setGoalName("");
+          goal.setGoalAmount("");
+          goalContributionSettings.setContributionFrequency("");
+          goal.setChosenGoal({});
+        }
+      })
+      .finally(() => navigate("/"));
   };
   const deleteUnconfirmedGoals = () => {
     deleteUnconfirmed(configuration).then((result: any) => {
@@ -79,14 +81,14 @@ const AddGoalDetails = () => {
     });
   };
   const { refetch } = useQuery("saving-goals", () => saveGoalNameAndAmount, {
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     enabled: false,
   });
   const { refetch: unconfirmedGoals } = useQuery(
     "delete-unconfirmed-goals",
     () => deleteUnconfirmedGoals,
     {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       enabled: false,
     }
   );
@@ -94,7 +96,7 @@ const AddGoalDetails = () => {
     "confirmed-goals",
     () => confirmingAGoal,
     {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       enabled: false,
     }
   );
@@ -102,7 +104,7 @@ const AddGoalDetails = () => {
     "save-goal-image",
     () => saveTheGoalImage,
     {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       enabled: !!goal.contributionSettingsGoalId,
     }
   );
@@ -151,29 +153,34 @@ const AddGoalDetails = () => {
       <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-48 bottom-0 px-3.5 pt-9">
         <div className="mb-6">
           <GoalCreationInput
+            placeHolder="Add goal name"
             label="Let’s name your goal"
-            value={goalName ? goalName : "Add goal name"}
+            value={goal.goalName ? goal.goalName : ""}
             leadingIcon={<FiFlag size="1.375rem" />}
-            addValue={(e) => setGoalname(e)}
-            hasValue={!!goalName}
+            addValue={(e) => goal.setGoalName(e)}
+            hasValue={!!goal.goalName}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
+            hasCurrencySymbol={true}
+            type="number"
+            placeHolder="Add target amount"
             label="What’s your target amount?"
-            value={goal.selectedGoal.amount ? amount : "Add target amount"}
+            value={goal.goalAmount ? goal.goalAmount : ""}
             leadingIcon={<FiTarget size="1.375rem" />}
-            addValue={(e) => setAmount(e)}
-            hasValue={!!goal.selectedGoal.amount}
+            addValue={(e) => goal.setGoalAmount(e)}
+            hasValue={!!goal.goalAmount}
           />
         </div>
         <div className="mb-6">
           <GoalCreationInput
+            placeHolder="Add contribution"
             label="How would you like to contribute?"
             value={
               goalContributionSettings.contributionFrequency
                 ? goalContributionSettings.contributionFrequency
-                : "Add contribution"
+                : ""
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={!!goalContributionSettings.contributionFrequency}
@@ -200,18 +207,20 @@ const AddGoalDetails = () => {
         </div>
         <div className="mb-6">
           <GoalCreationInput
+            placeHolder="Link bank or wallet"
             hasValue={false}
             label="Link an account and track savings with ease"
-            value="Link bank or wallet"
+            value=""
             leadingIcon={<FiPocket size="1.375rem" />}
             addValue={(e) => e}
           />
         </div>
         <div className="mb-10">
           <GoalCreationInput
+            placeHolder="Apply savings rule"
             hasValue={false}
             label="Boost your savings journey with rules"
-            value="Apply savings rule"
+            value=""
             leadingIcon={<FiTrendingUp size="1.375rem" />}
             addValue={(e) => e}
           />

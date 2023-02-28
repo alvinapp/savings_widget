@@ -107,7 +107,7 @@ export const convertDate = (dateString: string): string => {
   const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezone}`;
 };
-export const nthNumber = (number:any) => {
+export const nthNumber = (number: any) => {
   return number > 0
     ? ["th", "st", "nd", "rd"][
         (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10

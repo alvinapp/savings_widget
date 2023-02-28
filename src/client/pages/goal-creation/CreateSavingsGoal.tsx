@@ -10,10 +10,14 @@ import { predefinedGoals } from "client/utils/MockData";
 import Goal from "client/models/Goal";
 import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 import useGoalStore from "client/store/goalStore";
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 
 export const CreateSavingsGoal = () => {
   const navigate = useNavigate();
   const goalStore = useGoalStore((state: any) => state);
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   const setChosenGoal = goalStore.setGoal;
   return (
     <div className="h-screen w-screen relative">
@@ -42,7 +46,16 @@ export const CreateSavingsGoal = () => {
           />
         </div>
         <div className="mt-16 mx-3.5">
-          <BuildGoalCard title="Let's buld one together" />
+          <BuildGoalCard
+            title="Let's buld one together"
+            click={() => {
+              goalStore.setGoalImageUrl("");
+              goalStore.setGoalName("");
+              goalStore.setGoalAmount("");
+              setChosenGoal({});
+              navigate("/add-goal-details");
+            }}
+          />
         </div>
         <div className="mx-3.5 mt-6">
           <div className="font-workSans text-skin-base text-sm font-semibold tracking-title mb-3">
@@ -63,6 +76,8 @@ export const CreateSavingsGoal = () => {
                     goalName={goal.name}
                     onClick={() => {
                       goalStore.setGoalImageUrl(goal.imageUrl);
+                      goalStore.setGoalName(goal.name);
+                      goalStore.setGoalAmount(goal.amount);
                       setChosenGoal(goal);
                       navigate("/add-goal-details");
                     }}

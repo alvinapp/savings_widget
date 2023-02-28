@@ -46,6 +46,7 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
     (state: any) => state.configuration
   ) as IConfig;
   const pauseAGoal = async () => {
+    console.log(goal.resume_at.toString());
     pauseGoal({
       configuration: configuration,
       goalId: goal.confirmedGoal.id,
