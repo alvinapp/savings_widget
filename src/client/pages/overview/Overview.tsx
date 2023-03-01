@@ -84,7 +84,7 @@ const Overview = () => {
       <div className="mt-6">
         {/* <NotificationCard amount={250000.54} /> */}
       </div>
-      {goal.confirmedGoals.length === 0 && goal.confimedGoals  ? (
+      {goal.confirmedGoals.length === 0 ? (
         <OverviewTrackGoalCreationProgress />
       ) : (
         <ShowGoalsInOverview />
