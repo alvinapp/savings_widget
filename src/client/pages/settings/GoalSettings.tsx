@@ -13,6 +13,10 @@ export const GoalSettings = () => {
   const navigate = useNavigate();
   const goalStore = useGoalStore((state: any) => state);
   const [tabIndex, setTabIndex] = useState(0);
+  const activeGoals =
+    goalStore.confirmedGoals.filter((element: any) => element.is_active) ?? [];
+  const pausedGoals =
+    goalStore.confirmedGoals.filter((element: any) => !element.is_active) ?? [];
   return (
     <div className="flex flex-col h-screen w-screen pt-6 relative">
       <NavBar
@@ -40,27 +44,79 @@ export const GoalSettings = () => {
           onClick={(tab: any) => setTabIndex(tab.tab_id)}
         />
       </div>
-      <div>
-        {goalStore.confirmedGoals.map((goal: any, i: number) => {
-          return (
-            <GoalCard
-              key={i}
-              onClick={() => {
-                goalStore.setConfirmedGoal(goal);
-                navigate("/goal-view");
-              }}
-              id={goal.id}
-              name={goal.name}
-              amount={goal.amount}
-              progress={goal.progress}
-              imageUrl={goal.image_url.image_url}
-              status={goal.status}
-              transacted_at={goal.transacted_at}
-              is_active={goal.is_active}
-              resume={() => {}}
-            />
-          );
-        })}
+      <div className="mx-3.5 mt-6">
+        {tabIndex == 0 ? (
+          <div>
+            {goalStore.confirmedGoals.map((goal: any, i: number) => {
+              return (
+                <GoalCard
+                  key={i}
+                  onClick={() => {
+                    goalStore.setConfirmedGoal(goal);
+                    navigate("/goal-view");
+                  }}
+                  id={goal.id}
+                  name={goal.name}
+                  amount={goal.amount}
+                  progress={goal.progress}
+                  imageUrl={goal.image_url.image_url}
+                  status={goal.status}
+                  transacted_at={goal.transacted_at}
+                  is_active={goal.is_active}
+                  resume={() => {}}
+                />
+              );
+            })}
+          </div>
+        ) : tabIndex == 1 ? (
+          <div>
+            {activeGoals.map((goal: any, i: number) => {
+              return (
+                <GoalCard
+                  key={i}
+                  onClick={() => {
+                    goalStore.setConfirmedGoal(goal);
+                    navigate("/goal-view");
+                  }}
+                  id={goal.id}
+                  name={goal.name}
+                  amount={goal.amount}
+                  progress={goal.progress}
+                  imageUrl={goal.image_url.image_url}
+                  status={goal.status}
+                  transacted_at={goal.transacted_at}
+                  is_active={goal.is_active}
+                  resume={() => {}}
+                />
+              );
+            })}
+          </div>
+        ) : tabIndex == 2 ? (
+          <div>
+            {pausedGoals.map((goal: any, i: number) => {
+              return (
+                <GoalCard
+                  key={i}
+                  onClick={() => {
+                    goalStore.setConfirmedGoal(goal);
+                    navigate("/goal-view");
+                  }}
+                  id={goal.id}
+                  name={goal.name}
+                  amount={goal.amount}
+                  progress={goal.progress}
+                  imageUrl={goal.image_url.image_url}
+                  status={goal.status}
+                  transacted_at={goal.transacted_at}
+                  is_active={goal.is_active}
+                  resume={() => {}}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="absolute bottom-4 right-4">
         <AddGoalButton onClick={() => navigate("/goal-creation")} />

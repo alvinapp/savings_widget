@@ -82,17 +82,24 @@ const Overview = () => {
         <BalanceView balance={0} currency="₦" />
       </div>
       <div className="mt-6">
-        <NotificationCard amount={250000.54} />
+        {/* <NotificationCard amount={250000.54} /> */}
       </div>
-      <ShowGoalsInOverview />
-      {/* <OverviewTrackGoalCreationProgress /> */}
-      <div className="fixed bottom-4 right-4">
-        <AddGoalButton
-          onClick={() => {
-            navigate("/goal-creation");
-          }}
-        />
-      </div>
+      {goal.confirmedGoals.length === 0 && goal.confimedGoals  ? (
+        <OverviewTrackGoalCreationProgress />
+      ) : (
+        <ShowGoalsInOverview />
+      )}
+      {goal.confirmedGoals.length > 0 ? (
+        <div className="fixed bottom-4 right-4">
+          <AddGoalButton
+            onClick={() => {
+              navigate("/goal-creation");
+            }}
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

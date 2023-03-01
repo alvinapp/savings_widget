@@ -26,31 +26,30 @@ const GoalCard = ({
   ) as IConfig;
   const goal = useGoalStore((state: any) => state);
   const handleResume = (event: any) => {
-    console.log("clicked");
     event.stopPropagation();
     resumeTheGoal();
-  };
-  const handleClick = (event: any) => {
-    onClick;
   };
   const resumeAGoal = async () => {
     resumeGoal({
       configuration: configuration,
       goalId: id,
       data: {},
-    }).then((result) => {
-      if (result) {
+    })
+      .then((result) => {
+        if (result) {
+        }
+      })
+      .finally(() =>
         getConfirmedGoals({ configuration: configuration }).then((result) => {
           goal.setConfirmedGoals(result);
-        });
-      }
-    });
+        })
+      );
   };
   const { data, refetch: resumeTheGoal } = useQuery(
     "resume a goal",
     () => resumeAGoal,
     {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       enabled: false,
     }
   );

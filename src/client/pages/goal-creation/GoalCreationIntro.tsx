@@ -12,6 +12,7 @@ import useAccountStore from "client/store/accountStore";
 import useConnectInfoStore from "client/store/connectIntroStore";
 import useUserStore from "client/store/userStore";
 import { useNavigate } from "react-router-dom";
+import useGoalCreationStore from "client/store/goalCreationStatus";
 
 const connectDetailsList = [
   {
@@ -32,11 +33,15 @@ const GoalCreationIntro = () => {
   const slideInfoStore = useConnectInfoStore((state: any) => state);
   const userStore = useUserStore((state: any) => state);
   const slideIndex = slideInfoStore.slideIndex;
+    const goalCreationStatus = useGoalCreationStore(
+      (state: any) => state.goalCreationStatus
+    );
+    const {has_income} = goalCreationStatus;
   const slidePages = () => {
     if (slideIndex >= 1) {
       if (userStore.user.tc_accepted) {
         slideInfoStore.setSlideIndex(0); 
-        if (userStore.user.income != null) {
+        if (has_income) {
           navigate("/create-savings-goal");
         } else {
           navigate("/monthly-income");

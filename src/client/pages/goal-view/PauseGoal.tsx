@@ -67,7 +67,7 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
   const { isLoading: pausingGoal, refetch: pauseTheGoal } = useQuery(
     "pause-goal",
     () => pauseAGoal,
-    { refetchOnWindowFocus: true, enabled: false }
+    { refetchOnWindowFocus: false, enabled: false }
   );
   return (
     <div className="flex flex-col relative">

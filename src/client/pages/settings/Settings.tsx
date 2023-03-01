@@ -51,7 +51,7 @@ export const Settings = () => {
         </div>
         <SettingsCard
           title="Monthly income"
-          subtitle={`${currencySymbol} ${user.income}`}
+          subtitle={`${currencySymbol} ${user.income ?? ""}`}
           leading={<FiBriefcase />}
           iconBackground={"bg-skin-iconPrimary"}
           iconColor="text-skin-successTertiary"

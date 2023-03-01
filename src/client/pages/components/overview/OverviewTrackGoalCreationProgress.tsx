@@ -58,8 +58,20 @@ const OverviewTrackGoalCreationProgress = () => {
         </div>
         <div className="mt-6">
           <MainButton
-            title="Start your journey"
-            click={() => navigate("goal-creation")}
+            title={
+              has_income && has_goal && !has_linked_account
+                ? "Link an account"
+                : has_income && !has_goal && !has_linked_account
+                ? "Create a goal"
+                : "Start your journey"
+            }
+            click={() => {
+              has_income && has_goal && !has_linked_account
+                ? navigate("/")
+                : has_income && !has_goal && !has_linked_account
+                ? navigate("create-savings-goal")
+                : navigate("goal-creation");
+            }}
           />
         </div>
       </div>
