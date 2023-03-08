@@ -14,7 +14,7 @@ import OverviewTrackGoalCreationProgress from "../components/overview/OverviewTr
 import checkStatusOfGoalCreation from "client/api/user-goal-creation-status";
 import useGoalCreationStore from "client/store/goalCreationStatus";
 import useUserStore from "client/store/userStore";
-import { getConfirmedGoals } from "client/api/goal";
+import { getConfirmedGoals, totalContribution } from "client/api/goal";
 import useGoalStore from "client/store/goalStore";
 import { NotificationCard } from "../components/overview/NotificationCard";
 import { ToastContainer } from "react-toastify";
@@ -55,6 +55,13 @@ const Overview = () => {
       }
     });
   };
+  const fetchTotalContribution = async () => {
+    totalContribution({ configuration: configuration }).then((result) => {
+      if (result) {
+        goal.setTotalContribution(result.total_contributions);
+      }
+    });
+  };
   const { data } = useQuery(["token"], () => authenticateUser, {
     refetchOnWindowFocus: false,
   });
@@ -66,6 +73,11 @@ const Overview = () => {
   const { data: confirmedGoals } = useQuery(
     "confirmed-goals",
     () => fetchConfimedGoals,
+    { enabled: !!configuration.token }
+  );
+  const { data: totalContributions } = useQuery(
+    "total-contributions",
+    () => fetchTotalContribution,
     { enabled: !!configuration.token }
   );
   return (
@@ -94,7 +106,7 @@ const Overview = () => {
         />
       </div>
       <div className="mt-6 flex flex-row justify-center">
-        <BalanceView balance={0} currency="₦" />
+        <BalanceView balance={goal.totalContribution} currency="₦" />
       </div>
       <div className="mt-6">
         {/* <NotificationCard amount={250000.54} /> */}

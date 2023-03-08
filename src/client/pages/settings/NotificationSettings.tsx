@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { NotificationsSettingsCard } from "../components/settings/NotificationsSettingsCard";
 
-export const NotificationSettings = () => {
+const NotificationSettings = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col relative pt-6 w-screen h-screen">
@@ -33,3 +33,4 @@ export const NotificationSettings = () => {
     </div>
   );
 };
+export default NotificationSettings;

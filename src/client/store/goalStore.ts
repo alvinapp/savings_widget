@@ -13,6 +13,7 @@ const useGoalStore = create((set) => ({
   goalName: "",
   goalAmount: "",
   customImageUrl: "",
+  totalContribution: 0,
   setGoal: (goal: Goal) => {
     return set((state: any) => {
       const result = {
@@ -105,6 +106,14 @@ const useGoalStore = create((set) => ({
     return set((state: any) => {
       const result = {
         goalAmount: amount,
+      };
+      return result;
+    });
+  },
+  setTotalContribution: (contribution: number) => {
+    return set((state: any) => {
+      const result = {
+        totalContribution: contribution,
       };
       return result;
     });

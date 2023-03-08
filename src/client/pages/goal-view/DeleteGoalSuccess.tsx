@@ -11,7 +11,7 @@ import { FiThumbsUp } from "react-icons/fi";
 import { useStore } from "zustand";
 import useGoalStore from "client/store/goalStore";
 import { useNavigate } from "react-router-dom";
-export const DeleteGoalSuccess = () => {
+const DeleteGoalSuccess = () => {
   const navigate = useNavigate();
   const [timer, setTimer] = useState(12);
   const [percentage, setPercentage] = useState(0);
@@ -64,3 +64,4 @@ export const DeleteGoalSuccess = () => {
     </div>
   );
 };
+export default DeleteGoalSuccess;

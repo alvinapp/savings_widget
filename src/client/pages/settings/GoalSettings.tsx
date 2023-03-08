@@ -9,7 +9,7 @@ import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import TabFilter from "../components/TabFilter";
 
-export const GoalSettings = () => {
+const GoalSettings = () => {
   const navigate = useNavigate();
   const goalStore = useGoalStore((state: any) => state);
   const [tabIndex, setTabIndex] = useState(0);
@@ -124,3 +124,4 @@ export const GoalSettings = () => {
     </div>
   );
 };
+export default GoalSettings;

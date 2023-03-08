@@ -9,7 +9,7 @@ import CloseButton from "../components/CloseButton";
 import { ImageCard } from "../components/goal-creation/ImageCard";
 import NavBar from "../components/NavBar";
 
-export const CustomImageSelection = () => {
+const CustomImageSelection = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const goal = useGoalStore((state: any) => state);
@@ -96,3 +96,4 @@ export const CustomImageSelection = () => {
     </div>
   );
 };
+export default CustomImageSelection;

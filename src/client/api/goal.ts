@@ -94,6 +94,7 @@ export const confirmGoal = async ({
       return Promise.reject(reason);
     });
 
+//Get all confirmed goals
 export const getConfirmedGoals = async ({
   configuration,
 }: {
@@ -229,6 +230,24 @@ export const updateGoalContributionSettings = async ({
     endpoint: `/goals/${goalId}/schedule/update`,
     token: configuration.token,
     data: data,
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((reason: any) => {
+      Sentry.captureException(reason);
+      console.debug(reason);
+      return Promise.reject(reason);
+    });
+//Get total contribution
+export const totalContribution = async ({
+  configuration,
+}: {
+  configuration: IConfig;
+}) =>
+  fetchData({
+    endpoint: `/goals/total_contributions`,
+    token: configuration.token,
   })
     .then((res) => {
       return res;

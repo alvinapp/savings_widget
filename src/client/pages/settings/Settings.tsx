@@ -15,7 +15,7 @@ import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { SettingsCard } from "../components/settings/SettingsCard";
 
-export const Settings = () => {
+const Settings = () => {
   const navigate = useNavigate();
   const user = useUserStore((state: any) => state.user);
   const goalStore = useGoalStore((state: any) => state);
@@ -133,3 +133,4 @@ export const Settings = () => {
     </div>
   );
 };
+export default Settings;

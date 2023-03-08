@@ -7,7 +7,7 @@ import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import TriggerCard from "../components/TriggerCard";
 
-export const SavingsTriggersSettings = () => {
+const SavingsTriggersSettings = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col h-screen w-screen pt-6 relative">
@@ -49,3 +49,4 @@ export const SavingsTriggersSettings = () => {
     </div>
   );
 };
+export default SavingsTriggersSettings;

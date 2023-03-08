@@ -12,7 +12,7 @@ import saveMonthlyIncome from "client/api/monthly-income";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import useUserStore from "client/store/userStore";
-export const SettingsMonthlyIncome = () => {
+const SettingsMonthlyIncome = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
@@ -26,10 +26,9 @@ export const SettingsMonthlyIncome = () => {
       amount: finalAmount,
     }).then((result) => {
       if (result) {
-        result.income;
         monthlyIncome.setMonthlyIncome(result.income);
+        navigate(-1);
       }
-      //   navigate("/create-savings-goal");
     });
   };
   const { data, refetch } = useQuery(["saveIncome"], () => saveIncome, {
@@ -81,3 +80,4 @@ export const SettingsMonthlyIncome = () => {
     </div>
   );
 };
+export default SettingsMonthlyIncome;

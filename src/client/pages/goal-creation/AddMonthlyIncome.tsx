@@ -11,7 +11,7 @@ import { useQuery } from "react-query";
 import saveMonthlyIncome from "client/api/monthly-income";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-export const AddMonthlyIncome = () => {
+const AddMonthlyIncome = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
@@ -79,3 +79,4 @@ export const AddMonthlyIncome = () => {
     </div>
   );
 };
+export default AddMonthlyIncome;

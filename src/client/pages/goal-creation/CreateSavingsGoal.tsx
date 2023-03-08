@@ -12,7 +12,7 @@ import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 import useGoalStore from "client/store/goalStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 
-export const CreateSavingsGoal = () => {
+const CreateSavingsGoal = () => {
   const navigate = useNavigate();
   const goalStore = useGoalStore((state: any) => state);
   const goalContributionSettings = useGoalContributionSettingsStore(
@@ -93,3 +93,4 @@ export const CreateSavingsGoal = () => {
     </div>
   );
 };
+export default CreateSavingsGoal;

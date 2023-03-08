@@ -1,32 +1,55 @@
-import { useEffect, useState } from "react";
-import "client/index.css";
-import "client/style.scss";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { QueryClient, QueryClientProvider } from "react-query";
-
-// import Routes from "client/pages/routes";
-import TermsCondition from "client/pages/terms-condition/TermsCondition";
 import { Route, Routes } from "react-router-dom";
-import GoalCreationIntro from "client/pages/goal-creation/GoalCreationIntro";
-import { AddMonthlyIncome } from "./pages/goal-creation/AddMonthlyIncome";
-import { CreateSavingsGoal } from "./pages/goal-creation/CreateSavingsGoal";
-import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
-import { GoalView } from "./pages/goal-view/GoalView";
-import { SavingsTrigger } from "./pages/savings-triggers/SavingsTrigger";
-import { Settings } from "./pages/settings/Settings";
-import { GoalSettings } from "./pages/settings/GoalSettings";
-import { SavingsTriggersSettings } from "./pages/settings/SavingsTriggersSettings";
-import { NotificationSettings } from "./pages/settings/NotificationSettings";
-import { Notifications } from "./pages/notications/Notifications";
-import Overview from "./pages/overview/Overview";
-import { DeleteGoalSuccess } from "./pages/goal-view/DeleteGoalSuccess";
-import { CustomImageSelection } from "./pages/goal-creation/CustomImageSelection";
-import { SettingsMonthlyIncome } from "./pages/settings/SettingsMonthlyIncome";
-import useUserStore from "./store/userStore";
 import io from "socket.io-client";
 import useNotificationStore from "./store/notificationStore";
-import UpdateGoalDetails from "./pages/update-goal/UpdateGoal";
+import useUserStore from "./store/userStore";
+import "./index.css";
+import "./style.scss";
+
 declare var AppConfig: AppConfig;
+
+const Overview = lazy(() => import("./pages/overview/Overview"));
+const TermsCondition = lazy(
+  () => import("./pages/terms-condition/TermsCondition")
+);
+const GoalCreationIntro = lazy(
+  () => import("./pages/goal-creation/GoalCreationIntro")
+);
+const AddMonthlyIncome = lazy(
+  () => import("./pages/goal-creation/AddMonthlyIncome")
+);
+const CreateSavingsGoal = lazy(
+  () => import("./pages/goal-creation/CreateSavingsGoal")
+);
+const AddGoalDetails = lazy(
+  () => import("./pages/goal-creation/AddGoalDetails")
+);
+const GoalView = lazy(() => import("./pages/goal-view/GoalView"));
+const SavingsTrigger = lazy(
+  () => import("./pages/savings-triggers/SavingsTrigger")
+);
+const Settings = lazy(() => import("./pages/settings/Settings"));
+const GoalSettings = lazy(() => import("./pages/settings/GoalSettings"));
+const SavingsTriggersSettings = lazy(
+  () => import("./pages/settings/SavingsTriggersSettings")
+);
+const NotificationSettings = lazy(
+  () => import("./pages/settings/NotificationSettings")
+);
+const Notifications = lazy(() => import("./pages/notications/Notifications"));
+const DeleteGoalSuccess = lazy(
+  () => import("./pages/goal-view/DeleteGoalSuccess")
+);
+const CustomImageSelection = lazy(
+  () => import("./pages/goal-creation/CustomImageSelection")
+);
+const SettingsMonthlyIncome = lazy(
+  () => import("./pages/settings/SettingsMonthlyIncome")
+);
+const UpdateGoalDetails = lazy(() => import("./pages/update-goal/UpdateGoal"));
+
 const App = () => {
   const queryClient = new QueryClient();
   const userStore = useUserStore((state: any) => state);
@@ -34,6 +57,7 @@ const App = () => {
   const [receivedMessages, setReceivedMessages] = useState([]);
   const socket = io(AppConfig.API_URL);
   const userId = userStore.user.user_id ?? "";
+
   useEffect(() => {
     socket.on(`schedule ${userId}`, (data: { message: any }) => {
       console.log("Received schedule event:", data);
@@ -54,38 +78,43 @@ const App = () => {
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
-          <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/goal-creation" element={<GoalCreationIntro />} />
-            <Route path="/terms-and-conditons" element={<TermsCondition />} />
-            <Route path="/monthly-income" element={<AddMonthlyIncome />} />
-            <Route path="/goal-details" element={<AddGoalDetails />} />
-            <Route
-              path="/create-savings-goal"
-              element={<CreateSavingsGoal />}
-            />
-            <Route path="/add-goal-details" element={<AddGoalDetails />} />
-            <Route path="/goal-view" element={<GoalView />} />
-            <Route path="/savings-trigger" element={<SavingsTrigger />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/goal-settings" element={<GoalSettings />} />
-            <Route
-              path="/savings-triggers-settings"
-              element={<SavingsTriggersSettings />}
-            />
-            <Route
-              path="/notification-settings"
-              element={<NotificationSettings />}
-            />
-            <Route path="/delete-goal" element={<DeleteGoalSuccess />} />
-            <Route path="image-selection" element={<CustomImageSelection />} />
-            <Route
-              path="/settings-monthly-income"
-              element={<SettingsMonthlyIncome />}
-            />
-            <Route path="/update-goal" element={<UpdateGoalDetails />} />
-          </Routes>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Overview />} />
+              <Route path="/goal-creation" element={<GoalCreationIntro />} />
+              <Route path="/terms-and-conditons" element={<TermsCondition />} />
+              <Route path="/monthly-income" element={<AddMonthlyIncome />} />
+              <Route path="/goal-details" element={<AddGoalDetails />} />
+              <Route
+                path="/create-savings-goal"
+                element={<CreateSavingsGoal />}
+              />
+              <Route path="/add-goal-details" element={<AddGoalDetails />} />
+              <Route path="/goal-view" element={<GoalView />} />
+              <Route path="/savings-trigger" element={<SavingsTrigger />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/goal-settings" element={<GoalSettings />} />
+              <Route
+                path="/savings-triggers-settings"
+                element={<SavingsTriggersSettings />}
+              />
+              <Route
+                path="/notification-settings"
+                element={<NotificationSettings />}
+              />
+              <Route path="/delete-goal" element={<DeleteGoalSuccess />} />
+              <Route
+                path="/image-selection"
+                element={<CustomImageSelection />}
+              />
+              <Route
+                path="/settings-monthly-income"
+                element={<SettingsMonthlyIncome />}
+              />
+              <Route path="/update-goal" element={<UpdateGoalDetails />} />
+            </Routes>
+          </Suspense>
         </div>
       </QueryClientProvider>
     </SkeletonTheme>

@@ -10,7 +10,7 @@ import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { NotificaitonCard } from "../components/notificaitons/NotificaitonCard";
 import { NotificationEmptyState } from "./NotificationEmptyState";
-export const Notifications = () => {
+const Notifications = () => {
   const navigate = useNavigate();
   const notificaitonsStore = useNotificationStore((state: any) => state) ?? [];
   const configuration = useConfigurationStore(
@@ -70,3 +70,4 @@ export const Notifications = () => {
     </div>
   );
 };
+export default Notifications;

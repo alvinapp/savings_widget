@@ -11,7 +11,7 @@ import arrowRight from "../../assets/images/savings/bell.svg";
 /* @ts-ignore */
 import SlideButton from "react-slide-button";
 
-export const SavingsTrigger = () => {
+const SavingsTrigger = () => {
   const navigate = useNavigate();
   const [sliderValue, setSliderValue] = useState(0);
   return (
@@ -133,3 +133,4 @@ export const SavingsTrigger = () => {
     </div>
   );
 };
+export default SavingsTrigger;

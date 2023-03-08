@@ -30,7 +30,7 @@ import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { DeleteGoal } from "./DeleteGoal";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
-export const GoalView = () => {
+const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
   const configuration = useConfigurationStore(
@@ -254,3 +254,4 @@ export const GoalView = () => {
     </div>
   );
 };
+export default GoalView;
