@@ -8,7 +8,6 @@ import { useQuery } from "react-query";
 import { getConfirmedGoals, resumeGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
-import { ToastContainer, toast } from "react-toastify";
 const GoalCard = ({
   id,
   name,
@@ -18,7 +17,6 @@ const GoalCard = ({
   imageUrl,
   onClick,
   is_active,
-  resume,
 }: Goal) => {
   const currencySymbol = "₦";
   const configuration = useConfigurationStore(
@@ -34,16 +32,13 @@ const GoalCard = ({
       configuration: configuration,
       goalId: id,
       data: {},
-    })
-      .then((result) => {
-        if (result) {
-        }
-      })
-      .finally(() =>
+    }).then((result) => {
+      if (result) {
         getConfirmedGoals({ configuration: configuration }).then((result) => {
           goal.setConfirmedGoals(result);
-        })
-      );
+        });
+      }
+    });
   };
   const { data, refetch: resumeTheGoal } = useQuery(
     "resume a goal",

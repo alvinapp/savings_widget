@@ -1,14 +1,35 @@
+import { getConfirmedGoals, resumeGoal } from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useGoalStore from "client/store/goalStore";
+import useNotificationStore from "client/store/notificationStore";
 import React from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { NotificaitonCard } from "../components/notificaitons/NotificaitonCard";
 import { NotificationEmptyState } from "./NotificationEmptyState";
-
 export const Notifications = () => {
   const navigate = useNavigate();
-  const currentDate = new Date();
+  const notificaitonsStore = useNotificationStore((state: any) => state) ?? [];
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const goal = useGoalStore((state: any) => state);
+  const resumeAGoal = async (id: number) => {
+    resumeGoal({
+      configuration: configuration,
+      goalId: id,
+      data: {},
+    }).then((result) => {
+      if (result) {
+        getConfirmedGoals({ configuration: configuration }).then((result) => {
+          goal.setConfirmedGoals(result);
+        });
+      }
+    });
+  };
   return (
     <div className="flex flex-col relative pt-6 h-screen w-screen">
       <NavBar
@@ -30,11 +51,21 @@ export const Notifications = () => {
         }
       />
       <div className="flex flex-col mt-9 mx-3.5">
-        {/* <NotificaitonCard
-          date={currentDate}
-          description="Resume your Marie store goal today to stay on 🎯track!"
-        /> */}
-        <NotificationEmptyState />
+        {notificaitonsStore.notifications.length > 0 ? (
+          notificaitonsStore.notifications.map((notification: any) => {
+            return (
+              <NotificaitonCard
+                date={notification.time}
+                description={notification.message}
+                image={notification.image.image_url}
+                type={notification.type}
+                resume={() => {}}
+              />
+            );
+          })
+        ) : (
+          <NotificationEmptyState />
+        )}
       </div>
     </div>
   );

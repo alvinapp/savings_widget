@@ -58,6 +58,7 @@ type GoalCreationInputProps = {
   placeHolder?: string;
   type?: any;
   hasCurrencySymbol?: boolean;
+  clearInput?: any;
 };
 export const GoalCreationInput = ({
   label,
@@ -69,8 +70,12 @@ export const GoalCreationInput = ({
   placeHolder,
   type = "text",
   hasCurrencySymbol = false,
+  clearInput,
 }: GoalCreationInputProps) => {
-  const [initialValue, setInitialValue] = useState(value);
+  const handleClearInput = (event: any) => {
+    event.stopPropagation();
+    clearInput();
+  };
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
@@ -112,16 +117,19 @@ export const GoalCreationInput = ({
               type={type}
               placeholder={placeHolder}
               value={value}
-              className={`w-52 outline-none text-center`}
+              className={`w-64 outline-none text-center`}
               onChange={(e) => {
                 addValue(e.target.value);
               }}
             />
           </div>
           {hasValue ? (
-            <div className="rounded-full flex items-center bg-skin-secondary p-2 absolute right-2">
+            <button
+              className="rounded-full flex items-center bg-skin-secondary p-2 absolute right-2"
+              onClick={handleClearInput}
+            >
               <FiX color="#4E6783" />
-            </div>
+            </button>
           ) : (
             <div></div>
           )}

@@ -18,7 +18,6 @@ export const DeleteGoalSuccess = () => {
   const timeOutCallback = useCallback(() => {
     setTimer((currTimer): number => currTimer - 1);
     setPercentage((currPercent): number => currPercent + 10);
-    console.log("times");
   }, []);
   const cloudImage = {
     loop: true,

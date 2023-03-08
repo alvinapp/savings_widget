@@ -7,13 +7,16 @@ import MainButton from "client/pages/components/MainButton";
 import bank from "client/assets/images/bank.svg";
 import useGoalCreationStore from "client/store/goalCreationStatus";
 import { useNavigate } from "react-router-dom";
+import { useConfigurationStore } from "client/store/configuration";
 const OverviewTrackGoalCreationProgress = () => {
   const goalCreationStatus = useGoalCreationStore(
     (state: any) => state.goalCreationStatus
   );
   const { has_linked_account, has_income, has_goal } = goalCreationStatus;
   const navigate = useNavigate();
-
+  const userToken = useConfigurationStore(
+    (state: any) => state.configuration.token
+  );
   return (
     <>
       <div className="rounded-2xl my-6 pt-6 pb-4 px-3.5 shadow-card bg-overviewBg">
@@ -58,6 +61,7 @@ const OverviewTrackGoalCreationProgress = () => {
         </div>
         <div className="mt-6">
           <MainButton
+            isDisabled={!!!userToken}
             title={
               has_income && has_goal && !has_linked_account
                 ? "Link an account"
@@ -65,13 +69,17 @@ const OverviewTrackGoalCreationProgress = () => {
                 ? "Create a goal"
                 : "Start your journey"
             }
-            click={() => {
-              has_income && has_goal && !has_linked_account
-                ? navigate("/")
-                : has_income && !has_goal && !has_linked_account
-                ? navigate("create-savings-goal")
-                : navigate("goal-creation");
-            }}
+            click={
+              userToken
+                ? () => {
+                    has_income && has_goal && !has_linked_account
+                      ? navigate("/")
+                      : has_income && !has_goal && !has_linked_account
+                      ? navigate("create-savings-goal")
+                      : navigate("goal-creation");
+                  }
+                : () => {}
+            }
           />
         </div>
       </div>

@@ -192,3 +192,49 @@ export const searchImages = async ({ searchText }: { searchText: string }) => {
   const result = dataJ.results;
   return result;
 };
+//Update Goal
+export const updateGoal = async ({
+  configuration,
+  goalId,
+  data,
+}: {
+  configuration: IConfig;
+  data: any;
+  goalId: number;
+}) =>
+  postData({
+    endpoint: `/goals/${goalId}/update`,
+    token: configuration.token,
+    data: data,
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((reason: any) => {
+      Sentry.captureException(reason);
+      console.debug(reason);
+      return Promise.reject(reason);
+    });
+//Update Contribution Settings
+export const updateGoalContributionSettings = async ({
+  configuration,
+  data,
+  goalId,
+}: {
+  configuration: IConfig;
+  data: any;
+  goalId: number;
+}) =>
+  postData({
+    endpoint: `/goals/${goalId}/schedule/update`,
+    token: configuration.token,
+    data: data,
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((reason: any) => {
+      Sentry.captureException(reason);
+      console.debug(reason);
+      return Promise.reject(reason);
+    });

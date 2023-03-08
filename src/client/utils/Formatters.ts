@@ -35,6 +35,7 @@ export const dateFormat = (date: Date, includeYear?: boolean) => {
     formattedDate.slice(2, 3);
   return resultDate;
 };
+// check for NAN
 export const checkNAN = (value: any) => {
   if (Number.isNaN(value)) {
     return 0;

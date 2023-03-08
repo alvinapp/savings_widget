@@ -53,6 +53,7 @@ export const CreateSavingsGoal = () => {
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
               setChosenGoal({});
+              goalContributionSettings.setContributionFrequency("");
               navigate("/add-goal-details");
             }}
           />
@@ -79,6 +80,7 @@ export const CreateSavingsGoal = () => {
                       goalStore.setGoalName(goal.name);
                       goalStore.setGoalAmount(goal.amount);
                       setChosenGoal(goal);
+                      goalContributionSettings.setContributionFrequency("");
                       navigate("/add-goal-details");
                     }}
                   />

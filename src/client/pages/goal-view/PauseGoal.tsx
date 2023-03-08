@@ -2,17 +2,13 @@ import { useState } from "react";
 import { FiFlag } from "react-icons/fi";
 import CloseButton from "../components/CloseButton";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
-import SelectDate from "../components/goal-creation/SelectDate";
-/* @ts-ignore */
-import DatePicker from "react-mobile-datepicker";
-import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import useGoalStore from "client/store/goalStore";
 import SelectResumeDate from "../components/goalview/SelectResumeDate";
 import { getConfirmedGoals, pauseGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { useQuery } from "react-query";
 import { convertDate, dateFormat, nthNumber } from "client/utils/Formatters";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 type PauseGoalProps = {
   onClick?: () => void;
 };
@@ -46,7 +42,6 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
     (state: any) => state.configuration
   ) as IConfig;
   const pauseAGoal = async () => {
-    console.log(goal.resume_at.toString());
     pauseGoal({
       configuration: configuration,
       goalId: goal.confirmedGoal.id,

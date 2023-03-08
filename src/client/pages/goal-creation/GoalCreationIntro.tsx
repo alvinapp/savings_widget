@@ -33,14 +33,14 @@ const GoalCreationIntro = () => {
   const slideInfoStore = useConnectInfoStore((state: any) => state);
   const userStore = useUserStore((state: any) => state);
   const slideIndex = slideInfoStore.slideIndex;
-    const goalCreationStatus = useGoalCreationStore(
-      (state: any) => state.goalCreationStatus
-    );
-    const {has_income} = goalCreationStatus;
+  const goalCreationStatus = useGoalCreationStore(
+    (state: any) => state.goalCreationStatus
+  );
+  const { has_income } = goalCreationStatus;
   const slidePages = () => {
     if (slideIndex >= 1) {
       if (userStore.user.tc_accepted) {
-        slideInfoStore.setSlideIndex(0); 
+        slideInfoStore.setSlideIndex(0);
         if (has_income) {
           navigate("/create-savings-goal");
         } else {
@@ -50,7 +50,7 @@ const GoalCreationIntro = () => {
         navigate("/terms-and-conditons");
         slideInfoStore.setSlideIndex(0);
       }
-    } else { 
+    } else {
       slideInfoStore.setSlideIndex(slideIndex + 1);
     }
   };

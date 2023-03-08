@@ -6,11 +6,15 @@ type NotificaitonCardProps = {
   date: Date;
   image?: string;
   description?: string;
+  type?: string;
+  resume?: () => void;
 };
 export const NotificaitonCard = ({
   date,
   image,
   description,
+  type,
+  resume,
 }: NotificaitonCardProps) => {
   const createdDate = new Date(date);
   return (
@@ -25,29 +29,34 @@ export const NotificaitonCard = ({
           <div className="flex flex-col">
             <div className="relative">
               <div className="rounded-full bg-skin-secondaryWithOpacity h-8 w-8 mr-3 shadow-card">
-                <img src={image} />
+                <img src={image} className="h-8 w-8 rounded-full" />
               </div>
-              <div className="rounded-full absolute top-0 right-2.5 bg-skin-danger h-2 w-2"></div>
+              <div className="rounded-full absolute top-0 right-3 bg-skin-danger h-2 w-2"></div>
             </div>
           </div>
           <div className="font-poppins text-xs text-skin-base tracking-wide mr-12">
             {description}
           </div>
         </div>
-        <div className="flex flex-row justify-center mt-3">
-          <div className="mr-2">
+        {type === "pause schedule" ? (
+          <div className="flex flex-row justify-center mt-3">
+            <div className="mr-2">
+              <ActionButton
+                label="Ask me later"
+                bgColor="bg-skin-tertiary"
+                labelColor="text-skin-neutral"
+              />
+            </div>
             <ActionButton
-              label="Ask me later"
-              bgColor="bg-skin-tertiary"
-              labelColor="text-skin-neutral"
+              label="Resume goal"
+              bgColor="bg-skin-primary"
+              labelColor="text-skin-white"
+              onClick={resume}
             />
           </div>
-          <ActionButton
-            label="Resume goal"
-            bgColor="bg-skin-primary"
-            labelColor="text-skin-white"
-          />
-        </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <div className="border border-1 rounded-full mt-4"></div>
     </div>

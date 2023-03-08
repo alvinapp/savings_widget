@@ -10,16 +10,21 @@ import { MonthlyContributionSelector } from "../components/goal-creation/Monthly
 import useUserStore from "client/store/userStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import { useQuery } from "react-query";
-import { saveGoalContributionSettings } from "client/api/goal";
+import {
+  saveGoalContributionSettings,
+  updateGoalContributionSettings,
+} from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import { convertDate } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
+  updatingGoal?: boolean;
 };
 export const AddContributionSettings = ({
   onClick,
+  updatingGoal = false,
 }: AddContributionSettingsProps) => {
   const currency = "₦";
   const [tabIndex, setTabIndex] = useState(0);
@@ -50,7 +55,7 @@ export const AddContributionSettings = ({
   const goal = useGoalStore((state: any) => state);
   const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
   const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
-  const contributionSettings = () => {
+  const saveSettings = () => {
     saveGoalContributionSettings({
       configuration: configuration,
       data: {
@@ -68,14 +73,38 @@ export const AddContributionSettings = ({
       }
     });
   };
-  const { isLoading, refetch } = useQuery(
-    "save-contribution-settings",
-    () => contributionSettings,
-    {
-      refetchOnWindowFocus: true,
-      enabled: false,
-    }
-  );
+  const updateSettings = () => {
+    updateGoalContributionSettings({
+      configuration: configuration,
+      data: {
+        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+        savings_amount: goalContributionSettings.contributionAmount,
+        contribute_from: convertDate(
+          goalContributionSettings.startingFromDate.toString()
+        ),
+      },
+      goalId: goal.confirmedGoal.id,
+    }).then((result) => {
+      if (result.frequency !== "") {
+        goalContributionSettings.setContributionFrequency(result.frequency);
+        goalContributionSettings.openContributionSettingsBottomSheet(false);
+      }
+    });
+  };
+  const {
+    isLoading: saveContributionLoading,
+    refetch: saveContributionSettings,
+  } = useQuery("save-contribution-settings", () => saveSettings, {
+    refetchOnWindowFocus: true,
+    enabled: false,
+  });
+  const {
+    isLoading: updateContributionLoading,
+    refetch: updateContributionSettings,
+  } = useQuery("update-contribution-settings", () => updateSettings, {
+    refetchOnWindowFocus: true,
+    enabled: false,
+  });
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -130,8 +159,12 @@ export const AddContributionSettings = ({
       <div className="mt-12">
         <BottomSheetFooter
           title={`Save weekly ${currency}10,000 by Thur, Jul 8th 2023.`}
-          onClick={() => refetch()}
-          loading={isLoading}
+          onClick={() =>
+            updatingGoal
+              ? updateContributionSettings()
+              : saveContributionSettings()
+          }
+          loading={saveContributionLoading || updateContributionLoading}
         />
       </div>
     </div>

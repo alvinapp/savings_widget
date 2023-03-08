@@ -17,6 +17,9 @@ import useUserStore from "client/store/userStore";
 import { getConfirmedGoals } from "client/api/goal";
 import useGoalStore from "client/store/goalStore";
 import { NotificationCard } from "../components/overview/NotificationCard";
+import { ToastContainer } from "react-toastify";
+import { showCustomToast } from "client/utils/Toast";
+import useNotificationStore from "client/store/notificationStore";
 const Overview = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -28,10 +31,16 @@ const Overview = () => {
   const setGoalCreationStatus = useGoalCreationStore(
     (state: any) => state.setGoalCreationStatus
   );
+  const notificationsStore = useNotificationStore((state: any) => state) ?? [];
   const authenticateUser = async () => {
     getToken(configuration).then((res) => {
-      setUser(res.user);
-      setToken(res.token);
+      if (typeof res.user !== "undefined") {
+        setUser(res.user);
+        setToken(res.token);
+      } else {
+        navigate("/");
+        showCustomToast({ message: "The sdk key is invalid" });
+      }
     });
   };
   const checkUserStatus = async () => {
@@ -67,11 +76,17 @@ const Overview = () => {
             <div className="flex flex-row justify-end">
               <div className="flex flex-row items-center justify-center">
                 <NotificaitonsButton
-                  onClick={() => navigate("/notifications")}
-                  notificationCount={1}
+                  onClick={() =>
+                    configuration.token ? navigate("/notifications") : null
+                  }
+                  notificationCount={notificationsStore.notifications.length}
                 />
                 <div className="ml-6 mb-2">
-                  <SettingsButton onClick={() => navigate("/settings")} />
+                  <SettingsButton
+                    onClick={() =>
+                      configuration.token ? navigate("/settings") : null
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -100,6 +115,7 @@ const Overview = () => {
       ) : (
         <div></div>
       )}
+      <ToastContainer />
     </div>
   );
 };

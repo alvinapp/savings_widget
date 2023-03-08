@@ -29,12 +29,16 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { DeleteGoal } from "./DeleteGoal";
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 export const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   const goalviewTabs = [
     {
       tab_id: 0,
@@ -130,7 +134,19 @@ export const GoalView = () => {
                 title={`${goal.confirmedGoal.name}`}
                 titleColor="text-white"
               />
-              <SettingsButton background="bg-skin-base" icon={settingNeutral} />
+              <SettingsButton
+                background="bg-skin-base"
+                icon={settingNeutral}
+                onClick={() => {
+                  goal.setGoalImageUrl(currentGoal.image_url.image_url);
+                  goal.setGoalName(currentGoal.name);
+                  goal.setGoalAmount(currentGoal.amount);
+                  goalContributionSettings.setContributionFrequency(
+                    currentGoal.frequency
+                  );
+                  navigate("/update-goal");
+                }}
+              />
             </div>
           }
         />

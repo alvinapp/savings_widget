@@ -22,27 +22,33 @@ import Overview from "./pages/overview/Overview";
 import { DeleteGoalSuccess } from "./pages/goal-view/DeleteGoalSuccess";
 import { CustomImageSelection } from "./pages/goal-creation/CustomImageSelection";
 import { SettingsMonthlyIncome } from "./pages/settings/SettingsMonthlyIncome";
-const pageHistory: string[] = [];
-
+import useUserStore from "./store/userStore";
+import io from "socket.io-client";
+import useNotificationStore from "./store/notificationStore";
+import UpdateGoalDetails from "./pages/update-goal/UpdateGoal";
+declare var AppConfig: AppConfig;
 const App = () => {
-  const [page, setPage] = useState<String>("/");
   const queryClient = new QueryClient();
+  const userStore = useUserStore((state: any) => state);
+  const notificationStore = useNotificationStore((state: any) => state);
+  const [receivedMessages, setReceivedMessages] = useState([]);
+  const socket = io(AppConfig.API_URL);
+  const userId = userStore.user.user_id ?? "";
   useEffect(() => {
-    document.addEventListener("toPage", ({ detail }: any) => {
-      const page = detail["page"];
-      const replace = detail["replace"] as boolean;
-      if (replace == true && pageHistory.length > 0) {
-        pageHistory[pageHistory.length - 1] = page;
-      } else {
-        pageHistory.push(page);
+    socket.on(`schedule ${userId}`, (data: { message: any }) => {
+      console.log("Received schedule event:", data);
+      // @ts-ignore
+      if (!receivedMessages.includes(data.message)) {
+        notificationStore.setNotification(data);
+        // @ts-ignore
+        setReceivedMessages((prevMessages) => [...prevMessages, data.message]);
       }
-      setPage(page);
     });
-    document.addEventListener("closePage", () => {
-      const page = pageHistory.pop() || "/";
-      setPage(page);
-    });
-  });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [receivedMessages, userId]);
 
   return (
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">
@@ -78,6 +84,7 @@ const App = () => {
               path="/settings-monthly-income"
               element={<SettingsMonthlyIncome />}
             />
+            <Route path="/update-goal" element={<UpdateGoalDetails />} />
           </Routes>
         </div>
       </QueryClientProvider>
