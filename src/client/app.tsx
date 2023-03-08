@@ -7,6 +7,7 @@ import useNotificationStore from "./store/notificationStore";
 import useUserStore from "./store/userStore";
 import "./index.css";
 import "./style.scss";
+import { TailSpin } from "react-loader-spinner";
 
 declare var AppConfig: AppConfig;
 
@@ -78,7 +79,21 @@ const App = () => {
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">
       <QueryClientProvider client={queryClient}>
         <div className="overflow-x-hidden w-screen">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="flex flex-col w-screen h-screen justify-center items-center">
+                <TailSpin
+                  height="40"
+                  width="40"
+                  color="#056489"
+                  ariaLabel="tail-spin-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            }
+          >
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/goal-creation" element={<GoalCreationIntro />} />
