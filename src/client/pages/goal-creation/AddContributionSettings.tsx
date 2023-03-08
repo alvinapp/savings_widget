@@ -3,17 +3,28 @@ import TabFilter from "client/pages/components/TabFilter";
 import { FiToggleLeft, FiToggleRight } from "react-icons/fi";
 import { Amount } from "client/pages/components/Amount";
 import ReactSlider from "react-slider";
-import WeekDay from "../components/goal-creation/WeeklyDaySelector";
 import CloseButton from "../components/CloseButton";
-import SelectDate from "../components/goal-creation/SelectDate";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
 import WeeklyContributionSelector from "../components/goal-creation/WeeklyContributionSelector";
 import { MonthlyContributionSelector } from "../components/goal-creation/MonthlyContributionSelector";
+import useUserStore from "client/store/userStore";
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import { useQuery } from "react-query";
+import {
+  saveGoalContributionSettings,
+  updateGoalContributionSettings,
+} from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useGoalStore from "client/store/goalStore";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
+import { convertDate } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
+  updatingGoal?: boolean;
 };
 export const AddContributionSettings = ({
   onClick,
+  updatingGoal = false,
 }: AddContributionSettingsProps) => {
   const currency = "₦";
   const [tabIndex, setTabIndex] = useState(0);
@@ -29,6 +40,71 @@ export const AddContributionSettings = ({
       icon: <FiToggleRight />,
     },
   ];
+  const monthlyIncome = useMonthlyIncomeStore(
+    (state: any) => state.monthlyIncome
+  );
+  const user = useUserStore((state: any) => state.user);
+  const monthlyIncomeAmount = monthlyIncome || user.income;
+  const [percentageOfMonthlyIncome, setPercentageOfMonthlyIncome] = useState(0);
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const goal = useGoalStore((state: any) => state);
+  const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
+  const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
+  const saveSettings = () => {
+    saveGoalContributionSettings({
+      configuration: configuration,
+      data: {
+        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+        savings_amount: goalContributionSettings.contributionAmount,
+        contribute_from: convertDate(
+          goalContributionSettings.startingFromDate.toString()
+        ),
+      },
+      goalId: goal.contributionSettingsGoalId,
+    }).then((result) => {
+      if (result.frequency !== "") {
+        goalContributionSettings.setContributionFrequency(result.frequency);
+        goalContributionSettings.openContributionSettingsBottomSheet(false);
+      }
+    });
+  };
+  const updateSettings = () => {
+    updateGoalContributionSettings({
+      configuration: configuration,
+      data: {
+        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+        savings_amount: goalContributionSettings.contributionAmount,
+        contribute_from: convertDate(
+          goalContributionSettings.startingFromDate.toString()
+        ),
+      },
+      goalId: goal.confirmedGoal.id,
+    }).then((result) => {
+      if (result.frequency !== "") {
+        goalContributionSettings.setContributionFrequency(result.frequency);
+        goalContributionSettings.openContributionSettingsBottomSheet(false);
+      }
+    });
+  };
+  const {
+    isLoading: saveContributionLoading,
+    refetch: saveContributionSettings,
+  } = useQuery("save-contribution-settings", () => saveSettings, {
+    refetchOnWindowFocus: true,
+    enabled: false,
+  });
+  const {
+    isLoading: updateContributionLoading,
+    refetch: updateContributionSettings,
+  } = useQuery("update-contribution-settings", () => updateSettings, {
+    refetchOnWindowFocus: true,
+    enabled: false,
+  });
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -50,7 +126,7 @@ export const AddContributionSettings = ({
         />
       </div>
       <div className="mb-2.5 flex flex-row justify-center items-center">
-        <Amount balance={10000} />
+        <Amount balance={goalContributionSettings.contributionAmount} />
       </div>
       <div className="mb-6 px-10">
         <ReactSlider
@@ -58,15 +134,24 @@ export const AddContributionSettings = ({
           thumbClassName="example-thumb"
           trackClassName="example-track"
           marks={20}
+          renderThumb={(props, state) => (
+            <div {...props}>{`${state.valueNow}%`}</div>
+          )}
+          onChange={(value, index) => {
+            goalContributionSettings.setContributionAmount(
+              (monthlyIncomeAmount * value) / 100
+            );
+            setPercentageOfMonthlyIncome(value);
+          }}
         />
       </div>
       <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
-        5% of my monthly net income
+        {`${percentageOfMonthlyIncome}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
       </div>
-      {tabIndex == 1 ? (
+      {tabIndex === 1 ? (
         <MonthlyContributionSelector />
       ) : (
         <WeeklyContributionSelector />
@@ -74,6 +159,12 @@ export const AddContributionSettings = ({
       <div className="mt-12">
         <BottomSheetFooter
           title={`Save weekly ${currency}10,000 by Thur, Jul 8th 2023.`}
+          onClick={() =>
+            updatingGoal
+              ? updateContributionSettings()
+              : saveContributionSettings()
+          }
+          loading={saveContributionLoading || updateContributionLoading}
         />
       </div>
     </div>

@@ -1,3 +1,4 @@
+import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { useState } from "react";
 
 const daysOfWeek = ["", "S", "M", "T", "W", "T", "F", "S"];
@@ -9,7 +10,7 @@ type WeekdayCircleProps = {
 };
 const WeekdayCircle = ({ day, onClick, isActive }: WeekdayCircleProps) => {
   return (
-    <div className="rounded-full outline outline-1 outline-skin-primary p-px mx-1">
+    <div className="rounded-full border border-1 border-skin-primary p-px mx-1">
       <div
         className={`rounded-full h-9 w-9 flex items-center justify-center ${
           isActive
@@ -46,6 +47,9 @@ const WeekDay = ({
     "Sunday",
   ];
   const [exactDay, setExactDay] = useState("");
+  const goalContributionSettings = useGoalContributionSettingsStore(
+    (state: any) => state
+  );
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
@@ -58,6 +62,9 @@ const WeekDay = ({
               isActive={active}
               onClick={() => {
                 setExactDay(exactDaysOfTheWeek[day]);
+                goalContributionSettings.setWeekDayToContribute(
+                  exactDaysOfTheWeek[day]
+                );
                 if (onClick) {
                   onClick(day);
                 }
@@ -68,7 +75,7 @@ const WeekDay = ({
       </div>
       <div className="flex flex-row justify-center mt-4">
         <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center">
-          {exactDay}
+          {goalContributionSettings.weekDayToContibute}
         </div>
       </div>
     </div>

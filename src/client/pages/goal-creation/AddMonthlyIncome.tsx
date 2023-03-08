@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BackButton from "client/pages/components/BackButton";
 import MainButton from "client/pages/components/MainButton";
 import NavBar from "client/pages/components/NavBar";
@@ -7,14 +7,38 @@ import CloseButton from "client/pages/components/CloseButton";
 import { Header } from "../components/goal-creation/Header";
 import { FiBriefcase } from "react-icons/fi";
 import { AddMonthlyIncomeInput } from "../components/goal-creation/Input";
-export const AddMonthlyIncome = () => {
+import { useQuery } from "react-query";
+import saveMonthlyIncome from "client/api/monthly-income";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
+const AddMonthlyIncome = () => {
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
   const navigate = useNavigate();
+  const [finalAmount, setFinalAmount] = useState(0);
+  const monthlyIncome = useMonthlyIncomeStore((state: any) => state);
+  const saveIncome = () => {
+    saveMonthlyIncome({
+      configuration: configuration,
+      amount: finalAmount,
+    }).then((result) => {
+      if (result) {
+        result.income;
+        monthlyIncome.setMonthlyIncome(result.income);
+      }
+      navigate("/create-savings-goal");
+    });
+  };
+  const { data, refetch } = useQuery(["saveIncome"], () => saveIncome, {
+    enabled: false,
+  });
   return (
     <div className="h-screen w-screen relative">
-      <div className="bg-curvedBg pt-8 bg-no-repeat h-64 bg-cover">
+      <div className="bg-curvedBg pt-4 bg-no-repeat h-64 bg-cover">
         <NavBar
           children={
-            <div className="flex flex-row justify-between items-center px-3.5">
+            <div className="flex flex-row justify-between items-center">
               <BackButton
                 onClick={() => {
                   navigate(-1);
@@ -35,15 +59,24 @@ export const AddMonthlyIncome = () => {
           />
         </div>
         <div className="mt-24 mx-3.5 flex flex-row justify-center">
-          <AddMonthlyIncomeInput />
+          <AddMonthlyIncomeInput
+            addValue={(e) => setFinalAmount(e)}
+            value={finalAmount}
+            increment={() => {
+              setFinalAmount(finalAmount + 1000);
+            }}
+            decrement={() => {
+              if (finalAmount > 0) {
+                setFinalAmount(finalAmount - 1000);
+              }
+            }}
+          />
         </div>
       </div>
       <div className="fixed bottom-2 right-0 left-0 px-3.5">
-        <MainButton
-          title="Continue"
-          click={() => navigate("/create-savings-goal")}
-        />
+        <MainButton title="Continue" click={() => refetch()} />
       </div>
     </div>
   );
 };
+export default AddMonthlyIncome;

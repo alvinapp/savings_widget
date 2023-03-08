@@ -1,32 +1,31 @@
-import Slider from 'react-slick';
-import AccountCard from 'client/pages/components/AccountCard';
-import Account from 'client/models/Account';
-import {useEffect, useState} from 'react';
+import Slider from "react-slick";
+import AccountCard from "client/pages/components/AccountCard";
+import Account from "client/models/Account";
+import { useEffect, useState } from "react";
 // import {fetchAccounts, fetchToken} from 'client/state/overview';
-import getAccounts from 'client/api/accounts';
-import {UnlinkAccount} from './UnlinkAccount';
-import useAccountStore from 'client/store/accountStore';
-import Accounts from 'client/models/accounts';
+import getAccounts from "client/api/accounts";
+import useAccountStore from "client/store/accountStore";
+import Accounts from "client/models/Accounts";
 
 type AccountCardProps = {
   accounts?: Array<Account>;
   deleteAccount?: () => void;
 };
-const AccountCardsSlider = ({accounts, deleteAccount}: AccountCardProps) => {
+const AccountCardsSlider = ({ accounts, deleteAccount }: AccountCardProps) => {
   const settings = {
     mobileFirst: true,
     dots: false,
     arrows: false,
     centerMode: true,
     infinite: false,
-    centerPadding: '0px',
+    centerPadding: "0px",
     slidesToShow: 3,
     speed: 300,
     slidesToScroll: 1,
     initialSlide: 0,
     swipe: true,
     swipeToSlide: true,
-    className: 'account_slider',
+    className: "account_slider",
     responsive: [
       {
         breakpoint: 1024,

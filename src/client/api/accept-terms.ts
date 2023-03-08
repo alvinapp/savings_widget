@@ -1,8 +1,8 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 
-import {IConfig} from 'client/store/configuration';
+import { IConfig } from "client/store/configuration";
 
-import {fetchData, postData} from './api';
+import { fetchData, postData } from "./api";
 export const acceptTerms = async ({
   configuration,
   accept,
@@ -11,7 +11,7 @@ export const acceptTerms = async ({
   accept?: boolean;
 }) => {
   return postData({
-    endpoint: '/users/terms-and-conditions/',
+    endpoint: "/users/terms-and-conditions/",
     data: accept,
     token: configuration!.token,
   })

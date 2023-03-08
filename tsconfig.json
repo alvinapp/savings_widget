@@ -7,7 +7,7 @@
     "outDir": "./built",
     "allowJs": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
     "jsx": "react-jsx",
@@ -21,7 +21,8 @@
       "assets": ["src/client/assets"],
       "assets/*": ["src/client/assets/*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+  
   },
-  "include": ["./src/**/*", "./__tests__/**/*", "src/custom.d.ts"]
+  "include": ["./src/**/*", "./__tests__/**/*", "src/custom.d.ts"],
 }

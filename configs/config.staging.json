@@ -1,8 +1,9 @@
 {
   "ENVIRONMENT": "staging",
-  "API_URL": "http://3.94.15.54:5000",  
+  "API_URL": "https://ent.app.alvinapp.com",  
   "TOKEN": null ,
   "IDENTIFIER": null,
   "HOST": "52.72.25.150",
-  "PORT": "8080"
+  "PORT": "8080",
+  "ACCESS_KEY":"7-an9au7YLuvLfHHzNcM65-2BuToVWvWHXTsMjOAdrI"
 }

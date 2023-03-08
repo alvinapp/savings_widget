@@ -12,6 +12,7 @@ import useAccountStore from "client/store/accountStore";
 import useConnectInfoStore from "client/store/connectIntroStore";
 import useUserStore from "client/store/userStore";
 import { useNavigate } from "react-router-dom";
+import useGoalCreationStore from "client/store/goalCreationStatus";
 
 const connectDetailsList = [
   {
@@ -32,13 +33,19 @@ const GoalCreationIntro = () => {
   const slideInfoStore = useConnectInfoStore((state: any) => state);
   const userStore = useUserStore((state: any) => state);
   const slideIndex = slideInfoStore.slideIndex;
+  const goalCreationStatus = useGoalCreationStore(
+    (state: any) => state.goalCreationStatus
+  );
+  const { has_income } = goalCreationStatus;
   const slidePages = () => {
     if (slideIndex >= 1) {
       if (userStore.user.tc_accepted) {
-        document.dispatchEvent(
-          new CustomEvent("toPage", { detail: { page: Routes.MONO } })
-        );
         slideInfoStore.setSlideIndex(0);
+        if (has_income) {
+          navigate("/create-savings-goal");
+        } else {
+          navigate("/monthly-income");
+        }
       } else {
         navigate("/terms-and-conditons");
         slideInfoStore.setSlideIndex(0);
@@ -49,9 +56,9 @@ const GoalCreationIntro = () => {
   };
 
   return (
-    <div className="h-screen ">
+    <div className="h-screen">
       <div className="flex flex-col bg-white">
-        <div className="mt-6 mx-3.5">
+        <div className="mt-4 mx-3.5">
           <NavBar
             children={
               <div className="flex flex-row justify-end">

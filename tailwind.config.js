@@ -6,16 +6,21 @@ module.exports = {
       textColor: {
         skin: {
           base: "var(--color-text-base)",
+          white: "var(--color-text-white)",
           primary: "var(--color-text-primary)",
           secondary: "var(--color-text-secondary)",
           neutral: "var(--color-text-neutral)",
           success: "var(--color-text-success)",
+          successSecondary: "var(--color-text-success-secondary)",
           successNeutral: "var(--color-text-success-neutral)",
+          successTertiary: "var(--color-text-success-tertiary)",
           warning: "var(--color-text-warning)",
           danger: "var(--color-text-danger)",
           title: "var(--color-text-title)",
           subtitle: "var(--color-text-subtitle)",
           inputDisabled: "var(--color-text-input-disabled)",
+          iconTertiary: "var(--color-text-icon-tertiary)",
+          iconSecondary: "var(--color-text-icon-secondary)",
         },
       },
       backgroundColor: {
@@ -30,6 +35,8 @@ module.exports = {
           successNeutral: "var(--color-background-success-neutral)",
           successWithOpacity:
             "var(--color-background-success-neutral-withOpacity)",
+          successSecondary: "var(--color-background-success-secondary)",
+          successTertiary: "var(--color-background-success-tertiary)",
           danger: "var(--color-background-danger)",
           warningWithOpacity: "var(--color-background-warning-withOpacity)",
           accent: "var(--color-background-accent)",
@@ -37,6 +44,11 @@ module.exports = {
           tertiary: "var(--color-background-tertiary)",
           input: "var(--color-background-input)",
           inputButton: "var(--color-background-input-button)",
+          divider: "var(--color-background-divider)",
+          iconPrimary: "var(--color-background-icon-primary)",
+          iconSecondary: "var(--color-background-icon-secondary)",
+          iconTertiary: "var( --color-background-icon-tertiary)",
+          path: "var( --color-background-path)",
         },
       },
       outlineColor: {
@@ -45,6 +57,18 @@ module.exports = {
           primary: "var(--color-outline-primary)",
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
+          successNeutral: "var(--color-outline-success-neutral)",
+        },
+      },
+      borderColor: {
+        skin: {
+          base: "var(--color-outline-base)",
+          primary: "var(--color-outline-primary)",
+          neutral: "var(--color-outline-neutral)",
+          secondary: "var(--color-outline-secondary)",
+          successNeutral: "var(--color-outline-success-neutral)",
+          successTertiary: "var(--color-outline-success-tertiary)",
+          danger: "var(--color-outline-danger)",
         },
       },
       fontFamily: {
@@ -93,6 +117,7 @@ module.exports = {
         card: "1px 1px 3px 2px rgba(0, 0, 0, 0.05)",
         button: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
         input: "0 1px 6px -0.5px #9BC1D0",
+        knob: "0 2px 6px 0 #C3C3C3;",
       },
     },
     fontSize: {

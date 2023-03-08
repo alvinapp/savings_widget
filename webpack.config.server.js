@@ -3,12 +3,15 @@ const { resolve } = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const webPackConfig = (env) => {
   const config = require(resolve(process.cwd(), env.config));
+  const zlib = require("zlib");
   const SERVER_HOST = config.HOST || "http://localhost";
   const SERVER_PORT = config.PORT || 8000;
   const SERVER_DOMAIN = `${SERVER_HOST}:${SERVER_PORT}`;
+  const ACCESS_KEY = config.ACCESS_KEY || "";
 
   console.log("configuration", config);
   console.log("SERVER_HOST", SERVER_HOST);
@@ -85,6 +88,19 @@ const webPackConfig = (env) => {
         filename: "index.html",
         inject: "body",
         excludeChunks: ["Widget"],
+      }),
+      new CompressionPlugin({
+        filename: "[path][base].br",
+        algorithm: "brotliCompress",
+        test: /\.(js|css|html|svg)$/,
+        compressionOptions: {
+          params: {
+            [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+          },
+        },
+        threshold: 10240,
+        minRatio: 0.8,
+        deleteOriginalAssets: false,
       }),
     ],
   };

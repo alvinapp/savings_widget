@@ -9,7 +9,7 @@ export const Header = ({ children, title, subtitle }: HeaderProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-between items-center pb-4">
-        <div className="h-11 w-11 rounded-full bg-skin-tertiary outline outline-1 outline-skin-secondary flex justify-center items-center">
+        <div className="h-11 w-11 rounded-full bg-skin-tertiary border border-1 border-skin-secondary flex justify-center items-center">
           {children}
         </div>
         <div className="w-28">
