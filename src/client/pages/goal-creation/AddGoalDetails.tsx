@@ -92,7 +92,7 @@ const AddGoalDetails = () => {
       enabled: false,
     }
   );
-  const { isLoading, refetch: confirmGoals } = useQuery(
+  const { isLoading: confirmLoading, refetch: confirmGoals } = useQuery(
     "confirmed-goals",
     () => confirmingAGoal,
     {
@@ -225,7 +225,11 @@ const AddGoalDetails = () => {
             addValue={(e) => e}
           />
         </div>
-        <MainButton title="Start saving" click={() => confirmGoals()} />
+        <MainButton
+          title="Start saving"
+          click={() => confirmGoals()}
+          loading={confirmLoading}
+        />
       </div>
     </div>
   );

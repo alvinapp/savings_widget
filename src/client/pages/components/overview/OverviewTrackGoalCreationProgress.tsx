@@ -63,7 +63,7 @@ const OverviewTrackGoalCreationProgress = () => {
           <MainButton
             isDisabled={!!!userToken}
             title={
-              has_income && has_goal && !has_linked_account
+              has_goal && !has_linked_account
                 ? "Link an account"
                 : has_income && !has_goal && !has_linked_account
                 ? "Create a goal"
@@ -72,7 +72,7 @@ const OverviewTrackGoalCreationProgress = () => {
             click={
               userToken
                 ? () => {
-                    has_income && has_goal && !has_linked_account
+                    has_goal && !has_linked_account
                       ? navigate("/")
                       : has_income && !has_goal && !has_linked_account
                       ? navigate("create-savings-goal")

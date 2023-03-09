@@ -186,7 +186,7 @@ const GoalView = () => {
               <MoreButton
                 size="h-12 w-12"
                 onClick={() => {
-                  navigate("");
+                  goal.openPauseDeleteBottomSheet(true);
                 }}
               />
             }
@@ -229,6 +229,12 @@ const GoalView = () => {
                 pauseGoal={() => goal.openPauseGoalBottomSheet(true)}
                 deleteGoal={() => goal.openDeleteBottomSheet(true)}
                 onClick={() => goal.openPauseDeleteBottomSheet(false)}
+                isPaused={!currentGoal.is_active}
+                resumeGoal={() =>
+                  resumeTheGoal().finally(() => {
+                    goal.openPauseGoalBottomSheet(false);
+                  })
+                }
               />
             }
             defaultSnap={300}

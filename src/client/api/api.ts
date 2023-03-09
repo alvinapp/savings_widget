@@ -27,7 +27,8 @@ const get = async ({
       credentials: "omit",
       headers: headers,
     });
-    return response.json();
+    const responseData = await response.json();
+    return response.ok ? responseData : false;
   } catch (error) {
     // console.debug('get', JSON.stringify({url, headers, params}));
     Sentry.captureException(error);
