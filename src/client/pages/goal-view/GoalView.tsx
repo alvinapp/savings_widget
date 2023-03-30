@@ -215,7 +215,10 @@ const GoalView = () => {
               borderRadius: 24,
             }}
             children={
-              <PauseGoal onClick={() => goal.openPauseGoalBottomSheet(false)} />
+              <PauseGoal
+                onClick={() => goal.openPauseGoalBottomSheet(false)}
+                goalName={goal.confirmedGoal.name}
+              />
             }
             defaultSnap={300}
           ></BottomSheet>

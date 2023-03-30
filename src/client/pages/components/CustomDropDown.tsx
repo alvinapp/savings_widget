@@ -38,7 +38,7 @@ export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
         </div>
       </button>
       {isOpen ? (
-        <div className="absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto border border-1 border-skin-primary overflow-y-auto">
+        <div className="absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto border border-1 border-skin-primary h-14 overflow-y-auto">
           <ul className="">
             {dataset.map((data, i) => {
               return (

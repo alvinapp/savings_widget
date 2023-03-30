@@ -11,7 +11,7 @@ export const dateFormat = (date: Date, includeYear?: boolean) => {
   if (diffInDays == 0) {
     return "Today";
   }
-  if (diffInDays == 1) {
+  if (diffInDays == -1) {
     return "Yesterday";
   }
   const dateProperties: any = includeYear
@@ -114,4 +114,27 @@ export const nthNumber = (number: any) => {
         (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
       ]
     : "";
+};
+export const getMaturityDate = (
+  amount: number,
+  date: Date,
+  contributionAmount: number,
+  weekly: boolean
+) => {
+  if (contributionAmount !== 0) {
+    console.log(`This is the goal amount ${amount}`);
+    console.log(`This is the contribution amount ${contributionAmount}`);
+    const numberOfMonths = weekly
+      ? amount / (contributionAmount * 4)
+      : amount / contributionAmount;
+    console.log(numberOfMonths);
+    const maturityDate = new Date(
+      date.setMonth(date.getMonth() + numberOfMonths)
+    );
+    const exactMaturityDate = dateFormat(maturityDate, true);
+    return exactMaturityDate;
+  } else {
+    return "";
+  }
+  // return maturityDate;
 };

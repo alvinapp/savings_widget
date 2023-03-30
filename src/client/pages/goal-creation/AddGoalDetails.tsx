@@ -13,7 +13,12 @@ import { useNavigate } from "react-router-dom";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import { useQuery } from "react-query";
-import { confirmGoal, saveAGoal, saveGoalImage } from "client/api/goal";
+import {
+  confirmGoal,
+  getConfirmedGoals,
+  saveAGoal,
+  saveGoalImage,
+} from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
@@ -38,41 +43,7 @@ const AddGoalDetails = () => {
       goalId: goal.contributionSettingsGoalId,
     });
   };
-  const saveGoalNameAndAmount = () => {
-    saveAGoal({
-      configuration: configuration,
-      data: {
-        extern_id: "",
-        name: goal.goalName,
-        title: "",
-        amount: parseFloat(goal.goalAmount),
-        contribute_from: "",
-        is_customized: false,
-      },
-    }).then((result) => {
-      if (result.id) {
-        goal.setContributionSettingsGoalId(result.id);
-        goalContributionSettings.openContributionSettingsBottomSheet(true);
-      }
-    });
-  };
-  const confirmingAGoal = () => {
-    confirmGoal({
-      configuration: configuration,
-      goalId: goal.contributionSettingsGoalId,
-      data: {},
-    })
-      .then((result) => {
-        if (result) {
-          goal.setGoalImageUrl("");
-          goal.setGoalName("");
-          goal.setGoalAmount("");
-          goalContributionSettings.setContributionFrequency("");
-          goal.setChosenGoal({});
-        }
-      })
-      .finally(() => navigate("/"));
-  };
+
   const deleteUnconfirmedGoals = () => {
     deleteUnconfirmed(configuration).then((result: any) => {
       if (result) {
@@ -80,10 +51,31 @@ const AddGoalDetails = () => {
       }
     });
   };
-  const { refetch } = useQuery("saving-goals", () => saveGoalNameAndAmount, {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
+  const { isFetching: saveGoalNameFetching, refetch: saveGoalNameAmount } =
+    useQuery(
+      "saving-goals",
+      () =>
+        saveAGoal({
+          configuration: configuration,
+          data: {
+            extern_id: "",
+            name: goal.goalName,
+            title: "",
+            amount: parseFloat(goal.goalAmount),
+            contribute_from: "",
+            is_customized: false,
+          },
+        }).then((result) => {
+          if (result.id) {
+            goal.setContributionSettingsGoalId(result.id);
+            goalContributionSettings.openContributionSettingsBottomSheet(true);
+          }
+        }),
+      {
+        refetchOnWindowFocus: false,
+        enabled: false,
+      }
+    );
   const { refetch: unconfirmedGoals } = useQuery(
     "delete-unconfirmed-goals",
     () => deleteUnconfirmedGoals,
@@ -92,9 +84,30 @@ const AddGoalDetails = () => {
       enabled: false,
     }
   );
-  const { isLoading: confirmLoading, refetch: confirmGoals } = useQuery(
+  const { isFetching: confirmIsFetching, refetch: confirmGoals } = useQuery(
     "confirmed-goals",
-    () => confirmingAGoal,
+    () =>
+      confirmGoal({
+        configuration: configuration,
+        goalId: goal.contributionSettingsGoalId,
+        data: {},
+      })
+        .then((result) => {
+          console.log(result);
+          if (result) {
+            goal.setGoalImageUrl("");
+            goal.setGoalName("");
+            goal.setGoalAmount("");
+            goalContributionSettings.setContributionFrequency("");
+            goal.setGoal({});
+            getConfirmedGoals({ configuration: configuration }).then(
+              (result) => {
+                goal.setConfirmedGoals(result);
+              }
+            );
+          }
+        })
+        .finally(() => navigate("/")),
     {
       refetchOnWindowFocus: false,
       enabled: false,
@@ -184,8 +197,9 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={!!goalContributionSettings.contributionFrequency}
-            onClick={() => refetch()}
+            onClick={() => saveGoalNameAmount()}
             addValue={(e) => e}
+            isLoading={saveGoalNameFetching}
           />
           <BottomSheet
             open={goalContributionSettings.openContributionSettingsSheet}
@@ -219,7 +233,7 @@ const AddGoalDetails = () => {
           <GoalCreationInput
             placeHolder="Apply savings rule"
             hasValue={false}
-            label="Boost your savings journey with rules"
+            label="Set rule"
             value=""
             leadingIcon={<FiTrendingUp size="1.375rem" />}
             addValue={(e) => e}
@@ -228,7 +242,7 @@ const AddGoalDetails = () => {
         <MainButton
           title="Start saving"
           click={() => confirmGoals()}
-          loading={confirmLoading}
+          loading={confirmIsFetching}
         />
       </div>
     </div>

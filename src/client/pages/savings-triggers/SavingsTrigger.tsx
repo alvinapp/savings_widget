@@ -10,10 +10,13 @@ import { FiArrowRight, FiCreditCard, FiFlag } from "react-icons/fi";
 import arrowRight from "../../assets/images/savings/bell.svg";
 /* @ts-ignore */
 import SlideButton from "react-slide-button";
-
+import ReactSlider from "react-slider";
+import useGoalStore from "client/store/goalStore";
 const SavingsTrigger = () => {
   const navigate = useNavigate();
+  const [percentageOfSavings, setPercentageOfSavings] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
+  const goal = useGoalStore((state: any) => state);
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -45,7 +48,7 @@ const SavingsTrigger = () => {
         </div>
         <div className="flex flex-row justify-center mt-2 mx-12">
           <div className="font-poppins font-medium text-tiny text-skin-subtitle tracking-listtile_subtitle text-center">
-            Save the change by rounding up, everytime you use your card.
+            Automatically save the change from daily transactions
           </div>
         </div>
         <div className="flex flex-row justify-center mt-6">
@@ -54,11 +57,15 @@ const SavingsTrigger = () => {
           </div>
         </div>
         <div className="flex flex-row  mx-4 mt-5">
-          <Slider
-            value={sliderValue}
-            onChange={(value: any) => setSliderValue(value)}
-            ariaLabelledByForHandle="2"
-            step={33.33}
+          {/* <Slider
+            // @ts-ignore
+            marks={[0, 1, 2, 5, 10]}
+            // @ts-ignore
+            renderThumb={(props, state) => (
+              <div {...props}>{console.log(props)}</div>
+            )}
+            min={0}
+            max={4}
             dots
             dotStyle={{
               background: "#6F89A5",
@@ -79,6 +86,7 @@ const SavingsTrigger = () => {
               background: "#056489",
             }}
             handleStyle={{
+              color: "#ffffff",
               height: "2.75rem",
               width: "2.75rem",
               borderRadius: "50%",
@@ -88,21 +96,56 @@ const SavingsTrigger = () => {
               border: "none",
               opacity: 1,
             }}
+          /> */}
+          <ReactSlider
+            className="horizontal-slider"
+            marks={[1, 2, 5, 10]}
+            markClassName="example-mark"
+            min={0}
+            max={10}
+            thumbClassName="example-thumb"
+            trackClassName="example-track"
+            renderThumb={(props, state) => (
+              <div {...props}>{`${state.valueNow}%`}</div>
+            )}
+            onChange={(value, index) => {
+              setPercentageOfSavings(value);
+            }}
           />
         </div>
-        <div className="flex flex-row mt-6 justify-center">
+        {/* <div className="flex flex-row mt-6 justify-center">
           <div className="font-workSans font-semibold text-base text-skin-base tracking-title mr-2">
             or by
           </div>
           <CustomAmountButton />
-        </div>
+        </div> */}
         <div className="flex flex-row justify-center mt-6">
           <div className="font-workSans font-semibold text-base text-skin-base tracking-title">
-            every time i use my card at
+            every time I transact at
           </div>
         </div>
         <div className="mt-4 flex flex-row justify-center">
-          <CustomDropDown dataset={["All merchants"]} icon={<FiCreditCard />} />
+          <CustomDropDown
+            dataset={[
+              "All merchants",
+              "Groceries",
+              "Shopping",
+              "Eating out",
+              "Transportation",
+              "Utilities",
+              "Health care",
+              "Entertainment",
+              "Travel",
+              "Bills & Fees",
+              "Personal care",
+              "Home improvement",
+              "Charity",
+              "Cash withdrawals",
+              "Restaurants",
+              "Fast food",
+            ]}
+            icon={<FiCreditCard />}
+          />
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>
         <div className="flex flex-row justify-center mt-6">
@@ -111,7 +154,10 @@ const SavingsTrigger = () => {
           </div>
         </div>
         <div className="mt-4 flex flex-row justify-center">
-          <CustomDropDown dataset={["Spend responsibly"]} icon={<FiFlag />} />
+          <CustomDropDown
+            dataset={[`${goal.confirmedGoal.name}`]}
+            icon={<FiFlag />}
+          />
         </div>
         <div className="flex flex-row justify-center mt-8">
           <div className="font-poppins font-medium text-xs text-skin-subtitle tracking-listtile_subtitle text-center">

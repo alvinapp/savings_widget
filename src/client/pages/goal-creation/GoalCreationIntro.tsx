@@ -18,13 +18,13 @@ const connectDetailsList = [
   {
     title: "Save with ease",
     subtitle:
-      "Double your money by automatically folding it over and putting it it back into your pocket",
+      "Set individual savings schedules or fun savings rules for each goal you have",
     image: money1,
   },
   {
     title: "Track with ease",
     subtitle:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Track your savings progress from your Your Bank app so you can spend day-to-day with peace of mind",
     image: money3,
   },
 ];

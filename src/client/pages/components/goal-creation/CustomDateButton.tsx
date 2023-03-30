@@ -40,6 +40,7 @@ export const CustomDateButton = ({
       selected={goalContributionSettings.startingFromDate}
       onChange={(date: Date) => goalContributionSettings.setStartFromDate(date)}
       customInput={<ExampleCustomInput />}
+      minDate={new Date()}
     />
   );
 };

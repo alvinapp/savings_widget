@@ -17,7 +17,8 @@ import {
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-import { convertDate } from "client/utils/Formatters";
+import { convertDate, getMaturityDate } from "client/utils/Formatters";
+import { dateFormat } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
   updatingGoal?: boolean;
@@ -45,7 +46,7 @@ export const AddContributionSettings = ({
   );
   const user = useUserStore((state: any) => state.user);
   const monthlyIncomeAmount = monthlyIncome || user.income;
-  const [percentageOfMonthlyIncome, setPercentageOfMonthlyIncome] = useState(0);
+  const [percentageOfSavings, setPercentageOfSavings] = useState(0);
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
@@ -55,56 +56,61 @@ export const AddContributionSettings = ({
   const goal = useGoalStore((state: any) => state);
   const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
   const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
-  const saveSettings = () => {
-    saveGoalContributionSettings({
-      configuration: configuration,
-      data: {
-        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
-        savings_amount: goalContributionSettings.contributionAmount,
-        contribute_from: convertDate(
-          goalContributionSettings.startingFromDate.toString()
-        ),
-      },
-      goalId: goal.contributionSettingsGoalId,
-    }).then((result) => {
-      if (result.frequency !== "") {
-        goalContributionSettings.setContributionFrequency(result.frequency);
-        goalContributionSettings.openContributionSettingsBottomSheet(false);
-      }
-    });
-  };
-  const updateSettings = () => {
-    updateGoalContributionSettings({
-      configuration: configuration,
-      data: {
-        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
-        savings_amount: goalContributionSettings.contributionAmount,
-        contribute_from: convertDate(
-          goalContributionSettings.startingFromDate.toString()
-        ),
-      },
-      goalId: goal.confirmedGoal.id,
-    }).then((result) => {
-      if (result.frequency !== "") {
-        goalContributionSettings.setContributionFrequency(result.frequency);
-        goalContributionSettings.openContributionSettingsBottomSheet(false);
-      }
-    });
-  };
+
   const {
-    isLoading: saveContributionLoading,
+    isFetching: saveContributionFetching,
     refetch: saveContributionSettings,
-  } = useQuery("save-contribution-settings", () => saveSettings, {
-    refetchOnWindowFocus: true,
-    enabled: false,
-  });
+  } = useQuery(
+    "save-contribution-settings",
+    () =>
+      saveGoalContributionSettings({
+        configuration: configuration,
+        data: {
+          cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+          savings_amount: goalContributionSettings.contributionAmount,
+          contribute_from: convertDate(
+            goalContributionSettings.startingFromDate.toString()
+          ),
+        },
+        goalId: goal.contributionSettingsGoalId,
+      }).then((result) => {
+        if (result.frequency !== "") {
+          goalContributionSettings.setContributionFrequency(result.frequency);
+          goalContributionSettings.openContributionSettingsBottomSheet(false);
+        }
+      }),
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
   const {
-    isLoading: updateContributionLoading,
+    isFetching: updateContributionFetching,
     refetch: updateContributionSettings,
-  } = useQuery("update-contribution-settings", () => updateSettings, {
-    refetchOnWindowFocus: true,
-    enabled: false,
-  });
+  } = useQuery(
+    "update-contribution-settings",
+    () =>
+      updateGoalContributionSettings({
+        configuration: configuration,
+        data: {
+          cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+          savings_amount: goalContributionSettings.contributionAmount,
+          contribute_from: convertDate(
+            goalContributionSettings.startingFromDate.toString()
+          ),
+        },
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result.frequency !== "") {
+          goalContributionSettings.setContributionFrequency(result.frequency);
+          goalContributionSettings.openContributionSettingsBottomSheet(false);
+        }
+      }),
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -141,12 +147,12 @@ export const AddContributionSettings = ({
             goalContributionSettings.setContributionAmount(
               (monthlyIncomeAmount * value) / 100
             );
-            setPercentageOfMonthlyIncome(value);
+            setPercentageOfSavings(value);
           }}
         />
       </div>
       <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
-        {`${percentageOfMonthlyIncome}% of my monthly net income`}
+        {`${percentageOfSavings}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
@@ -158,13 +164,13 @@ export const AddContributionSettings = ({
       )}
       <div className="mt-12">
         <BottomSheetFooter
-          title={`Save weekly ${currency}10,000 by Thur, Jul 8th 2023.`}
+          title={`Save ${currency}${goalContributionSettings.contributionAmount} weekly to reach your goal`}
           onClick={() =>
             updatingGoal
               ? updateContributionSettings()
               : saveContributionSettings()
           }
-          loading={saveContributionLoading || updateContributionLoading}
+          loading={saveContributionFetching || updateContributionFetching}
         />
       </div>
     </div>

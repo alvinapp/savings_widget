@@ -112,10 +112,10 @@ const Overview = () => {
       <div className="mt-6">
         {/* <NotificationCard amount={250000.54} /> */}
       </div>
-      {goal.confirmedGoals.length === 0 ? (
-        <OverviewTrackGoalCreationProgress />
-      ) : (
+      {goal.confirmedGoals.length > 0 ? (
         <ShowGoalsInOverview />
+      ) : (
+        <OverviewTrackGoalCreationProgress />
       )}
       {goal.confirmedGoals.length > 0 ? (
         <div className="fixed bottom-4 right-4">

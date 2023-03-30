@@ -2,6 +2,7 @@ import Goal from "client/models/Goal";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
 import React, { useState } from "react";
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
+import { TailSpin } from "react-loader-spinner";
 type AddMonthlyIncomeInputProps = {
   increment?: () => void;
   decrement?: () => void;
@@ -59,6 +60,7 @@ type GoalCreationInputProps = {
   type?: any;
   hasCurrencySymbol?: boolean;
   clearInput?: any;
+  isLoading?: boolean;
 };
 export const GoalCreationInput = ({
   label,
@@ -71,6 +73,7 @@ export const GoalCreationInput = ({
   type = "text",
   hasCurrencySymbol = false,
   clearInput,
+  isLoading = false,
 }: GoalCreationInputProps) => {
   const handleClearInput = (event: any) => {
     event.stopPropagation();
@@ -114,6 +117,7 @@ export const GoalCreationInput = ({
               <div></div>
             )}
             <input
+              disabled={hasValue ? false : true}
               type={type}
               placeholder={placeHolder}
               value={value}
@@ -130,6 +134,16 @@ export const GoalCreationInput = ({
             >
               <FiX color="#4E6783" />
             </button>
+          ) : isLoading ? (
+            <TailSpin
+              height="20"
+              width="20"
+              color="#056489"
+              ariaLabel="tail-spin-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
           ) : (
             <div></div>
           )}

@@ -11,20 +11,20 @@ export const saveAGoal = async ({
 }: {
   configuration: IConfig;
   data: any;
-}) =>
-  postData({
-    endpoint: "/goals",
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = postData({
+      endpoint: "/goals",
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 
 export const saveGoalImage = async ({
   configuration,
@@ -56,21 +56,20 @@ export const saveGoalContributionSettings = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/schedule`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = postData({
+      endpoint: `/goals/${goalId}/schedule`,
+      token: configuration.token,
+      data: data,
     });
-
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 export const confirmGoal = async ({
   configuration,
   goalId,
@@ -79,20 +78,20 @@ export const confirmGoal = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/confirm`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = postData({
+      endpoint: `/goals/${goalId}/confirm`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 
 //Get all confirmed goals
 export const getConfirmedGoals = async ({
@@ -122,20 +121,21 @@ export const pauseGoal = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/pause`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = postData({
+      endpoint: `/goals/${goalId}/pause`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
 //Resume a goal
 export const resumeGoal = async ({
   configuration,
@@ -225,20 +225,20 @@ export const updateGoalContributionSettings = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/schedule/update`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = postData({
+      endpoint: `/goals/${goalId}/schedule/update`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 //Get total contribution
 export const totalContribution = async ({
   configuration,

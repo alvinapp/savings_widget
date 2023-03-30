@@ -30,7 +30,7 @@ const OverviewTrackGoalCreationProgress = () => {
         </div>
         <div className="mt-3 pr-14">
           <div className="text-skin-primary text-base font-workSans tracking-title">
-            Start your savings journey with Wesley.
+            Start your savings journey with Your Bank.
           </div>
         </div>
         <div className="mt-6">
@@ -73,7 +73,7 @@ const OverviewTrackGoalCreationProgress = () => {
               userToken
                 ? () => {
                     has_goal && !has_linked_account
-                      ? navigate("/")
+                      ? navigate("/create-savings-goal")
                       : has_income && !has_goal && !has_linked_account
                       ? navigate("create-savings-goal")
                       : navigate("goal-creation");

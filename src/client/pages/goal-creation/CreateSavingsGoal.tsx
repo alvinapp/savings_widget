@@ -42,12 +42,12 @@ const CreateSavingsGoal = () => {
           <Header
             title="Create a savings goal."
             children={<FiFlag color="#6F89A5" />}
-            subtitle="Excepteur sint occaecat cupidatat non proident"
+            subtitle="Select a popular goal or create your own"
           />
         </div>
         <div className="mt-16 mx-3.5">
           <BuildGoalCard
-            title="Let's buld one together"
+            title="Let's build one together"
             click={() => {
               goalStore.setGoalImageUrl("");
               goalStore.setGoalName("");
@@ -63,7 +63,7 @@ const CreateSavingsGoal = () => {
             Tailored inspirations just for you
           </div>
           <div className="tracking-widest font-poppins text-skin-secondary text-xxxs">
-            Excepteur sint occaecat cupidatat non proident
+            We'll help you get to whatever your dream is
           </div>
         </div>
         <div className=" mt-4.5 mx-3.5">
