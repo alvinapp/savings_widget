@@ -108,33 +108,30 @@ export const convertDate = (dateString: string): string => {
   const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezone}`;
 };
+export const rightDateFormat = (dateString: string): string => {
+  const date = new Date(dateString);
+  const year = date.getUTCFullYear().toString();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+  const day = date.getUTCDate().toString().padStart(2, "0");
+  const hours = date.getUTCHours().toString().padStart(2, "0");
+  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  const seconds = date.getUTCSeconds().toString().padStart(2, "0");
+  const milliseconds = date.getUTCMilliseconds().toString().padStart(3, "0");
+  const timezoneOffset = date.getTimezoneOffset();
+  const timezoneHours = Math.abs(Math.floor(timezoneOffset / 60))
+    .toString()
+    .padStart(2, "0");
+  const timezoneMinutes = Math.abs(timezoneOffset % 60)
+    .toString()
+    .padStart(2, "0");
+  const timezoneSign = timezoneOffset < 0 ? "+" : "-";
+  const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 export const nthNumber = (number: any) => {
   return number > 0
     ? ["th", "st", "nd", "rd"][
         (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
       ]
     : "";
-};
-export const getMaturityDate = (
-  amount: number,
-  date: Date,
-  contributionAmount: number,
-  weekly: boolean
-) => {
-  if (contributionAmount !== 0) {
-    console.log(`This is the goal amount ${amount}`);
-    console.log(`This is the contribution amount ${contributionAmount}`);
-    const numberOfMonths = weekly
-      ? amount / (contributionAmount * 4)
-      : amount / contributionAmount;
-    console.log(numberOfMonths);
-    const maturityDate = new Date(
-      date.setMonth(date.getMonth() + numberOfMonths)
-    );
-    const exactMaturityDate = dateFormat(maturityDate, true);
-    return exactMaturityDate;
-  } else {
-    return "";
-  }
-  // return maturityDate;
 };

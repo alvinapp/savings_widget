@@ -22,14 +22,19 @@ import {
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
+import useUserStore from "client/store/userStore";
 const AddGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
-  const currencySymbol = useMonthlyIncomeStore(
-    (state: any) => state.currencySymbol
+  const monthlyIncome = useMonthlyIncomeStore(
+    (state: any) => state.monthlyIncome
   );
+  const user = useUserStore((state: any) => state.user);
+  const monthlyIncomeAmount = monthlyIncome || user.income;
   const goal = useGoalStore((state: any) => state);
+  const [hasGoalAmount, setHasGoalAmount] = useState(true);
+  const [hasGoalName, setHasGoalName] = useState(true);
   const navigate = useNavigate();
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
@@ -69,6 +74,10 @@ const AddGoalDetails = () => {
           if (result.id) {
             goal.setContributionSettingsGoalId(result.id);
             goalContributionSettings.openContributionSettingsBottomSheet(true);
+            goalContributionSettings.setContributionAmount(
+              (monthlyIncomeAmount * 5) / 100
+            );
+            goal.setPercentageOfSavings(5);
           }
         }),
       {
@@ -93,7 +102,6 @@ const AddGoalDetails = () => {
         data: {},
       })
         .then((result) => {
-          console.log(result);
           if (result) {
             goal.setGoalImageUrl("");
             goal.setGoalName("");
@@ -171,7 +179,15 @@ const AddGoalDetails = () => {
             value={goal.goalName ? goal.goalName : ""}
             leadingIcon={<FiFlag size="1.375rem" />}
             addValue={(e) => goal.setGoalName(e)}
-            hasValue={!!goal.goalName}
+            hasValue={hasGoalName}
+            clearInput={() => {
+              setHasGoalName(false);
+              goal.setGoalName("");
+            }}
+            onClick={() => {
+              console.log(hasGoalName);
+              // setHasGoalName(false);
+            }}
           />
         </div>
         <div className="mb-6">
@@ -183,7 +199,14 @@ const AddGoalDetails = () => {
             value={goal.goalAmount ? goal.goalAmount : ""}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => goal.setGoalAmount(e)}
-            hasValue={!!goal.goalAmount}
+            hasValue={hasGoalAmount}
+            clearInput={() => {
+              setHasGoalAmount(false);
+              goal.setGoalAmount("");
+            }}
+            onClick={() => {
+              setHasGoalAmount(false);
+            }}
           />
         </div>
         <div className="mb-6">
@@ -200,6 +223,9 @@ const AddGoalDetails = () => {
             onClick={() => saveGoalNameAmount()}
             addValue={(e) => e}
             isLoading={saveGoalNameFetching}
+            clearInput={() =>
+              goalContributionSettings.setContributionFrequency("")
+            }
           />
           <BottomSheet
             open={goalContributionSettings.openContributionSettingsSheet}

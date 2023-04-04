@@ -4,10 +4,15 @@ import CloseButton from "../components/CloseButton";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
 import useGoalStore from "client/store/goalStore";
 import SelectResumeDate from "../components/goalview/SelectResumeDate";
-import { getConfirmedGoals, pauseGoal } from "client/api/goal";
+import { getConfirmedGoals, getMaturityDate, pauseGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { useQuery } from "react-query";
-import { convertDate, dateFormat, nthNumber } from "client/utils/Formatters";
+import {
+  convertDate,
+  dateFormat,
+  nthNumber,
+  rightDateFormat,
+} from "client/utils/Formatters";
 import { toast } from "react-toastify";
 type PauseGoalProps = {
   onClick?: () => void;
@@ -19,7 +24,6 @@ export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
   const day = nextMonth.getDate();
   const [activeDateOption, setActiveDateOption] = useState(0);
   const goal = useGoalStore((state: any) => state);
-  const currency = "₦";
   const selectDateOptions = [
     { id: 0, title: `${day}${nthNumber(day)} next month` },
     { id: 1, title: "Custom" },
@@ -65,6 +69,22 @@ export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
       }),
     { refetchOnWindowFocus: false, enabled: false }
   );
+  const { isFetching: fetchingMaturityDate, refetch: maturiryDate } = useQuery(
+    "maturity-date",
+    () =>
+      getMaturityDate({
+        configuration: configuration,
+        data: {
+          date_str: rightDateFormat(goal.resume_at.toString()),
+        },
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result) {
+          goal.setMaturityDate(result.maturity_date);
+        }
+      })
+    // { refetchOnWindowFocus: false, enabled: false }
+  );
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -95,18 +115,18 @@ export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
           onClick={(selected: number) => {
             if (selected === 0) {
               goal.setResumeAtDate(nextMonth);
-            } else {
+              maturiryDate();
             }
             setActiveDateOption(selected);
           }}
           selectDateOptions={selectDateOptions}
         />
       </div>
-      <div className="mt-12 mb-12">
+      <div className="mt-12">
         <BottomSheetFooter
           loading={pausingGoal}
           onClick={() => pauseTheGoal()}
-          title={`Your goal will resume on ${dateFormat(goal.resume_at, true)}`}
+          title={`${goal.maturityDate}`}
         />
       </div>
     </div>

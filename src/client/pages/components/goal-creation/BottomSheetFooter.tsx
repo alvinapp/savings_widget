@@ -17,7 +17,7 @@ export const BottomSheetFooter = ({
   loading,
 }: BottomSheetFooterProps) => {
   return (
-    <div className="bg-bottomSheetFooterBg bg-cover bg-no-repeat h-screen/50 relative pb-5">
+    <div className="bg-bottomSheetFooterBg bg-cover bg-no-repeat h-1/2 relative pb-5 pt-3">
       <div className="absolute -top-5 right-0 left-0 flex flex-row justify-between items-center mx-3.5">
         <img src={runningMan} />
         <img src={tree1} />

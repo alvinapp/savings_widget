@@ -44,7 +44,7 @@ async function post({
 }: {
   endpoint: string;
   token?: string | null;
-  data: any;
+  data?: any;
   publicKey?: string | null;
 }) {
   var headers = {

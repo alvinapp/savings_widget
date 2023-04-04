@@ -11,6 +11,9 @@ import Goal from "client/models/Goal";
 import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 import useGoalStore from "client/store/goalStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import { useQuery } from "react-query";
+import { defaultFrequency } from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
 
 const CreateSavingsGoal = () => {
   const navigate = useNavigate();
@@ -19,6 +22,25 @@ const CreateSavingsGoal = () => {
     (state: any) => state
   );
   const setChosenGoal = goalStore.setGoal;
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const { isFetching: fetchingFrequency, refetch: fetchFrequency } = useQuery(
+    "fetch-frequency",
+    () =>
+      defaultFrequency({
+        configuration: configuration,
+        data: {
+          frequency_text: "weekly",
+        },
+      }).then((result) => {
+        if (result.frequency != "") {
+          goalContributionSettings.setContributionFrequency(result.frequency);
+          goalStore.setPercentageOfSavings(result.percentage);
+        }
+      }),
+    { refetchOnWindowFocus: false, enabled: false }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
@@ -53,7 +75,6 @@ const CreateSavingsGoal = () => {
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
               setChosenGoal({});
-              goalContributionSettings.setContributionFrequency("");
               navigate("/add-goal-details");
             }}
           />
@@ -68,11 +89,11 @@ const CreateSavingsGoal = () => {
         </div>
         <div className=" mt-4.5 mx-3.5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {predefinedGoals.map((goal: Goal, index) => {
+            {predefinedGoals.map((goal: Goal, i) => {
               return (
                 <div className="mb-4">
                   <CreateGoalCard
-                    key={index}
+                    key={i}
                     goalImage={goal.imageUrl}
                     goalName={goal.name}
                     onClick={() => {
@@ -80,8 +101,8 @@ const CreateSavingsGoal = () => {
                       goalStore.setGoalName(goal.name);
                       goalStore.setGoalAmount(goal.amount);
                       setChosenGoal(goal);
-                      goalContributionSettings.setContributionFrequency("");
                       navigate("/add-goal-details");
+                      fetchFrequency();
                     }}
                   />
                 </div>

@@ -17,7 +17,7 @@ import {
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-import { convertDate, getMaturityDate } from "client/utils/Formatters";
+import { convertDate } from "client/utils/Formatters";
 import { dateFormat } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
@@ -128,7 +128,20 @@ export const AddContributionSettings = ({
         <TabFilter
           tabs={contributionSettingsTabs}
           activeTab={tabIndex}
-          onClick={(tab: any) => setTabIndex(tab.tab_id)}
+          onClick={(tab: any) => {
+            setTabIndex(tab.tab_id);
+            if (tab.tab_id === 0) {
+              goalContributionSettings.setContributionAmount(
+                (monthlyIncomeAmount * 5) / 100
+              );
+              goal.setPercentageOfSavings(5);
+            } else {
+              goalContributionSettings.setContributionAmount(
+                (monthlyIncomeAmount * 20) / 100
+              );
+              goal.setPercentageOfSavings(20);
+            }
+          }}
         />
       </div>
       <div className="mb-2.5 flex flex-row justify-center items-center">
@@ -136,6 +149,7 @@ export const AddContributionSettings = ({
       </div>
       <div className="mb-6 px-10">
         <ReactSlider
+          value={goal.percentageOfSavings}
           className="horizontal-slider"
           thumbClassName="example-thumb"
           trackClassName="example-track"
@@ -147,7 +161,7 @@ export const AddContributionSettings = ({
             goalContributionSettings.setContributionAmount(
               (monthlyIncomeAmount * value) / 100
             );
-            setPercentageOfSavings(value);
+            goal.setPercentageOfSavings(value);
           }}
         />
       </div>

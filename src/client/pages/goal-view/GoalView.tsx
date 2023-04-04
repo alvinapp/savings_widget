@@ -56,19 +56,6 @@ const GoalView = () => {
     (element: any) => element.id === goal.confirmedGoal.id
   );
 
-  const resumeAGoal = async () => {
-    resumeGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
   const deleteAGoal = async () => {
     deleteGoal({
       configuration: configuration,
@@ -87,7 +74,18 @@ const GoalView = () => {
 
   const { refetch: resumeTheGoal } = useQuery(
     "resume-goal",
-    () => resumeAGoal,
+    () =>
+      resumeGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {},
+      }).then((result) => {
+        if (result) {
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
     { refetchOnWindowFocus: true, enabled: false }
   );
   const { refetch: deleteTheGoal } = useQuery(

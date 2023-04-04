@@ -27,22 +27,21 @@ const GoalCard = ({
     event.stopPropagation();
     resumeTheGoal();
   };
-  const resumeAGoal = async () => {
-    resumeGoal({
-      configuration: configuration,
-      goalId: id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
+
   const { data, refetch: resumeTheGoal } = useQuery(
     "resume a goal",
-    () => resumeAGoal,
+    () =>
+      resumeGoal({
+        configuration: configuration,
+        goalId: id,
+        data: {},
+      }).then((result) => {
+        if (result) {
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: false,

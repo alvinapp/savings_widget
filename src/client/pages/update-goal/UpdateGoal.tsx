@@ -58,7 +58,6 @@ const UpdateGoalDetails = () => {
     })
       .then((result) => {
         if (result.id) {
-          console.log(result);
           goal.setContributionSettingsGoalId(result.id);
         }
       })

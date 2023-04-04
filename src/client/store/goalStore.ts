@@ -14,6 +14,24 @@ const useGoalStore = create((set) => ({
   goalAmount: "",
   customImageUrl: "",
   totalContribution: 0,
+  maturityDate: "",
+  percentageOfSavings: 5,
+  setPercentageOfSavings: (perc: number) => {
+    return set(() => {
+      const result = {
+        percentageOfSavings: perc,
+      };
+      return result;
+    });
+  },
+  setMaturityDate: (date: any) => {
+    return set(() => {
+      const result = {
+        maturityDate: date,
+      };
+      return result;
+    });
+  },
   setGoal: (goal: Goal) => {
     return set((state: any) => {
       const result = {
