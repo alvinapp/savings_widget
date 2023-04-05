@@ -135,3 +135,9 @@ export const nthNumber = (number: any) => {
       ]
     : "";
 };
+export const maskAccountNo = (str: string, pad = 1) => {
+  const slicedStr = str.slice(1, pad);
+  const masked = slicedStr.padEnd(str.length, "*");
+  console.log(masked);
+  return masked;
+};

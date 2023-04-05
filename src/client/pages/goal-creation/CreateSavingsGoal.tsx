@@ -35,7 +35,7 @@ const CreateSavingsGoal = () => {
         },
       }).then((result) => {
         if (result.frequency != "") {
-          goalContributionSettings.setContributionFrequency(result.frequency);
+          // goalContributionSettings.setContributionFrequency(result.frequency);
           goalStore.setPercentageOfSavings(result.percentage);
         }
       }),

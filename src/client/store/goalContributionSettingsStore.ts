@@ -7,6 +7,15 @@ const useGoalContributionSettingsStore = create((set) => ({
   startingFromDate: new Date(),
   openContributionSettingsSheet: false,
   contributionFrequency: "",
+  maturityDateText: "",
+  setMaturityDateText: (text: string) => {
+    return set(() => {
+      const result = {
+        maturityDateText: text,
+      };
+      return result;
+    });
+  },
   setContributionAmount: (amount: number) => {
     return set((state: any) => {
       const result = {

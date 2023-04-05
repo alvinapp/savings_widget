@@ -23,6 +23,10 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import useUserStore from "client/store/userStore";
+import useBankAccountStore from "client/store/BankAccountStore";
+import { SelectBank } from "../components/goal-creation/SelectBank";
+import getBankAccounts from "client/api/accounts";
+import { maskAccountNo } from "client/utils/Formatters";
 const AddGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
@@ -31,31 +35,26 @@ const AddGoalDetails = () => {
     (state: any) => state.monthlyIncome
   );
   const user = useUserStore((state: any) => state.user);
+  const accountStore = useBankAccountStore((state: any) => state);
   const monthlyIncomeAmount = monthlyIncome || user.income;
   const goal = useGoalStore((state: any) => state);
   const [hasGoalAmount, setHasGoalAmount] = useState(true);
   const [hasGoalName, setHasGoalName] = useState(true);
   const navigate = useNavigate();
+  const isValid =
+    !!goalContributionSettings.contributionFrequency &&
+    accountStore.account.bank_name;
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  const saveTheGoalImage = () => {
-    saveGoalImage({
-      configuration: configuration,
-      data: {
-        image_url: goal.goalImageUrl,
-      },
-      goalId: goal.contributionSettingsGoalId,
-    });
-  };
 
-  const deleteUnconfirmedGoals = () => {
-    deleteUnconfirmed(configuration).then((result: any) => {
+  const { isFetching: fetchingBankAccounts } = useQuery("bank-accounts", () =>
+    getBankAccounts(configuration).then((result) => {
       if (result) {
-        goalContributionSettings.contributionFrequency("");
+        accountStore.setAccounts(result);
       }
-    });
-  };
+    })
+  );
   const { isFetching: saveGoalNameFetching, refetch: saveGoalNameAmount } =
     useQuery(
       "saving-goals",
@@ -73,21 +72,22 @@ const AddGoalDetails = () => {
         }).then((result) => {
           if (result.id) {
             goal.setContributionSettingsGoalId(result.id);
-            goalContributionSettings.openContributionSettingsBottomSheet(true);
-            goalContributionSettings.setContributionAmount(
-              (monthlyIncomeAmount * 5) / 100
-            );
-            goal.setPercentageOfSavings(5);
+            goal.setGoalId(result.id);
           }
-        }),
-      {
-        refetchOnWindowFocus: false,
-        enabled: false,
-      }
+        })
+      // {
+      //   refetchOnWindowFocus: false,
+      //   enabled: false,
+      // }
     );
   const { refetch: unconfirmedGoals } = useQuery(
     "delete-unconfirmed-goals",
-    () => deleteUnconfirmedGoals,
+    () =>
+      deleteUnconfirmed(configuration).then((result: any) => {
+        if (result) {
+          goalContributionSettings.contributionFrequency("");
+        }
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: false,
@@ -108,6 +108,7 @@ const AddGoalDetails = () => {
             goal.setGoalAmount("");
             goalContributionSettings.setContributionFrequency("");
             goal.setGoal({});
+            accountStore.setAccount({});
             getConfirmedGoals({ configuration: configuration }).then(
               (result) => {
                 goal.setConfirmedGoals(result);
@@ -123,7 +124,14 @@ const AddGoalDetails = () => {
   );
   const { data: saveImage } = useQuery(
     "save-goal-image",
-    () => saveTheGoalImage,
+    () =>
+      saveGoalImage({
+        configuration: configuration,
+        data: {
+          image_url: goal.goalImageUrl,
+        },
+        goalId: goal.contributionSettingsGoalId,
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: !!goal.contributionSettingsGoalId,
@@ -185,8 +193,7 @@ const AddGoalDetails = () => {
               goal.setGoalName("");
             }}
             onClick={() => {
-              console.log(hasGoalName);
-              // setHasGoalName(false);
+              setHasGoalName(false);
             }}
           />
         </div>
@@ -220,9 +227,17 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={!!goalContributionSettings.contributionFrequency}
-            onClick={() => saveGoalNameAmount()}
+            onClick={() => {
+              goalContributionSettings.openContributionSettingsBottomSheet(
+                true
+              );
+              goalContributionSettings.setContributionAmount(
+                (monthlyIncomeAmount * 5) / 100
+              );
+              goal.setPercentageOfSavings(5);
+            }}
             addValue={(e) => e}
-            isLoading={saveGoalNameFetching}
+            // isLoading={saveGoalNameFetching}
             clearInput={() =>
               goalContributionSettings.setContributionFrequency("")
             }
@@ -248,12 +263,43 @@ const AddGoalDetails = () => {
         <div className="mb-6">
           <GoalCreationInput
             placeHolder="Link bank or wallet"
-            hasValue={false}
             label="Link an account and track savings with ease"
-            value=""
+            value={
+              accountStore.account.bank_name
+                ? `${
+                    accountStore.account.bank_name
+                      ? accountStore.account.bank_name
+                      : ""
+                  }, ${
+                    accountStore.account.account_number
+                      ? maskAccountNo(
+                          accountStore.account.account_number.toString(),
+                          4
+                        )
+                      : ""
+                  }`
+                : ""
+            }
             leadingIcon={<FiPocket size="1.375rem" />}
+            hasValue={
+              !!accountStore.account.bank_name &&
+              accountStore.account.account_number
+            }
+            onClick={() => accountStore.openAccountBottomSheet(true)}
             addValue={(e) => e}
+            clearInput={() => {
+              accountStore.setAccount;
+            }}
           />
+          <BottomSheet
+            onDismiss={() => accountStore.openAccountBottomSheet(false)}
+            open={accountStore.accountBottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={<SelectBank accountList={accountStore.accounts} />}
+            defaultSnap={300}
+          ></BottomSheet>
         </div>
         <div className="mb-10">
           <GoalCreationInput
@@ -266,6 +312,7 @@ const AddGoalDetails = () => {
           />
         </div>
         <MainButton
+          isDisabled={!isValid}
           title="Start saving"
           click={() => confirmGoals()}
           loading={confirmIsFetching}

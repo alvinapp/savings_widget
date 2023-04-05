@@ -34,20 +34,21 @@ export const saveGoalImage = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/goal_image`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = await postData({
+      endpoint: `/goals/${goalId}/goal_image`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
 export const saveGoalContributionSettings = async ({
   configuration,
   data,
@@ -291,6 +292,28 @@ export const defaultFrequency = async ({
   try {
     const res = postData({
       endpoint: `/goals/schedule_text`,
+      token: configuration.token,
+      data: data,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+//Get Contribution settings maturity date
+
+export const contributionMaturityDate = async ({
+  configuration,
+  data,
+}: {
+  configuration: IConfig;
+  data?: any;
+}) => {
+  try {
+    const res = postData({
+      endpoint: `/goals/maturity`,
       token: configuration.token,
       data: data,
     });

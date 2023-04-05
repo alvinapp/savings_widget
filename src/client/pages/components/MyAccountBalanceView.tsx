@@ -1,9 +1,9 @@
-import {FiMoreHorizontal} from 'react-icons/fi';
+import { FiMoreHorizontal } from "react-icons/fi";
 
-import Account from 'client/models/Account';
-import useAccountStore from 'client/store/accountStore';
-import {accountLogo} from 'client/utils/AccountLogo';
-import {checkNAN} from 'client/utils/Formatters';
+import Account from "client/models/Account";
+import useAccountStore from "client/store/BankAccountStore";
+import { accountLogo } from "client/utils/AccountLogo";
+import { checkNAN } from "client/utils/Formatters";
 
 type AccountBalanceViewProps = {
   balance?: number;
@@ -26,13 +26,13 @@ const MyAccountBalanceView = ({
           <div className="flex flex-col mr-3.5">
             <div
               className={`rounded-full bg-icon_bg/20 w-12 h-12 flex justify-center items-center ${
-                accountName === 'M-Pesa'
-                  ? 'bg-mpesaIcon bg-120% bg-no-repeat bg-center'
-                  : ''
+                accountName === "M-Pesa"
+                  ? "bg-mpesaIcon bg-120% bg-no-repeat bg-center"
+                  : ""
               }`}
             >
-              {accountName === 'M-Pesa' ? (
-                ''
+              {accountName === "M-Pesa" ? (
+                ""
               ) : (
                 <img src={accountLogo(`${accountName}`)} alt=""></img>
               )}

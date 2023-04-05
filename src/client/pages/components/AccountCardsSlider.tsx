@@ -4,7 +4,7 @@ import Account from "client/models/Account";
 import { useEffect, useState } from "react";
 // import {fetchAccounts, fetchToken} from 'client/state/overview';
 import getAccounts from "client/api/accounts";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/BankAccountStore";
 import Accounts from "client/models/Accounts";
 
 type AccountCardProps = {

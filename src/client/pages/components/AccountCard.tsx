@@ -1,12 +1,12 @@
-import {FiMoreHorizontal} from 'react-icons/fi';
-import {useLongPress} from 'use-long-press';
+import { FiMoreHorizontal } from "react-icons/fi";
+import { useLongPress } from "use-long-press";
 
-import Account from 'client/models/Account';
-import Routes from 'client/pages/routes';
-import useAccountStore from 'client/store/accountStore';
-import {cardBackground} from 'client/utils/CardBackground';
-import {accountLogo} from 'client/utils/AccountLogo';
-import {applyAsterix} from 'client/utils/Formatters';
+import Account from "client/models/Account";
+import Routes from "client/pages/routes";
+import useAccountStore from "client/store/BankAccountStore";
+import { cardBackground } from "client/utils/CardBackground";
+import { accountLogo } from "client/utils/AccountLogo";
+import { applyAsterix } from "client/utils/Formatters";
 
 const AccountCard = ({
   account,
@@ -32,7 +32,7 @@ const AccountCard = ({
     e.stopPropagation();
     filterAccountBy(account);
     document.dispatchEvent(
-      new CustomEvent('toPage', {detail: {page: Routes.MYACCOUNT}})
+      new CustomEvent("toPage", { detail: { page: Routes.MYACCOUNT } })
     );
   };
 
@@ -47,13 +47,13 @@ const AccountCard = ({
           <div className="flex flex-row justify-start mb-4 items-center">
             <div
               className={`rounded-full bg-icon_bg/20 w-7 h-7 flex justify-center mr-2 p-0.5 ${
-                account.name === 'M-Pesa'
-                  ? 'bg-mpesaIcon bg-120% bg-no-repeat bg-center'
-                  : ''
+                account.name === "M-Pesa"
+                  ? "bg-mpesaIcon bg-120% bg-no-repeat bg-center"
+                  : ""
               }`}
             >
-              {account.name === 'M-Pesa' ? (
-                ''
+              {account.name === "M-Pesa" ? (
+                ""
               ) : (
                 <img
                   src={accountLogo(`${account.name}`)}
@@ -85,13 +85,13 @@ const AccountCard = ({
             id="al-account-card--account-number"
           >
             <span className="font-montserrat text-xs text-light text-white mr-1 tracking-wide">
-              {applyAsterix({str: accountNumber, mask: '*', n: 4})}
+              {applyAsterix({ str: accountNumber, mask: "*", n: 4 })}
             </span>
             <div
               className="font-poppins text-xxs font-medium text-white tracking-widest"
               id="al-account-card--account-type"
             >
-              {account.type.replace('Account', '')}
+              {account.type.replace("Account", "")}
             </div>
           </div>
         </div>

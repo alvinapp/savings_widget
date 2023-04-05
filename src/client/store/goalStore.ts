@@ -10,12 +10,21 @@ const useGoalStore = create((set) => ({
   pauseDeleteBottomSheet: false,
   deleteGoalBottomSheet: false,
   goalImageUrl: "",
+  goalId: 0,
   goalName: "",
   goalAmount: "",
   customImageUrl: "",
   totalContribution: 0,
   maturityDate: "",
-  percentageOfSavings: 5,
+  percentageOfSavings: 0,
+  setGoalId: (id: number) => {
+    return set(() => {
+      const result = {
+        goalId: id,
+      };
+      return result;
+    });
+  },
   setPercentageOfSavings: (perc: number) => {
     return set(() => {
       const result = {

@@ -1,5 +1,5 @@
 import { checkIfDebitCredit, dateFormat } from "client/utils/Formatters";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/BankAccountStore";
 import Accounts from "client/models/Accounts";
 import Transaction from "client/models/Transaction";
 import Trigger from "client/models/Trigger";
@@ -31,9 +31,7 @@ const TriggerCard = ({
               </div>
             </div>
             <div className="flex flex-col">
-              <div
-                className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
-              >
+              <div className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40">
                 {triggerName}
               </div>
               <div

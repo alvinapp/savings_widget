@@ -8,7 +8,7 @@ import money1 from "client/assets/images/money1.svg";
 import money2 from "client/assets/images/money2.svg";
 import money3 from "client/assets/images/money3.svg";
 import Routes from "client/pages/routes";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/BankAccountStore";
 import useConnectInfoStore from "client/store/connectIntroStore";
 import useUserStore from "client/store/userStore";
 import { useNavigate } from "react-router-dom";

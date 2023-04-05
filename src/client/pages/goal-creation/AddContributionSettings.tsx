@@ -11,13 +11,14 @@ import useUserStore from "client/store/userStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import { useQuery } from "react-query";
 import {
+  contributionMaturityDate,
   saveGoalContributionSettings,
   updateGoalContributionSettings,
 } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-import { convertDate } from "client/utils/Formatters";
+import { convertDate, rightDateFormat } from "client/utils/Formatters";
 import { dateFormat } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
@@ -27,8 +28,8 @@ export const AddContributionSettings = ({
   onClick,
   updatingGoal = false,
 }: AddContributionSettingsProps) => {
-  const currency = "₦";
   const [tabIndex, setTabIndex] = useState(0);
+  const [maturityDateText, setMaturityDateText] = useState("");
   const contributionSettingsTabs = [
     {
       tab_id: 0,
@@ -46,7 +47,6 @@ export const AddContributionSettings = ({
   );
   const user = useUserStore((state: any) => state.user);
   const monthlyIncomeAmount = monthlyIncome || user.income;
-  const [percentageOfSavings, setPercentageOfSavings] = useState(0);
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
@@ -111,6 +111,30 @@ export const AddContributionSettings = ({
       enabled: false,
     }
   );
+  const { isFetching: fetchingMaturityDate, refetch: fetchMaturityDate } =
+    useQuery(
+      "fetch-maturity-date",
+      () =>
+        contributionMaturityDate({
+          configuration: configuration,
+          data: {
+            goal_amount: goal.goalAmount,
+            frequency: tabIndex === 0 ? "weekly" : "monthly",
+            contribution_amount: goalContributionSettings.contributionAmount,
+            date_str: rightDateFormat(
+              goalContributionSettings.startingFromDate.toString()
+            ),
+          },
+        }).then((result) => {
+          if (result) {
+            setMaturityDateText(result.maturity_date);
+          }
+        })
+      // {
+      //   refetchOnWindowFocus: true,
+      //   enabled: false,
+      // }
+    );
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -162,11 +186,12 @@ export const AddContributionSettings = ({
               (monthlyIncomeAmount * value) / 100
             );
             goal.setPercentageOfSavings(value);
+            fetchMaturityDate();
           }}
         />
       </div>
       <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
-        {`${percentageOfSavings}% of my monthly net income`}
+        {`${goal.percentageOfSavings}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
@@ -178,7 +203,7 @@ export const AddContributionSettings = ({
       )}
       <div className="mt-12">
         <BottomSheetFooter
-          title={`Save ${currency}${goalContributionSettings.contributionAmount} weekly to reach your goal`}
+          title={`${maturityDateText}`}
           onClick={() =>
             updatingGoal
               ? updateContributionSettings()
