@@ -40,7 +40,6 @@ export const SelectBank = ({ accountList }: SelectBankProps) => {
               bankName={account.bank_name}
               onClick={() => {
                 accountStore.setAccount(account);
-                console.log(accountStore.account);
                 linkBankAccount({
                   configuration: configuration,
                   data: {
@@ -48,7 +47,6 @@ export const SelectBank = ({ accountList }: SelectBankProps) => {
                     bank_account_id: account.id,
                   },
                 }).then((result) => {
-                  console.log(result);
                   if (result) {
                     accountStore.openAccountBottomSheet(false);
                   }

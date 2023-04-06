@@ -1,4 +1,7 @@
+import { calculateGoalMaturityDate } from "client/utils/Formatters";
 import create from "zustand";
+import useGoalStore from "./goalStore";
+
 const useGoalContributionSettingsStore = create((set) => ({
   contributionAmount: 0,
   weekDayToContibute: "",
@@ -8,10 +11,28 @@ const useGoalContributionSettingsStore = create((set) => ({
   openContributionSettingsSheet: false,
   contributionFrequency: "",
   maturityDateText: "",
+  tabIndex: 0,
+  goalAmount: 0,
+  setGoalAmount: (amount: number) => {
+    return set(() => {
+      const result = {
+        goalAmount: amount,
+      };
+      return result;
+    });
+  },
   setMaturityDateText: (text: string) => {
     return set(() => {
       const result = {
         maturityDateText: text,
+      };
+      return result;
+    });
+  },
+  setTabIndex: (index: number) => {
+    return set(() => {
+      const result = {
+        tabIndex: index,
       };
       return result;
     });

@@ -144,7 +144,7 @@ const AddGoalDetails = () => {
         <div className="relative">
           <img
             src={goal.goalImageUrl ? goal.goalImageUrl : ""}
-            className="absolute top-0 right-0 left-0"
+            className="absolute top-0 right-0 left-0 w-screen h-72"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
@@ -235,6 +235,7 @@ const AddGoalDetails = () => {
                 (monthlyIncomeAmount * 5) / 100
               );
               goal.setPercentageOfSavings(5);
+              goalContributionSettings.setStartFromDate(new Date());
             }}
             addValue={(e) => e}
             // isLoading={saveGoalNameFetching}
@@ -254,6 +255,8 @@ const AddGoalDetails = () => {
                     false
                   );
                   goalContributionSettings.setContributionAmount(0);
+                  goalContributionSettings.setTabIndex(0);
+                  // goalContributionSettings.setStartFromDate(new Date());
                 }}
               />
             }

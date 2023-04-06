@@ -138,6 +138,53 @@ export const nthNumber = (number: any) => {
 export const maskAccountNo = (str: string, pad = 1) => {
   const slicedStr = str.slice(1, pad);
   const masked = slicedStr.padEnd(str.length, "*");
-  console.log(masked);
   return masked;
 };
+export const calculateGoalMaturityDate = ({
+  goalAmount,
+  frequency,
+  contributionAmount,
+  dateStr,
+}: {
+  goalAmount?: any;
+  frequency?: string;
+  contributionAmount?: any;
+  dateStr?: any;
+}) => {
+  // Convert start date string to datetime object
+  const startDate = new Date(rightDateFormat(dateStr));
+  //calculate number of weeks or months required to reach the goal amount
+  if (goalAmount > 0) {
+    const numPeriods = parseInt(goalAmount) / parseInt(contributionAmount);
+    //calculate the goal maturity date base on the start date and number of periods
+    let date;
+    if (frequency == "weekly") {
+      const maturityDate: any = startDate.setDate(
+        startDate.getDate() + 7 * numPeriods
+      );
+      date = dateFormat(new Date(maturityDate), true);
+      return date;
+    } else {
+      const maturityDate: any = startDate.setDate(
+        startDate.getDate() + 30 * numPeriods
+      );
+      date = dateFormat(new Date(maturityDate), true);
+      return date;
+    }
+  }
+};
+
+/** @ts-ignore */
+export function debounce<F extends (...args: any[]) => any>(
+  func: F,
+  wait: number
+): (...args: Parameters<F>) => void {
+  let timeout: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<F>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      /** @ts-ignore */
+      func.apply(this, args);
+    }, wait);
+  };
+}

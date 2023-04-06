@@ -36,7 +36,6 @@ const Overview = () => {
   const authenticateUser = async () => {
     getToken(configuration).then((res) => {
       if (typeof res.user !== "undefined") {
-        console.log(res.token);
         setUser(res.user);
         setToken(res.token);
       } else {

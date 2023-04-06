@@ -98,10 +98,13 @@ const GoalView = () => {
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
-          <img src={image_url} className="absolute top-0 right-0 left-0" />
+          <img
+            src={image_url}
+            className="absolute top-0 right-0 left-0 w-screen object-cover h-80"
+          />
           <img
             src={goalviewOverlay}
-            className="absolute object-cover w-screen"
+            className="absolute top-0 right-0 left-0 object-cover w-screen"
           />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <GoalViewBalanceView

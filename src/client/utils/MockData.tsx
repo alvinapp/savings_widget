@@ -170,7 +170,7 @@ export const predefinedGoals = [
   {
     id: 7,
     name: "Large purchase",
-    amount: 10043323,
+    amount: 10000000,
     status: "",
     progress: 100,
     imageUrl:

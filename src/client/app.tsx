@@ -61,7 +61,6 @@ const App = () => {
 
   useEffect(() => {
     socket.on(`schedule ${userId}`, (data: { message: any }) => {
-      console.log("Received schedule event:", data);
       // @ts-ignore
       if (!receivedMessages.includes(data.message)) {
         notificationStore.setNotification(data);

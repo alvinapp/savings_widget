@@ -267,7 +267,6 @@ export const getMaturityDate = async ({
   data: any;
   goalId: number;
 }) => {
-  console.log(data);
   try {
     const res = postData({
       endpoint: `/goals/${goalId}/maturity`,

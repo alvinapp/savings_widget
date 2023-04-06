@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import TabFilter from "client/pages/components/TabFilter";
 import { FiToggleLeft, FiToggleRight } from "react-icons/fi";
 import { Amount } from "client/pages/components/Amount";
@@ -18,7 +18,12 @@ import {
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-import { convertDate, rightDateFormat } from "client/utils/Formatters";
+import {
+  calculateGoalMaturityDate,
+  convertDate,
+  debounce,
+  rightDateFormat,
+} from "client/utils/Formatters";
 import { dateFormat } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
@@ -28,8 +33,6 @@ export const AddContributionSettings = ({
   onClick,
   updatingGoal = false,
 }: AddContributionSettingsProps) => {
-  const [tabIndex, setTabIndex] = useState(0);
-  const [maturityDateText, setMaturityDateText] = useState("");
   const contributionSettingsTabs = [
     {
       tab_id: 0,
@@ -56,7 +59,6 @@ export const AddContributionSettings = ({
   const goal = useGoalStore((state: any) => state);
   const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
   const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
-
   const {
     isFetching: saveContributionFetching,
     refetch: saveContributionSettings,
@@ -66,7 +68,10 @@ export const AddContributionSettings = ({
       saveGoalContributionSettings({
         configuration: configuration,
         data: {
-          cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+          cron_string:
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString,
           savings_amount: goalContributionSettings.contributionAmount,
           contribute_from: convertDate(
             goalContributionSettings.startingFromDate.toString()
@@ -93,7 +98,10 @@ export const AddContributionSettings = ({
       updateGoalContributionSettings({
         configuration: configuration,
         data: {
-          cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
+          cron_string:
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString,
           savings_amount: goalContributionSettings.contributionAmount,
           contribute_from: convertDate(
             goalContributionSettings.startingFromDate.toString()
@@ -111,30 +119,25 @@ export const AddContributionSettings = ({
       enabled: false,
     }
   );
-  const { isFetching: fetchingMaturityDate, refetch: fetchMaturityDate } =
-    useQuery(
-      "fetch-maturity-date",
-      () =>
-        contributionMaturityDate({
-          configuration: configuration,
-          data: {
-            goal_amount: goal.goalAmount,
-            frequency: tabIndex === 0 ? "weekly" : "monthly",
-            contribution_amount: goalContributionSettings.contributionAmount,
-            date_str: rightDateFormat(
-              goalContributionSettings.startingFromDate.toString()
-            ),
-          },
-        }).then((result) => {
-          if (result) {
-            setMaturityDateText(result.maturity_date);
-          }
+  const debouncedMaturityDate = debounce(
+    (value: number, frequency?: string) => {
+      goalContributionSettings.setMaturityDateText(
+        calculateGoalMaturityDate({
+          goalAmount: goal.goalAmount,
+          contributionAmount: (monthlyIncomeAmount * value) / 100,
+          frequency: frequency,
+          dateStr: goalContributionSettings.startingFromDate.toString(),
         })
-      // {
-      //   refetchOnWindowFocus: true,
-      //   enabled: false,
-      // }
+      );
+    },
+    1000
+  );
+  useEffect(() => {
+    debouncedMaturityDate(
+      goal.percentageOfSavings,
+      goalContributionSettings.tabIndex === 0 ? "weekly" : "monthly"
     );
+  }, [goalContributionSettings.startingFromDate]);
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -151,19 +154,21 @@ export const AddContributionSettings = ({
       <div className="mb-6">
         <TabFilter
           tabs={contributionSettingsTabs}
-          activeTab={tabIndex}
+          activeTab={goalContributionSettings.tabIndex}
           onClick={(tab: any) => {
-            setTabIndex(tab.tab_id);
+            goalContributionSettings.setTabIndex(tab.tab_id);
             if (tab.tab_id === 0) {
               goalContributionSettings.setContributionAmount(
                 (monthlyIncomeAmount * 5) / 100
               );
               goal.setPercentageOfSavings(5);
+              debouncedMaturityDate(5, "weekly");
             } else {
               goalContributionSettings.setContributionAmount(
                 (monthlyIncomeAmount * 20) / 100
               );
               goal.setPercentageOfSavings(20);
+              debouncedMaturityDate(20, "monthly");
             }
           }}
         />
@@ -181,12 +186,15 @@ export const AddContributionSettings = ({
           renderThumb={(props, state) => (
             <div {...props}>{`${state.valueNow}%`}</div>
           )}
-          onChange={(value, index) => {
+          onChange={(value) => {
             goalContributionSettings.setContributionAmount(
               (monthlyIncomeAmount * value) / 100
             );
             goal.setPercentageOfSavings(value);
-            fetchMaturityDate();
+            debouncedMaturityDate(
+              value,
+              goalContributionSettings.tabIndex === 0 ? "weekly" : "monthly"
+            );
           }}
         />
       </div>
@@ -196,14 +204,18 @@ export const AddContributionSettings = ({
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
       </div>
-      {tabIndex === 1 ? (
+      {goalContributionSettings.tabIndex === 1 ? (
         <MonthlyContributionSelector />
       ) : (
         <WeeklyContributionSelector />
       )}
       <div className="mt-12">
         <BottomSheetFooter
-          title={`${maturityDateText}`}
+          title={
+            goalContributionSettings.tabIndex === 0
+              ? `Save ${goalContributionSettings.contributionAmount} weekly to reach your goal on ${goalContributionSettings.maturityDateText}`
+              : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}`
+          }
           onClick={() =>
             updatingGoal
               ? updateContributionSettings()
