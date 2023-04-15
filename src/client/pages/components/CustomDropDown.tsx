@@ -2,9 +2,17 @@ import React, { useState } from "react";
 type CustomDropDownProps = {
   dataset: Array<any>;
   icon?: React.ReactNode;
+  height?: string;
+  exactData?: any;
+  onClick?: (tab: any) => void;
 };
-export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
-  const [exactData, selectExactData] = useState(dataset[0]);
+export const CustomDropDown = ({
+  dataset,
+  icon,
+  height,
+  onClick,
+  exactData,
+}: CustomDropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="relative inline-block">
@@ -17,7 +25,7 @@ export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="text-skin-neutral text-lg mr-2">{icon}</div>
-        {exactData}{" "}
+        {exactData}
         <div className="text-skin-neutral">
           {" "}
           <svg
@@ -37,16 +45,22 @@ export const CustomDropDown = ({ dataset, icon }: CustomDropDownProps) => {
           </svg>
         </div>
       </button>
-      {isOpen ? (
-        <div className="absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto border border-1 border-skin-primary h-14 overflow-y-auto">
+      {isOpen && dataset.length > 1 ? (
+        <div
+          className={`absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto ${
+            height ?? "h-20"
+          } overflow-y-auto shadow-card`}
+        >
           <ul className="">
             {dataset.map((data, i) => {
               return (
                 <li
-                  className="text-tiny font-poppins font-medium tracking-progress_label"
+                  className="text-tiny font-poppins font-medium tracking-progress_label block mb-4"
                   key={i}
                   onClick={() => {
-                    selectExactData(data);
+                    if (onClick) {
+                      onClick(data);
+                    }
                     setIsOpen(false);
                   }}
                 >

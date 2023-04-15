@@ -12,11 +12,35 @@ import arrowRight from "../../assets/images/savings/bell.svg";
 import SlideButton from "react-slide-button";
 import ReactSlider from "react-slider";
 import useGoalStore from "client/store/goalStore";
+import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import { useQuery } from "react-query";
+import { saveTrigger } from "client/api/savings-triggers";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import { TailSpin } from "react-loader-spinner";
 const SavingsTrigger = () => {
   const navigate = useNavigate();
-  const [percentageOfSavings, setPercentageOfSavings] = useState(0);
-  const [sliderValue, setSliderValue] = useState(0);
   const goal = useGoalStore((state: any) => state);
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const savingsTriggerStore = useSavingsTriggerStore((state: any) => state);
+  const { isFetching: savingTrigger, refetch: saveTheTrigger } = useQuery(
+    "save-trigger",
+    () =>
+      saveTrigger({
+        configuration: configuration,
+        data: {
+          round_up_percentage: savingsTriggerStore.percentage,
+          merchant_name: savingsTriggerStore.merchant_name,
+          goal_id: goal.confirmedGoal.id,
+        },
+      }).then((result) => {
+        if (result) {
+          console.log(result);
+        }
+      }),
+    { refetchOnWindowFocus: false, enabled: false }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -57,46 +81,6 @@ const SavingsTrigger = () => {
           </div>
         </div>
         <div className="flex flex-row  mx-4 mt-5">
-          {/* <Slider
-            // @ts-ignore
-            marks={[0, 1, 2, 5, 10]}
-            // @ts-ignore
-            renderThumb={(props, state) => (
-              <div {...props}>{console.log(props)}</div>
-            )}
-            min={0}
-            max={4}
-            dots
-            dotStyle={{
-              background: "#6F89A5",
-              height: "1.925rem",
-              width: "1.925rem",
-              borderRadius: "50%",
-              top: "-13px",
-            }}
-            activeDotStyle={{
-              height: "0.75rem",
-              width: "0.75rem",
-              borderRadius: "50%",
-              background: "#056489",
-              top: "-4px",
-              border: "none",
-            }}
-            trackStyle={{
-              background: "#056489",
-            }}
-            handleStyle={{
-              color: "#ffffff",
-              height: "2.75rem",
-              width: "2.75rem",
-              borderRadius: "50%",
-              background: "#056489",
-              boxShadow: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
-              top: "-10px",
-              border: "none",
-              opacity: 1,
-            }}
-          /> */}
           <ReactSlider
             className="horizontal-slider"
             marks={[1, 2, 5, 10]}
@@ -108,8 +92,8 @@ const SavingsTrigger = () => {
             renderThumb={(props, state) => (
               <div {...props}>{`${state.valueNow}%`}</div>
             )}
-            onChange={(value, index) => {
-              setPercentageOfSavings(value);
+            onChange={(value) => {
+              savingsTriggerStore.setPercentage(value);
             }}
           />
         </div>
@@ -126,25 +110,16 @@ const SavingsTrigger = () => {
         </div>
         <div className="mt-4 flex flex-row justify-center">
           <CustomDropDown
-            dataset={[
-              "All merchants",
-              "Groceries",
-              "Shopping",
-              "Eating out",
-              "Transportation",
-              "Utilities",
-              "Health care",
-              "Entertainment",
-              "Travel",
-              "Bills & Fees",
-              "Personal care",
-              "Home improvement",
-              "Charity",
-              "Cash withdrawals",
-              "Restaurants",
-              "Fast food",
-            ]}
+            dataset={savingsTriggerStore.merchants_dataset}
             icon={<FiCreditCard />}
+            onClick={(merchantName: string) => {
+              savingsTriggerStore.setMerchantName(merchantName);
+            }}
+            exactData={
+              savingsTriggerStore.merchant_name === ""
+                ? savingsTriggerStore.merchants_dataset[0]
+                : savingsTriggerStore.merchant_name
+            }
           />
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>
@@ -157,6 +132,8 @@ const SavingsTrigger = () => {
           <CustomDropDown
             dataset={[`${goal.confirmedGoal.name}`]}
             icon={<FiFlag />}
+            height="h-4"
+            exactData={`${goal.confirmedGoal.name}`}
           />
         </div>
         <div className="flex flex-row justify-center mt-8">
@@ -164,16 +141,28 @@ const SavingsTrigger = () => {
             savings goal
           </div>
         </div>
-        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary">
-          <SlideButton
-            mainText="Swipe to activate"
-            caret={<FiArrowRight color="#ffffff" className="absolute" />}
-            onSlideDone={function () {}}
-            classList="my-class"
-            caretClassList="my-caret-class"
-            overlayClassList="my-overlay-class"
-            overlayWrapperClassList="my-overlay-wrapper-class"
-          />
+        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary justify-center">
+          {savingTrigger ? (
+            <TailSpin
+              height="30"
+              width="30"
+              color="#056489"
+              ariaLabel="tail-spin-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <SlideButton
+              mainText="Swipe to activate"
+              caret={<FiArrowRight color="#ffffff" className="absolute" />}
+              onSlideDone={() => saveTheTrigger()}
+              classList="my-class"
+              caretClassList="my-caret-class"
+              overlayClassList="my-overlay-class"
+              overlayWrapperClassList="my-overlay-wrapper-class"
+            />
+          )}
         </div>
       </div>
     </div>

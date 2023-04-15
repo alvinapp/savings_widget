@@ -50,7 +50,9 @@ const SettingsMonthlyIncome = lazy(
   () => import("./pages/settings/SettingsMonthlyIncome")
 );
 const UpdateGoalDetails = lazy(() => import("./pages/update-goal/UpdateGoal"));
-
+const SavingsTriggerSuccess = lazy(
+  () => import("./pages/savings-triggers/SavingsTriggerSuccess")
+);
 const App = () => {
   const queryClient = new QueryClient();
   const userStore = useUserStore((state: any) => state);
@@ -127,6 +129,10 @@ const App = () => {
                 element={<SettingsMonthlyIncome />}
               />
               <Route path="/update-goal" element={<UpdateGoalDetails />} />
+              <Route
+                path="/savings-triggers-success"
+                element={<SavingsTriggerSuccess />}
+              />
             </Routes>
           </Suspense>
         </div>
