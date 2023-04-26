@@ -94,7 +94,7 @@ const Settings = () => {
             iconBackground={"bg-skin-iconSecondary"}
             iconColor="text-skin-iconSecondary"
             trailing={<FiChevronRight />}
-            onClick={() => navigate("/savings-trigger")}
+            onClick={() => navigate("/savings-triggers-settings")}
           />
         </div>
         <div className="mt-2">

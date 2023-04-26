@@ -24,7 +24,15 @@ const useSavingsTriggerStore = create((set) => ({
     "Restaurants",
     "Fast food",
   ],
-
+  allSavingsTriggers: [],
+  setAllSavingsTriggers: (triggers: any) => {
+    return set(() => {
+      const results = {
+        allSavingsTriggers: triggers,
+      };
+      return results;
+    });
+  },
   setPercentage: (value: number) => {
     return set(() => {
       const results = {

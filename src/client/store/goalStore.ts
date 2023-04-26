@@ -17,6 +17,15 @@ const useGoalStore = create((set) => ({
   totalContribution: 0,
   maturityDate: "",
   percentageOfSavings: 0,
+  goalSavingsTriggers: [],
+  setGoalSavingsTriggers: (triggers: Array<any>) => {
+    return set(() => {
+      const result = {
+        goalSavingsTriggers: triggers,
+      };
+      return result;
+    });
+  },
   setGoalId: (id: number) => {
     return set(() => {
       const result = {

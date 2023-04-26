@@ -30,6 +30,7 @@ import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { DeleteGoal } from "./DeleteGoal";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import { fetchGoalTriggers } from "client/api/savings-triggers";
 const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
@@ -94,6 +95,20 @@ const GoalView = () => {
     { refetchOnWindowFocus: true, enabled: false }
   );
   const { image_url } = goal.confirmedGoal.image_url;
+  const { refetch: fetchTriggers } = useQuery(
+    "goal-triggers",
+    () =>
+      fetchGoalTriggers({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        // console.log(result);
+        if (result) {
+          goal.setGoalSavingsTriggers(result);
+        }
+      }),
+    { refetchOnWindowFocus: false }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -256,7 +271,7 @@ const GoalView = () => {
           {tabIndex == 0 ? (
             <ActivitiesView activities={activities} />
           ) : (
-            <TriggersView triggers={triggers} />
+            <TriggersView triggers={goal.goalSavingsTriggers} />
           )}
         </div>
       </div>

@@ -17,6 +17,7 @@ import { useQuery } from "react-query";
 import { saveTrigger } from "client/api/savings-triggers";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { TailSpin } from "react-loader-spinner";
+import successTrigger from "client/assets/images/savings/trigger-success.svg";
 const SavingsTrigger = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -36,7 +37,7 @@ const SavingsTrigger = () => {
         },
       }).then((result) => {
         if (result) {
-          console.log(result);
+          navigate("/savings-triggers-success");
         }
       }),
     { refetchOnWindowFocus: false, enabled: false }
@@ -64,7 +65,7 @@ const SavingsTrigger = () => {
           }
         />
       </div>
-      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-40 bottom-0 px-3.5 pt-9">
+      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-40 bottom-0 px-3.5 pt-12">
         <div className="flex flex-row justify-center">
           <div className="font-workSans font-semibold text-2xl text-skin-base">
             Round it up
@@ -163,6 +164,11 @@ const SavingsTrigger = () => {
               overlayWrapperClassList="my-overlay-wrapper-class"
             />
           )}
+        </div>
+      </div>
+      <div className="flex flex-row justify-center items-center absolute left-0 right-0 top-28">
+        <div className="h-23 w-23">
+          <img src={successTrigger} />
         </div>
       </div>
     </div>

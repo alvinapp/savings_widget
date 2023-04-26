@@ -6,13 +6,14 @@ import { BallTriangle } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { showCustomToast } from "client/utils/Toast";
+import successTrigger from "client/assets/images/savings/trigger-success.svg";
 const SavingsTriggerSuccess = () => {
   const navigate = useNavigate();
   const configurations = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
 
-  const [timer, setTimer] = useState(12);
+  const [timer, setTimer] = useState(10);
   const timeOutCallback = useCallback(() => {
     setTimer((currTimer): number => currTimer - 1);
   }, []);
@@ -35,8 +36,11 @@ const SavingsTriggerSuccess = () => {
       <div className="absolute w-full h-full">
         <Lottie options={cloudImage} />
       </div>
-      <div className="flex flex-col mx-9 absolute top-28 left-0 right-0">
-        <div className="mt-72 flex flex-row justify-center mx-4">
+      <div className="flex flex-col mx-9 absolute top-28 left-0 right-0 justify-center">
+        <div className="flex flex-row justify-center items-center mt-44 mb-8">
+          <img src={successTrigger} />
+        </div>
+        <div className="flex flex-row justify-center mx-4">
           <div className="font-workSans text-skin-white text-2xl text-center font-semibold">
             Whoop! Round It Up activated
           </div>
