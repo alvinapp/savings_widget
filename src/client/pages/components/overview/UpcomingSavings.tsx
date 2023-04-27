@@ -2,6 +2,7 @@ import React from "react";
 import UpcomingSavingsCard from "client/pages/components/UpcomingSavingsCard";
 import UpcomingSaving from "client/models/UpcomingSaving";
 import { useNavigate } from "react-router-dom";
+import { UpcomingSavingsEmptyState } from "client/pages/overview/UpcomingSavingsEmpty";
 
 type MyUpcomingSavingsProps = {
   upcomingSavings: Array<UpcomingSaving>;
@@ -10,7 +11,7 @@ export const UpcomingSavings = ({
   upcomingSavings,
 }: MyUpcomingSavingsProps) => {
   const navigate = useNavigate();
-  return (
+  return upcomingSavings.length > 0 ? (
     <div>
       {upcomingSavings.map((upcomingSaving: UpcomingSaving, i) => {
         return (
@@ -23,6 +24,10 @@ export const UpcomingSavings = ({
           />
         );
       })}
+    </div>
+  ) : (
+    <div className="flex flex-col justify-center items-center">
+      <UpcomingSavingsEmptyState />
     </div>
   );
 };
