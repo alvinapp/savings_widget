@@ -102,7 +102,6 @@ const GoalView = () => {
         configuration: configuration,
         goalId: goal.confirmedGoal.id,
       }).then((result) => {
-        // console.log(result);
         if (result) {
           goal.setGoalSavingsTriggers(result);
         }
@@ -144,7 +143,10 @@ const GoalView = () => {
             <div className="flex flex-row justify-between items-center">
               <BackButton
                 background="bg-skin-base"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  goal.setGoalSavingsTriggers([]);
+                  navigate(-1);
+                }}
               />
               <NavBarTitle
                 title={`${goal.confirmedGoal.name}`}

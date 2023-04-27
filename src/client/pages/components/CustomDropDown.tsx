@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 type CustomDropDownProps = {
   dataset: Array<any>;
   icon?: React.ReactNode;
@@ -14,8 +14,28 @@ export const CustomDropDown = ({
   exactData,
 }: CustomDropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    /**
+     * Close dropdown if user clicks outside of component
+     */
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
   return (
-    <div className="relative inline-block">
+    <div className="relative" ref={ref}>
       <button
         id="day-dropdown"
         aria-expanded="true"
@@ -47,7 +67,7 @@ export const CustomDropDown = ({
       </button>
       {isOpen && dataset.length > 1 ? (
         <div
-          className={`absolute right-0 left-0 rounded-lg bg-skin-base p-3.5 w-auto ${
+          className={`rounded-lg bg-skin-base p-3.5 w-full ${
             height ?? "h-20"
           } overflow-y-auto shadow-card`}
         >

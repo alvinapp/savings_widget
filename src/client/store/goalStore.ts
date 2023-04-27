@@ -2,7 +2,7 @@ import Goal from "client/models/Goal";
 import create from "zustand";
 const useGoalStore = create((set) => ({
   selectedGoal: {},
-  confirmedGoals: [],
+  confirmedGoals: null,
   confirmedGoal: {},
   contributionSettingsGoalId: 0,
   resume_at: new Date(),

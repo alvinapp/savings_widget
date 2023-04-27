@@ -111,6 +111,7 @@ const SavingsTrigger = () => {
         </div>
         <div className="mt-4 flex flex-row justify-center">
           <CustomDropDown
+            height="h-56"
             dataset={savingsTriggerStore.merchants_dataset}
             icon={<FiCreditCard />}
             onClick={(merchantName: string) => {

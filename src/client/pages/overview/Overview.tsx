@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 import { showCustomToast } from "client/utils/Toast";
 import useNotificationStore from "client/store/notificationStore";
 import { TailSpin } from "react-loader-spinner";
+import TransactionCardSkeleton from "../components/TransactionCardSkeleton";
 const Overview = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -33,52 +34,49 @@ const Overview = () => {
     (state: any) => state.setGoalCreationStatus
   );
   const notificationsStore = useNotificationStore((state: any) => state) ?? [];
-  const authenticateUser = async () => {
-    getToken(configuration).then((res) => {
-      if (typeof res.user !== "undefined") {
-        setUser(res.user);
-        setToken(res.token);
-      } else {
-        navigate("/");
-        showCustomToast({ message: "The sdk key is invalid" });
-      }
-    });
-  };
-  const checkUserStatus = async () => {
-    checkStatusOfGoalCreation(configuration).then((res) => {
-      setGoalCreationStatus(res);
-    });
-  };
-  const fetchConfimedGoals = async () => {
-    getConfirmedGoals({ configuration: configuration }).then((result) => {
-      if (result) {
-        goal.setConfirmedGoals(result);
-      }
-    });
-  };
-  const fetchTotalContribution = async () => {
-    totalContribution({ configuration: configuration }).then((result) => {
-      if (result) {
-        goal.setTotalContribution(result.total_contributions);
-      }
-    });
-  };
-  const { data } = useQuery(["token"], () => authenticateUser, {
-    refetchOnWindowFocus: false,
-  });
+
+  const { data } = useQuery(
+    ["token"],
+    () =>
+      getToken(configuration).then((res) => {
+        if (typeof res.user !== "undefined") {
+          setUser(res.user);
+          setToken(res.token);
+        } else {
+          navigate("/");
+          showCustomToast({ message: "The sdk key is invalid" });
+        }
+      }),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   const { data: goalCreationStatusData } = useQuery(
     ["checkStatusOfGoalCreation"],
-    () => checkUserStatus,
+    () =>
+      checkStatusOfGoalCreation(configuration).then((res) => {
+        setGoalCreationStatus(res);
+      }),
     { enabled: !!configuration.token }
   );
-  const { data: confirmedGoals } = useQuery(
+  const { isLoading: confirmedGoalsFetching, data: confirmedGoals } = useQuery(
     "confirmed-goals",
-    () => fetchConfimedGoals,
-    { enabled: !!configuration.token }
+    () =>
+      getConfirmedGoals({ configuration: configuration }).then((result) => {
+        if (result) {
+          goal.setConfirmedGoals(result);
+        }
+      }),
+    { enabled: !!configuration.token, refetchOnWindowFocus: false }
   );
   const { data: totalContributions } = useQuery(
     "total-contributions",
-    () => fetchTotalContribution,
+    () =>
+      totalContribution({ configuration: configuration }).then((result) => {
+        if (result) {
+          goal.setTotalContribution(result.total_contributions);
+        }
+      }),
     { enabled: !!configuration.token }
   );
   return (
@@ -112,12 +110,23 @@ const Overview = () => {
       <div className="mt-6">
         {/* <NotificationCard amount={250000.54} /> */}
       </div>
-      {goal.confirmedGoals.length > 0 ? (
-        <ShowGoalsInOverview />
-      ) : (
+      {confirmedGoalsFetching ? (
+        <div className="mt-1 mb-4">
+          {Array(10)
+            .fill("a")
+            .map((_, i) => {
+              return <TransactionCardSkeleton key={i} />;
+            })}
+        </div>
+      ) : goal.confirmedGoals !== null && goal.confirmedGoals.length === 0 ? (
         <OverviewTrackGoalCreationProgress />
+      ) : (
+        <ShowGoalsInOverview />
       )}
-      {goal.confirmedGoals.length > 0 ? (
+
+      {!confirmedGoalsFetching &&
+      goal.confirmedGoals !== null &&
+      goal.confirmedGoals.length > 0 ? (
         <div className="fixed bottom-4 right-4">
           <AddGoalButton
             onClick={() => {

@@ -244,19 +244,19 @@ export const totalContribution = async ({
   configuration,
 }: {
   configuration: IConfig;
-}) =>
-  fetchData({
-    endpoint: `/goals/total_contributions`,
-    token: configuration.token,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = await fetchData({
+      endpoint: `/goals/total_contributions`,
+      token: configuration.token,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 //Get maturity date
 export const getMaturityDate = async ({
   configuration,
