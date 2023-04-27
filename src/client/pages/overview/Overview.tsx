@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "client/pages/components/NavBar";
 import SettingsButton from "client/pages/components/SettingsButton";
 import NotificaitonsButton from "client/pages/components/NotificationButton";
@@ -22,6 +22,10 @@ import { showCustomToast } from "client/utils/Toast";
 import useNotificationStore from "client/store/notificationStore";
 import { TailSpin } from "react-loader-spinner";
 import TransactionCardSkeleton from "../components/TransactionCardSkeleton";
+import TabFilter from "../components/TabFilter";
+import { UpcomingSavings } from "../components/overview/UpcomingSavings";
+import { MyGoals } from "../components/overview/MyGoals";
+import { upcomingSavings, tabs } from "client/utils/MockData";
 const Overview = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -34,7 +38,10 @@ const Overview = () => {
     (state: any) => state.setGoalCreationStatus
   );
   const notificationsStore = useNotificationStore((state: any) => state) ?? [];
+  const [tabIndex, setTabIndex] = useState(0);
 
+  const allConfirmedGoals =
+    useGoalStore((state: any) => state.confirmedGoals) ?? [];
   const { data } = useQuery(
     ["token"],
     () =>
@@ -59,7 +66,11 @@ const Overview = () => {
       }),
     { enabled: !!configuration.token }
   );
-  const { isLoading: confirmedGoalsFetching, data: confirmedGoals } = useQuery(
+  const {
+    isFetching: confirmedGoalsFetching,
+    data: confirmedGoals,
+    isSuccess: goalsFetched,
+  } = useQuery(
     "confirmed-goals",
     () =>
       getConfirmedGoals({ configuration: configuration }).then((result) => {
@@ -79,6 +90,7 @@ const Overview = () => {
       }),
     { enabled: !!configuration.token }
   );
+
   return (
     <div className="h-screen bg-white overflow-y-auto overflow-x-hidden no-scrollbar px-3.5 relative">
       <div className="mt-4">
@@ -110,7 +122,25 @@ const Overview = () => {
       <div className="mt-6">
         {/* <NotificationCard amount={250000.54} /> */}
       </div>
-      {confirmedGoalsFetching ? (
+      {(goalsFetched && goal.confirmedGoals.length > 0) ||
+      (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
+        <div className="mt-6">
+          <TabFilter
+            tabs={tabs}
+            activeTab={tabIndex}
+            onClick={(tab: any) => setTabIndex(tab.tab_id)}
+          />
+          <div className="mt-4">
+            {tabIndex == 1 ? (
+              <UpcomingSavings upcomingSavings={upcomingSavings} />
+            ) : (
+              <MyGoals goals={allConfirmedGoals} />
+            )}
+          </div>
+        </div>
+      ) : goalsFetched && goal.confirmedGoals.length === 0 ? (
+        <OverviewTrackGoalCreationProgress />
+      ) : (
         <div className="mt-1 mb-4">
           {Array(10)
             .fill("a")
@@ -118,15 +148,9 @@ const Overview = () => {
               return <TransactionCardSkeleton key={i} />;
             })}
         </div>
-      ) : goal.confirmedGoals !== null && goal.confirmedGoals.length === 0 ? (
-        <OverviewTrackGoalCreationProgress />
-      ) : (
-        <ShowGoalsInOverview />
       )}
 
-      {!confirmedGoalsFetching &&
-      goal.confirmedGoals !== null &&
-      goal.confirmedGoals.length > 0 ? (
+      {goal.confirmedGoals.length > 0 ? (
         <div className="fixed bottom-4 right-4">
           <AddGoalButton
             onClick={() => {
