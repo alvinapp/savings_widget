@@ -25,22 +25,7 @@ const CreateSavingsGoal = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  const { isFetching: fetchingFrequency, refetch: fetchFrequency } = useQuery(
-    "fetch-frequency",
-    () =>
-      defaultFrequency({
-        configuration: configuration,
-        data: {
-          frequency_text: "weekly",
-        },
-      }).then((result) => {
-        if (result.frequency != "") {
-          // goalContributionSettings.setContributionFrequency(result.frequency);
-          goalStore.setPercentageOfSavings(result.percentage);
-        }
-      }),
-    { refetchOnWindowFocus: false, enabled: false }
-  );
+
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
@@ -102,7 +87,6 @@ const CreateSavingsGoal = () => {
                       goalStore.setGoalAmount(goal.amount);
                       setChosenGoal(goal);
                       navigate("/add-goal-details");
-                      fetchFrequency();
                     }}
                   />
                 </div>

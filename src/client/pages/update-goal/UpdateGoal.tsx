@@ -4,7 +4,10 @@ import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
 import CloseButton from "../components/CloseButton";
 import { AddPhotoButton } from "../components/AddPhotoButton";
-import { GoalCreationInput } from "../components/goal-creation/Input";
+import {
+  TextInput,
+  TextInputWithPopup,
+} from "../components/goal-creation/Input";
 import { FiFlag, FiTarget, FiPocket, FiTrendingUp } from "react-icons/fi";
 import MainButton from "../components/MainButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -34,39 +37,28 @@ const UpdateGoalDetails = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  const saveTheGoalImage = () => {
-    saveGoalImage({
-      configuration: configuration,
-      data: {
-        image_url: goal.goalImageUrl,
-      },
-      goalId: goal.confirmedGoal.id,
-    });
-  };
-  const updateGoalNameAndAmount = () => {
-    updateGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {
-        extern_id: "",
-        name: goal.goalName,
-        title: "",
-        amount: parseFloat(goal.goalAmount),
-        contribute_from: "",
-        is_customized: false,
-      },
-    })
-      .then((result) => {
-        if (result.id) {
-          goal.setContributionSettingsGoalId(result.id);
-        }
-      })
-      .finally(() => navigate(-2));
-  };
 
   const { isLoading, refetch: updateGoals } = useQuery(
     "update-goals",
-    () => updateGoalNameAndAmount,
+    () =>
+      updateGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {
+          extern_id: "",
+          name: goal.goalName,
+          title: "",
+          amount: parseFloat(goal.goalAmount),
+          contribute_from: "",
+          is_customized: false,
+        },
+      })
+        .then((result) => {
+          if (result.id) {
+            goal.setContributionSettingsGoalId(result.id);
+          }
+        })
+        .finally(() => navigate(-2)),
     {
       refetchOnWindowFocus: false,
       enabled: false,
@@ -74,7 +66,14 @@ const UpdateGoalDetails = () => {
   );
   const { data: saveImage } = useQuery(
     "save-goal-image",
-    () => saveTheGoalImage,
+    () =>
+      saveGoalImage({
+        configuration: configuration,
+        data: {
+          image_url: goal.goalImageUrl,
+        },
+        goalId: goal.confirmedGoal.id,
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: !!goal.confirmedGoal.id,
@@ -124,7 +123,7 @@ const UpdateGoalDetails = () => {
       </div>
       <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-48 bottom-0 px-3.5 pt-9">
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             placeHolder="Add goal name"
             label="Let’s name your goal"
             value={goal.goalName ? goal.goalName : ""}
@@ -135,7 +134,7 @@ const UpdateGoalDetails = () => {
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             hasCurrencySymbol={true}
             type="number"
             placeHolder="Add target amount"
@@ -148,7 +147,7 @@ const UpdateGoalDetails = () => {
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Add contribution"
             label="How would you like to contribute?"
             value={
@@ -186,7 +185,7 @@ const UpdateGoalDetails = () => {
           ></BottomSheet>
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Link bank or wallet"
             hasValue={false}
             label="Link an account and track savings with ease"
@@ -196,7 +195,7 @@ const UpdateGoalDetails = () => {
           />
         </div>
         <div className="mb-10">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Apply savings rule"
             hasValue={false}
             label="Boost your savings journey with rules"

@@ -57,22 +57,6 @@ const GoalView = () => {
     (element: any) => element.id === goal.confirmedGoal.id
   );
 
-  const deleteAGoal = async () => {
-    deleteGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        goal.openDeleteBottomSheet(false);
-        goal.openPauseDeleteBottomSheet(false);
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
-
   const { refetch: resumeTheGoal } = useQuery(
     "resume-goal",
     () =>
@@ -91,7 +75,20 @@ const GoalView = () => {
   );
   const { refetch: deleteTheGoal } = useQuery(
     "delete goal",
-    () => deleteAGoal,
+    () =>
+      deleteGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {},
+      }).then((result) => {
+        if (result) {
+          goal.openDeleteBottomSheet(false);
+          goal.openPauseDeleteBottomSheet(false);
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
     { refetchOnWindowFocus: true, enabled: false }
   );
   const { image_url } = goal.confirmedGoal.image_url;

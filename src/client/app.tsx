@@ -8,6 +8,7 @@ import useUserStore from "./store/userStore";
 import "./index.css";
 import "./style.scss";
 import { TailSpin } from "react-loader-spinner";
+import CreateGoalSavingsTrigger from "./pages/goal-creation/savings-trigger/CreateGoalSavingsTrigger";
 
 declare var AppConfig: AppConfig;
 
@@ -132,6 +133,10 @@ const App = () => {
               <Route
                 path="/savings-triggers-success"
                 element={<SavingsTriggerSuccess />}
+              />
+              <Route
+                path="/create-goal-savings-trigger"
+                element={<CreateGoalSavingsTrigger />}
               />
             </Routes>
           </Suspense>

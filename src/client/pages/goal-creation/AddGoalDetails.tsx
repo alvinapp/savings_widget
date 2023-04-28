@@ -4,7 +4,10 @@ import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
 import CloseButton from "../components/CloseButton";
 import { AddPhotoButton } from "../components/AddPhotoButton";
-import { GoalCreationInput } from "../components/goal-creation/Input";
+import {
+  TextInput,
+  TextInputWithPopup,
+} from "../components/goal-creation/Input";
 import { FiFlag, FiTarget, FiPocket, FiTrendingUp } from "react-icons/fi";
 import MainButton from "../components/MainButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -28,6 +31,8 @@ import useBankAccountStore from "client/store/BankAccountStore";
 import { SelectBank } from "../components/goal-creation/SelectBank";
 import getBankAccounts, { linkBankAccount } from "client/api/accounts";
 import { convertDate, maskAccountNo } from "client/utils/Formatters";
+import trigger from "client/assets/images/savings/trigger.png";
+import { saveTrigger } from "client/api/savings-triggers";
 const AddGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
@@ -50,77 +55,81 @@ const AddGoalDetails = () => {
     (state: any) => state.configuration
   ) as IConfig;
 
-  const saveGoalDetails = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        //save goal and get goal id
-        const goalResult = await saveAGoal({
-          configuration: configuration,
-          data: {
-            extern_id: "",
-            name: goal.goalName,
-            title: "",
-            amount: parseFloat(goal.goalAmount),
-            contribute_from: "",
-            is_customized: false,
-          },
-        });
-        goal.setContributionSettingsGoalId(goalResult.id);
-        goal.setGoalId(goalResult.id);
-        // Save goal image
-        const saveImage = await saveGoalImage({
-          configuration: configuration,
-          data: {
-            image_url: goal.goalImageUrl,
-          },
-          goalId: goalResult.id,
-        });
+  const saveGoalDetails = async () => {
+    try {
+      // Save goal and get goal id
+      const goalResult = await saveAGoal({
+        configuration: configuration,
+        data: {
+          extern_id: "",
+          name: goal.goalName,
+          title: "",
+          amount: parseFloat(goal.goalAmount),
+          contribute_from: "",
+          is_customized: false,
+        },
+      });
+      goal.setContributionSettingsGoalId(goalResult.id);
+      goal.setGoalId(goalResult.id);
 
-        //Save Contribution Settings
-        const goalContributionSchedule = await saveGoalContributionSettings({
-          configuration: configuration,
-          data: {
-            cron_string: goalContributionSettings.cron_string,
-            savings_amount: goalContributionSettings.contributionAmount,
-            contribute_from: convertDate(
-              goalContributionSettings.startingFromDate.toString()
-            ),
-          },
-          goalId: goalResult.id,
-        });
+      const goalId = goalResult.id;
 
-        //Linking an account
-        const linkAccount = await linkBankAccount({
-          configuration: configuration,
-          data: {
-            goal_id: goalResult.id,
-            bank_account_id: accountStore.account.id,
-          },
-        });
-        //Save rules for a goal
+      // Run remaining tasks concurrently using Promise.all
+      const [saveImage, goalContributionSchedule, linkAccount, saveRule] =
+        await Promise.all([
+          saveGoalImage({
+            configuration: configuration,
+            data: {
+              image_url: goal.goalImageUrl,
+            },
+            goalId: goalId,
+          }),
+          saveGoalContributionSettings({
+            configuration: configuration,
+            data: {
+              cron_string: goalContributionSettings.cron_string,
+              savings_amount: goalContributionSettings.contributionAmount,
+              contribute_from: convertDate(
+                goalContributionSettings.startingFromDate.toString()
+              ),
+            },
+            goalId: goalId,
+          }),
+          linkBankAccount({
+            configuration: configuration,
+            data: {
+              goal_id: goalId,
+              bank_account_id: accountStore.account.id,
+            },
+          }),
+          saveTrigger({
+            configuration: configuration,
+            data: {
+              round_up_percentage: goal.percentage,
+              merchant_name: goal.merchant_name,
+              goal_id: goalId,
+            },
+          }),
+        ]);
 
-        //Confirm goal
-        const confirmTheGoal = confirmGoal({
-          configuration: configuration,
-          goalId: goalResult.id,
-          data: {},
-        });
-
-        const data = {
-          goalResult: goalResult,
-          saveImage: saveImage,
-          goalContributionSchedule: goalContributionSchedule,
-          linkAccount: linkAccount,
-          confirmTheGoal: confirmTheGoal,
-        };
-
-        resolve(data);
-      } catch (error) {
-        reject(error);
-      }
-    });
+      //Confirm the goal
+      const confirmTheGoal = await confirmGoal({
+        configuration: configuration,
+        goalId: goalId,
+        data: {},
+      });
+      return {
+        goalResult: goalResult,
+        saveImage: saveImage,
+        goalContributionSchedule: goalContributionSchedule,
+        linkAccount: linkAccount,
+        confirmTheGoal: confirmTheGoal,
+        saveRule: saveRule,
+      };
+    } catch (error) {
+      throw error;
+    }
   };
-
   const { isFetching: fetchingBankAccounts } = useQuery("bank-accounts", () =>
     getBankAccounts(configuration).then((result) => {
       if (result) {
@@ -128,48 +137,6 @@ const AddGoalDetails = () => {
       }
     })
   );
-
-  //Save Goal Name and Amount
-  // const { isFetching: saveGoalNameFetching, refetch: saveGoalNameAmount } =
-  //   useQuery(
-  //     "saving-goals",
-  //     () =>
-  //       saveAGoal({
-  //         configuration: configuration,
-  //         data: {
-  //           extern_id: "",
-  //           name: goal.goalName,
-  //           title: "",
-  //           amount: parseFloat(goal.goalAmount),
-  //           contribute_from: "",
-  //           is_customized: false,
-  //         },
-  //       }).then((result) => {
-  //         if (result.id) {
-  //           goal.setContributionSettingsGoalId(result.id);
-  //           goal.setGoalId(result.id);
-  //         }
-  //       }),
-  //     {
-  //       refetchOnWindowFocus: false,
-  //       enabled: false,
-  //     }
-  //   );
-
-  //Delete unconfirmed goals: We might need disable it for now
-  // const { refetch: unconfirmedGoals } = useQuery(
-  //   "delete-unconfirmed-goals",
-  //   () =>
-  //     deleteUnconfirmed(configuration).then((result: any) => {
-  //       if (result) {
-  //         goalContributionSettings.contributionFrequency("");
-  //       }
-  //     }),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     enabled: false,
-  //   }
-  // );
 
   const { isFetching: saveGoalFetching, refetch: saveTheGoal } = useQuery(
     "save-goal-details",
@@ -196,21 +163,6 @@ const AddGoalDetails = () => {
       enabled: false,
     }
   );
-  // const { data: saveImage } = useQuery(
-  //   "save-goal-image",
-  //   () =>
-  //     saveGoalImage({
-  //       configuration: configuration,
-  //       data: {
-  //         image_url: goal.goalImageUrl,
-  //       },
-  //       goalId: goal.contributionSettingsGoalId,
-  //     }),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     enabled: !!goal.contributionSettingsGoalId,
-  //   }
-  // );
 
   return (
     <div className="h-screen w-screen relative">
@@ -255,13 +207,13 @@ const AddGoalDetails = () => {
       </div>
       <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-48 bottom-0 px-3.5 pt-9">
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             placeHolder="Add goal name"
             label="Let’s name your goal"
             value={goal.goalName ? goal.goalName : ""}
             leadingIcon={<FiFlag size="1.375rem" />}
             addValue={(e) => goal.setGoalName(e)}
-            hasValue={hasGoalName}
+            // hasValue={hasGoalName}
             clearInput={() => {
               setHasGoalName(false);
               goal.setGoalName("");
@@ -272,7 +224,7 @@ const AddGoalDetails = () => {
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             hasCurrencySymbol={true}
             type="number"
             placeHolder="Add target amount"
@@ -280,7 +232,7 @@ const AddGoalDetails = () => {
             value={goal.goalAmount ? goal.goalAmount : ""}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => goal.setGoalAmount(e)}
-            hasValue={hasGoalAmount}
+            // hasValue={hasGoalAmount}
             clearInput={() => {
               setHasGoalAmount(false);
               goal.setGoalAmount("");
@@ -291,7 +243,7 @@ const AddGoalDetails = () => {
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Add contribution"
             label="How would you like to contribute?"
             value={
@@ -338,7 +290,7 @@ const AddGoalDetails = () => {
           ></BottomSheet>
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Link bank or wallet"
             label="Link an account and track savings with ease"
             value={
@@ -365,7 +317,7 @@ const AddGoalDetails = () => {
             onClick={() => accountStore.openAccountBottomSheet(true)}
             addValue={(e) => e}
             clearInput={() => {
-              accountStore.setAccount;
+              accountStore.setAccount("");
             }}
           />
           <BottomSheet
@@ -379,13 +331,18 @@ const AddGoalDetails = () => {
           ></BottomSheet>
         </div>
         <div className="mb-10">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Apply savings rule"
-            hasValue={false}
+            hasValue={!!goal.percentage && goal.merchant_name}
             label="Set rule"
-            value=""
-            leadingIcon={<FiTrendingUp size="1.375rem" />}
+            value={goal.merchant_name ? `Round it up x${goal.percentage}%` : ""}
+            leadingIcon={<img src={trigger} />}
             addValue={(e) => e}
+            onClick={() => navigate("/create-goal-savings-trigger")}
+            clearInput={() => {
+              goal.setPercentage(0);
+              goal.setMerchantName("");
+            }}
           />
         </div>
         <MainButton

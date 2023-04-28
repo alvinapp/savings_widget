@@ -18,6 +18,24 @@ const useGoalStore = create((set) => ({
   maturityDate: "",
   percentageOfSavings: 0,
   goalSavingsTriggers: [],
+  percentage: 0,
+  merchant_name: "",
+  setPercentage: (value: number) => {
+    return set(() => {
+      const results = {
+        percentage: value,
+      };
+      return results;
+    });
+  },
+  setMerchantName: (name: string) => {
+    return set(() => {
+      const results = {
+        merchant_name: name,
+      };
+      return results;
+    });
+  },
   setGoalSavingsTriggers: (triggers: Array<any>) => {
     return set(() => {
       const result = {

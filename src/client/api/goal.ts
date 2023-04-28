@@ -13,7 +13,7 @@ export const saveAGoal = async ({
   data: any;
 }) => {
   try {
-    const res = postData({
+    const res = await postData({
       endpoint: "/goals",
       token: configuration.token,
       data: data,
@@ -192,20 +192,20 @@ export const deleteGoal = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/delete`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = await postData({
+      endpoint: `/goals/${goalId}/delete`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 
 //Search for custom images
 export const searchImages = async ({ searchText }: { searchText: string }) => {
@@ -225,20 +225,21 @@ export const updateGoal = async ({
   configuration: IConfig;
   data: any;
   goalId: number;
-}) =>
-  postData({
-    endpoint: `/goals/${goalId}/update`,
-    token: configuration.token,
-    data: data,
-  })
-    .then((res) => {
-      return res;
-    })
-    .catch((reason: any) => {
-      Sentry.captureException(reason);
-      console.debug(reason);
-      return Promise.reject(reason);
+}) => {
+  try {
+    const res = await postData({
+      endpoint: `/goals/${goalId}/update`,
+      token: configuration.token,
+      data: data,
     });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
 //Update Contribution Settings
 export const updateGoalContributionSettings = async ({
   configuration,
@@ -250,7 +251,7 @@ export const updateGoalContributionSettings = async ({
   goalId: number;
 }) => {
   try {
-    const res = postData({
+    const res = await postData({
       endpoint: `/goals/${goalId}/schedule/update`,
       token: configuration.token,
       data: data,
@@ -291,7 +292,7 @@ export const getMaturityDate = async ({
   goalId: number;
 }) => {
   try {
-    const res = postData({
+    const res = await postData({
       endpoint: `/goals/${goalId}/maturity`,
       token: configuration.token,
       data: data,
@@ -312,7 +313,7 @@ export const defaultFrequency = async ({
   data?: any;
 }) => {
   try {
-    const res = postData({
+    const res = await postData({
       endpoint: `/goals/schedule_text`,
       token: configuration.token,
       data: data,
@@ -334,7 +335,7 @@ export const contributionMaturityDate = async ({
   data?: any;
 }) => {
   try {
-    const res = postData({
+    const res = await postData({
       endpoint: `/goals/maturity`,
       token: configuration.token,
       data: data,

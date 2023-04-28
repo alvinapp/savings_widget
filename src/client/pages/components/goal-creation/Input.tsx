@@ -49,7 +49,9 @@ export const AddMonthlyIncomeInput = ({
   );
 };
 
-type GoalCreationInputProps = {
+//Text input field
+
+type TextInputProps = {
   label?: string;
   leadingIcon?: React.ReactNode;
   value?: any;
@@ -62,7 +64,7 @@ type GoalCreationInputProps = {
   clearInput?: any;
   isLoading?: boolean;
 };
-export const GoalCreationInput = ({
+export const TextInput = ({
   label,
   leadingIcon,
   value,
@@ -74,7 +76,110 @@ export const GoalCreationInput = ({
   hasCurrencySymbol = false,
   clearInput,
   isLoading = false,
-}: GoalCreationInputProps) => {
+}: TextInputProps) => {
+  const handleClearInput = (event: any) => {
+    event.stopPropagation();
+    clearInput();
+  };
+  return (
+    <div className="flex flex-col">
+      <div className="flex flex-row">
+        <div
+          className={`font-poppins font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
+        >
+          {label}
+        </div>
+      </div>
+      <div className="flex flex-row relative">
+        <div
+          className={`rounded flex flex-row items-center  pl-3.5 w-screen ${
+            hasValue
+              ? "border border-1 border-skin-base py-2"
+              : "shadow-input py-3"
+          }`}
+        >
+          <div
+            className={`flex flex-col ${
+              hasValue ? "text-skin-secondary" : "text-skin-inputDisabled"
+            }`}
+          >
+            {leadingIcon}
+          </div>
+          <div
+            className={`font-medium font-poppins text-base tracking-progress_label flex flex-row justify-center items-center ${
+              hasValue ? "text-skin-base" : "text-skin-inputDisabled"
+            }`}
+          >
+            {hasCurrencySymbol ? (
+              <div className="translate-x-12">{hasValue ? "₦ " : ""}</div>
+            ) : (
+              <div></div>
+            )}
+            <input
+              disabled={hasValue ? false : true}
+              type={type}
+              placeholder={placeHolder}
+              value={value}
+              className={`w-64 outline-none text-center`}
+              onChange={(e) => {
+                addValue(e.target.value);
+              }}
+            />
+          </div>
+          {hasValue ? (
+            <button
+              className="rounded-full flex items-center bg-skin-secondary p-2 absolute right-2"
+              onClick={handleClearInput}
+            >
+              <FiX color="#4E6783" />
+            </button>
+          ) : isLoading ? (
+            <TailSpin
+              height="20"
+              width="20"
+              color="#056489"
+              ariaLabel="tail-spin-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <div></div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+//Text field with popup
+
+type TextInputWithPopupProps = {
+  label?: string;
+  leadingIcon?: React.ReactNode;
+  value?: any;
+  hasValue?: boolean;
+  onClick?: () => void;
+  addValue: (e: any) => void;
+  placeHolder?: string;
+  type?: any;
+  hasCurrencySymbol?: boolean;
+  clearInput?: any;
+  isLoading?: boolean;
+};
+export const TextInputWithPopup = ({
+  label,
+  leadingIcon,
+  value,
+  hasValue = true,
+  onClick,
+  addValue,
+  placeHolder,
+  type = "text",
+  hasCurrencySymbol = false,
+  clearInput,
+  isLoading = false,
+}: TextInputWithPopupProps) => {
   const handleClearInput = (event: any) => {
     event.stopPropagation();
     clearInput();
@@ -100,7 +205,7 @@ export const GoalCreationInput = ({
           }`}
         >
           <div
-            className={`flex flex-col ${
+            className={`flex flex-col h-8 w-8 justify-center ${
               hasValue ? "text-skin-secondary" : "text-skin-inputDisabled"
             }`}
           >
