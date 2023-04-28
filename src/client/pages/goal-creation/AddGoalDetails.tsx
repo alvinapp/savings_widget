@@ -17,6 +17,7 @@ import {
   confirmGoal,
   getConfirmedGoals,
   saveAGoal,
+  saveGoalContributionSettings,
   saveGoalImage,
 } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
@@ -25,8 +26,8 @@ import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import useUserStore from "client/store/userStore";
 import useBankAccountStore from "client/store/BankAccountStore";
 import { SelectBank } from "../components/goal-creation/SelectBank";
-import getBankAccounts from "client/api/accounts";
-import { maskAccountNo } from "client/utils/Formatters";
+import getBankAccounts, { linkBankAccount } from "client/api/accounts";
+import { convertDate, maskAccountNo } from "client/utils/Formatters";
 const AddGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
@@ -44,22 +45,16 @@ const AddGoalDetails = () => {
   const isValid =
     !!goalContributionSettings.contributionFrequency &&
     accountStore.account.bank_name;
+
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
 
-  const { isFetching: fetchingBankAccounts } = useQuery("bank-accounts", () =>
-    getBankAccounts(configuration).then((result) => {
-      if (result) {
-        accountStore.setAccounts(result);
-      }
-    })
-  );
-  const { isFetching: saveGoalNameFetching, refetch: saveGoalNameAmount } =
-    useQuery(
-      "saving-goals",
-      () =>
-        saveAGoal({
+  const saveGoalDetails = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        //save goal and get goal id
+        const goalResult = await saveAGoal({
           configuration: configuration,
           data: {
             extern_id: "",
@@ -69,38 +64,117 @@ const AddGoalDetails = () => {
             contribute_from: "",
             is_customized: false,
           },
-        }).then((result) => {
-          if (result.id) {
-            goal.setContributionSettingsGoalId(result.id);
-            goal.setGoalId(result.id);
-          }
-        })
-      // {
-      //   refetchOnWindowFocus: false,
-      //   enabled: false,
-      // }
-    );
-  const { refetch: unconfirmedGoals } = useQuery(
-    "delete-unconfirmed-goals",
-    () =>
-      deleteUnconfirmed(configuration).then((result: any) => {
-        if (result) {
-          goalContributionSettings.contributionFrequency("");
-        }
-      }),
-    {
-      refetchOnWindowFocus: false,
-      enabled: false,
-    }
+        });
+        goal.setContributionSettingsGoalId(goalResult.id);
+        goal.setGoalId(goalResult.id);
+        // Save goal image
+        const saveImage = await saveGoalImage({
+          configuration: configuration,
+          data: {
+            image_url: goal.goalImageUrl,
+          },
+          goalId: goalResult.id,
+        });
+
+        //Save Contribution Settings
+        const goalContributionSchedule = await saveGoalContributionSettings({
+          configuration: configuration,
+          data: {
+            cron_string: goalContributionSettings.cron_string,
+            savings_amount: goalContributionSettings.contributionAmount,
+            contribute_from: convertDate(
+              goalContributionSettings.startingFromDate.toString()
+            ),
+          },
+          goalId: goalResult.id,
+        });
+
+        //Linking an account
+        const linkAccount = await linkBankAccount({
+          configuration: configuration,
+          data: {
+            goal_id: goalResult.id,
+            bank_account_id: accountStore.account.id,
+          },
+        });
+        //Save rules for a goal
+
+        //Confirm goal
+        const confirmTheGoal = confirmGoal({
+          configuration: configuration,
+          goalId: goalResult.id,
+          data: {},
+        });
+
+        const data = {
+          goalResult: goalResult,
+          saveImage: saveImage,
+          goalContributionSchedule: goalContributionSchedule,
+          linkAccount: linkAccount,
+          confirmTheGoal: confirmTheGoal,
+        };
+
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  const { isFetching: fetchingBankAccounts } = useQuery("bank-accounts", () =>
+    getBankAccounts(configuration).then((result) => {
+      if (result) {
+        accountStore.setAccounts(result);
+      }
+    })
   );
-  const { isFetching: confirmIsFetching, refetch: confirmGoals } = useQuery(
-    "confirmed-goals",
+
+  //Save Goal Name and Amount
+  // const { isFetching: saveGoalNameFetching, refetch: saveGoalNameAmount } =
+  //   useQuery(
+  //     "saving-goals",
+  //     () =>
+  //       saveAGoal({
+  //         configuration: configuration,
+  //         data: {
+  //           extern_id: "",
+  //           name: goal.goalName,
+  //           title: "",
+  //           amount: parseFloat(goal.goalAmount),
+  //           contribute_from: "",
+  //           is_customized: false,
+  //         },
+  //       }).then((result) => {
+  //         if (result.id) {
+  //           goal.setContributionSettingsGoalId(result.id);
+  //           goal.setGoalId(result.id);
+  //         }
+  //       }),
+  //     {
+  //       refetchOnWindowFocus: false,
+  //       enabled: false,
+  //     }
+  //   );
+
+  //Delete unconfirmed goals: We might need disable it for now
+  // const { refetch: unconfirmedGoals } = useQuery(
+  //   "delete-unconfirmed-goals",
+  //   () =>
+  //     deleteUnconfirmed(configuration).then((result: any) => {
+  //       if (result) {
+  //         goalContributionSettings.contributionFrequency("");
+  //       }
+  //     }),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     enabled: false,
+  //   }
+  // );
+
+  const { isFetching: saveGoalFetching, refetch: saveTheGoal } = useQuery(
+    "save-goal-details",
     () =>
-      confirmGoal({
-        configuration: configuration,
-        goalId: goal.contributionSettingsGoalId,
-        data: {},
-      })
+      saveGoalDetails()
         .then((result) => {
           if (result) {
             goal.setGoalImageUrl("");
@@ -122,21 +196,21 @@ const AddGoalDetails = () => {
       enabled: false,
     }
   );
-  const { data: saveImage } = useQuery(
-    "save-goal-image",
-    () =>
-      saveGoalImage({
-        configuration: configuration,
-        data: {
-          image_url: goal.goalImageUrl,
-        },
-        goalId: goal.contributionSettingsGoalId,
-      }),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!goal.contributionSettingsGoalId,
-    }
-  );
+  // const { data: saveImage } = useQuery(
+  //   "save-goal-image",
+  //   () =>
+  //     saveGoalImage({
+  //       configuration: configuration,
+  //       data: {
+  //         image_url: goal.goalImageUrl,
+  //       },
+  //       goalId: goal.contributionSettingsGoalId,
+  //     }),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     enabled: !!goal.contributionSettingsGoalId,
+  //   }
+  // );
 
   return (
     <div className="h-screen w-screen relative">
@@ -164,14 +238,14 @@ const AddGoalDetails = () => {
               <BackButton
                 background="bg-skin-base"
                 onClick={() => {
-                  unconfirmedGoals();
+                  // unconfirmedGoals();
                   navigate(-1);
                 }}
               />
               <CloseButton
                 background="bg-skin-base"
                 onClick={() => {
-                  unconfirmedGoals();
+                  // unconfirmedGoals();
                   navigate(-3);
                 }}
               />
@@ -317,8 +391,8 @@ const AddGoalDetails = () => {
         <MainButton
           isDisabled={!isValid}
           title="Start saving"
-          click={() => confirmGoals()}
-          loading={confirmIsFetching}
+          click={() => saveTheGoal()}
+          loading={saveGoalFetching}
         />
       </div>
     </div>

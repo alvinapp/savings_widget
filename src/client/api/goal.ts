@@ -49,6 +49,29 @@ export const saveGoalImage = async ({
   }
 };
 
+//Get Frequency text for give contribution settings
+
+export const getScheduleFrequencyText = async ({
+  configuration,
+  data,
+}: {
+  configuration: IConfig;
+  data: any;
+}) => {
+  try {
+    const res = await postData({
+      endpoint: `/goals/get_schedule`,
+      token: configuration.token,
+      data: data,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
 export const saveGoalContributionSettings = async ({
   configuration,
   data,

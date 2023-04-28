@@ -13,6 +13,15 @@ const useGoalContributionSettingsStore = create((set) => ({
   maturityDateText: "",
   tabIndex: 0,
   goalAmount: 0,
+  cron_string: "",
+  setCronString: (cron: string) => {
+    return set(() => {
+      const result = {
+        cron_string: cron,
+      };
+      return result;
+    });
+  },
   setGoalAmount: (amount: number) => {
     return set(() => {
       const result = {

@@ -12,6 +12,7 @@ import useGoalContributionSettingsStore from "client/store/goalContributionSetti
 import { useQuery } from "react-query";
 import {
   contributionMaturityDate,
+  getScheduleFrequencyText,
   saveGoalContributionSettings,
   updateGoalContributionSettings,
 } from "client/api/goal";
@@ -59,13 +60,11 @@ export const AddContributionSettings = ({
   const goal = useGoalStore((state: any) => state);
   const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
   const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
-  const {
-    isFetching: saveContributionFetching,
-    refetch: saveContributionSettings,
-  } = useQuery(
-    "save-contribution-settings",
+
+  const { isFetching: frequencyFetching, refetch: getFrequencyText } = useQuery(
+    "frequency-text",
     () =>
-      saveGoalContributionSettings({
+      getScheduleFrequencyText({
         configuration: configuration,
         data: {
           cron_string:
@@ -73,14 +72,15 @@ export const AddContributionSettings = ({
               ? monthlyCronString
               : weeklyCronString,
           savings_amount: goalContributionSettings.contributionAmount,
-          contribute_from: convertDate(
-            goalContributionSettings.startingFromDate.toString()
-          ),
         },
-        goalId: goal.contributionSettingsGoalId,
       }).then((result) => {
-        if (result.frequency !== "") {
+        if (result.frequency) {
           goalContributionSettings.setContributionFrequency(result.frequency);
+          goalContributionSettings.setCronString(
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString
+          );
           goalContributionSettings.openContributionSettingsBottomSheet(false);
         }
       }),
@@ -89,6 +89,36 @@ export const AddContributionSettings = ({
       enabled: false,
     }
   );
+  // const {
+  //   isFetching: saveContributionFetching,
+  //   refetch: saveContributionSettings,
+  // } = useQuery(
+  //   "save-contribution-settings",
+  //   () =>
+  //     saveGoalContributionSettings({
+  //       configuration: configuration,
+  //       data: {
+  //         cron_string:
+  //           goalContributionSettings.tabIndex === 1
+  //             ? monthlyCronString
+  //             : weeklyCronString,
+  //         savings_amount: goalContributionSettings.contributionAmount,
+  //         contribute_from: convertDate(
+  //           goalContributionSettings.startingFromDate.toString()
+  //         ),
+  //       },
+  //       goalId: goal.contributionSettingsGoalId,
+  //     }).then((result) => {
+  //       if (result.frequency !== "") {
+  //         // goalContributionSettings.setContributionFrequency(result.frequency);
+  //         // goalContributionSettings.openContributionSettingsBottomSheet(false);
+  //       }
+  //     }),
+  //   {
+  //     refetchOnWindowFocus: true,
+  //     enabled: false,
+  //   }
+  // );
   const {
     isFetching: updateContributionFetching,
     refetch: updateContributionSettings,
@@ -217,11 +247,9 @@ export const AddContributionSettings = ({
               : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}`
           }
           onClick={() =>
-            updatingGoal
-              ? updateContributionSettings()
-              : saveContributionSettings()
+            updatingGoal ? updateContributionSettings() : getFrequencyText()
           }
-          loading={saveContributionFetching || updateContributionFetching}
+          loading={frequencyFetching || updateContributionFetching}
         />
       </div>
     </div>
