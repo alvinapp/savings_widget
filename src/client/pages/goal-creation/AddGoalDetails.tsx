@@ -150,6 +150,8 @@ const AddGoalDetails = () => {
             goalContributionSettings.setContributionFrequency("");
             goal.setGoal({});
             accountStore.setAccount({});
+            goal.setPercentage(0);
+            goal.setMerchantName("");
             getConfirmedGoals({ configuration: configuration }).then(
               (result) => {
                 goal.setConfirmedGoals(result);

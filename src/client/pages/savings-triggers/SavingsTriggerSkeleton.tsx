@@ -21,7 +21,7 @@ const SavingsTriggerCardSkeleton = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <div className=" font-poppins text-sm font-medium text-black text-end text-ellipsis overflow-hidden whitespace-nowrap w-16">
             <Skeleton />
           </div>
@@ -30,7 +30,7 @@ const SavingsTriggerCardSkeleton = () => {
           >
             <Skeleton />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -6,10 +6,19 @@ const useBankAccountStore = create((set) => ({
   accounts: [],
   account: {},
   accountBottomSheet: false,
+  updateAccountBottomSheet: false,
   openAccountBottomSheet: (open: boolean) => {
     return set(() => {
       const results = {
         accountBottomSheet: open,
+      };
+      return results;
+    });
+  },
+  openUpdateAccountBottomSheet: (open: boolean) => {
+    return set(() => {
+      const results = {
+        updateAccountBottomSheet: open,
       };
       return results;
     });

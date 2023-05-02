@@ -115,7 +115,11 @@ const SavingsTrigger = () => {
             dataset={savingsTriggerStore.merchants_dataset}
             icon={<FiCreditCard />}
             onClick={(merchantName: string) => {
-              savingsTriggerStore.setMerchantName(merchantName);
+              savingsTriggerStore.setMerchantName(
+                savingsTriggerStore.merchant_name === ""
+                  ? savingsTriggerStore.merchants_dataset[0]
+                  : merchantName
+              );
             }}
             exactData={
               savingsTriggerStore.merchant_name === ""

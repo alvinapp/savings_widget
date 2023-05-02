@@ -20,24 +20,26 @@ import {
   saveAGoal,
   saveGoalImage,
   updateGoal,
+  updateGoalBankAccount,
 } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import { AddContributionSettings } from "../goal-creation/AddContributionSettings";
+import { maskAccountNo } from "client/utils/Formatters";
+import useBankAccountStore from "client/store/BankAccountStore";
+import { SelectBank } from "../components/goal-creation/SelectBank";
 const UpdateGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
-  const currencySymbol = useMonthlyIncomeStore(
-    (state: any) => state.currencySymbol
-  );
   const goal = useGoalStore((state: any) => state);
+  const { bank_account } = goal.confirmedGoal.bank_account_details ?? "";
   const navigate = useNavigate();
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-
+  const accountStore = useBankAccountStore((state: any) => state);
   const { isLoading, refetch: updateGoals } = useQuery(
     "update-goals",
     () =>
@@ -55,6 +57,18 @@ const UpdateGoalDetails = () => {
       })
         .then((result) => {
           if (result.id) {
+            //update bank account
+            updateGoalBankAccount({
+              configuration: configuration,
+              goalId: result.id,
+              data: {
+                name: "Chase Checking",
+                account_number: "1234567890",
+                routing_number: "123456789",
+                bank_name: "Chase",
+                account_type: "checking",
+              },
+            });
             goal.setContributionSettingsGoalId(result.id);
           }
         })
@@ -79,7 +93,8 @@ const UpdateGoalDetails = () => {
       enabled: !!goal.confirmedGoal.id,
     }
   );
-
+  const [hasGoalAmount, setHasGoalAmount] = useState(true);
+  const [hasGoalName, setHasGoalName] = useState(true);
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -129,8 +144,14 @@ const UpdateGoalDetails = () => {
             value={goal.goalName ? goal.goalName : ""}
             leadingIcon={<FiFlag size="1.375rem" />}
             addValue={(e) => goal.setGoalName(e)}
-            hasValue={!!goal.goalName}
-            clearInput={() => goal.setGoalName("")}
+            // hasValue={!!goal.goalName}
+            clearInput={() => {
+              setHasGoalName(false);
+              goal.setGoalName("");
+            }}
+            onClick={() => {
+              setHasGoalName(false);
+            }}
           />
         </div>
         <div className="mb-6">
@@ -142,21 +163,19 @@ const UpdateGoalDetails = () => {
             value={goal.goalAmount ? goal.goalAmount : ""}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => goal.setGoalAmount(e)}
-            hasValue={!!goal.goalAmount}
+            // hasValue={!!goal.goalAmount}
             clearInput={() => goal.setGoalAmount("")}
           />
         </div>
         <div className="mb-6">
           <TextInputWithPopup
             placeHolder="Add contribution"
-            label="How would you like to contribute?"
-            value={
-              goalContributionSettings.contributionFrequency
-                ? goalContributionSettings.contributionFrequency
-                : ""
-            }
+            value={`${goal.confirmedGoal.frequency_text}`}
             leadingIcon={<FiPocket size="1.375rem" />}
-            hasValue={!!goalContributionSettings.contributionFrequency}
+            hasValue={
+              !!goal.confirmedGoal.frequency_text ||
+              !!goalContributionSettings.contributionFrequency
+            }
             onClick={() =>
               goalContributionSettings.openContributionSettingsBottomSheet(true)
             }
@@ -187,14 +206,38 @@ const UpdateGoalDetails = () => {
         <div className="mb-6">
           <TextInputWithPopup
             placeHolder="Link bank or wallet"
-            hasValue={false}
             label="Link an account and track savings with ease"
-            value=""
+            value={
+              goal.confirmedGoal.bank_account_details !== null
+                ? `${bank_account.bank_name ? bank_account.bank_name : ""},${
+                    bank_account.account_number
+                      ? maskAccountNo(bank_account.account_number.toString(), 4)
+                      : ""
+                  }`
+                : ""
+            }
+            hasValue={!!bank_account.bank_name || !!accountStore.account}
             leadingIcon={<FiPocket size="1.375rem" />}
             addValue={(e) => e}
+            onClick={() => {
+              accountStore.openUpdateAccountBottomSheet(true);
+            }}
+            clearInput={() => {
+              console.log("Clicked");
+              accountStore.setAccount("");
+            }}
           />
+          <BottomSheet
+            onDismiss={() => accountStore.openUpdateAccountBottomSheet(false)}
+            open={accountStore.updateAccountBottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={<SelectBank accountList={accountStore.accounts} />}
+            defaultSnap={300}
+          ></BottomSheet>
         </div>
-        <div className="mb-10">
+        {/* <div className="mb-10">
           <TextInputWithPopup
             placeHolder="Apply savings rule"
             hasValue={false}
@@ -203,7 +246,7 @@ const UpdateGoalDetails = () => {
             leadingIcon={<FiTrendingUp size="1.375rem" />}
             addValue={(e) => e}
           />
-        </div>
+        </div> */}
         <MainButton
           title="Save changes"
           click={() => updateGoals()}

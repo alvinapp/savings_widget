@@ -14,15 +14,33 @@ import BackButton from "../components/BackButton";
 import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { SettingsCard } from "../components/settings/SettingsCard";
+import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import { fetchAllTriggers } from "client/api/savings-triggers";
+import { useQuery } from "react-query";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
 
 const Settings = () => {
   const navigate = useNavigate();
   const user = useUserStore((state: any) => state.user);
   const goalStore = useGoalStore((state: any) => state);
+  const savingsTriggerStore = useSavingsTriggerStore((state: any) => state);
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
   const currencySymbol = "₦";
-  const goals = 10;
   const accounts = 0;
-  const activeSavigsTriggers = 4;
+  const { isFetching: fetchingTriggers } = useQuery(
+    "goal-triggers",
+    () =>
+      fetchAllTriggers({
+        configuration: configuration,
+      }).then((result) => {
+        if (result) {
+          savingsTriggerStore.setAllSavingsTriggers(result);
+        }
+      }),
+    { refetchOnWindowFocus: false }
+  );
   return (
     <div className="pt-6 flex flex-col h-screen w-screen">
       <NavBar
@@ -89,7 +107,11 @@ const Settings = () => {
         <div className="mt-2">
           <SettingsCard
             title="Savings triggers"
-            subtitle={`${activeSavigsTriggers} active`}
+            subtitle={`${
+              savingsTriggerStore.allSavingsTriggers.length > 0
+                ? savingsTriggerStore.allSavingsTriggers.length
+                : 0
+            } active`}
             leading={<FiTrendingUp />}
             iconBackground={"bg-skin-iconSecondary"}
             iconColor="text-skin-iconSecondary"
@@ -122,7 +144,6 @@ const Settings = () => {
         <div className="mt-2 mb-8">
           <SettingsCard
             title="Privacy policy"
-            subtitle={`${activeSavigsTriggers} active`}
             leading={<FiFileText />}
             iconBackground={"bg-skin-iconTertiary"}
             iconColor="text-skin-iconTertiary"

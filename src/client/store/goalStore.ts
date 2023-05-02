@@ -13,6 +13,8 @@ const useGoalStore = create((set) => ({
   goalId: 0,
   goalName: "",
   goalAmount: "",
+  goalContributionFrequency: "",
+  goalBankAccount: {},
   customImageUrl: "",
   totalContribution: 0,
   maturityDate: "",
@@ -20,6 +22,25 @@ const useGoalStore = create((set) => ({
   goalSavingsTriggers: [],
   percentage: 0,
   merchant_name: "",
+
+  setBankAccount: (account: any) => {
+    return set(() => {
+      const results = {
+        goalBankAccount: account,
+      };
+      return results;
+    });
+  },
+
+  setGoalFrequency: (frequency: string) => {
+    return set(() => {
+      const results = {
+        goalContributionFrequency: frequency,
+      };
+      return results;
+    });
+  },
+
   setPercentage: (value: number) => {
     return set(() => {
       const results = {

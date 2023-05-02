@@ -9,6 +9,12 @@ import "./index.css";
 import "./style.scss";
 import { TailSpin } from "react-loader-spinner";
 import CreateGoalSavingsTrigger from "./pages/goal-creation/savings-trigger/CreateGoalSavingsTrigger";
+import GoalSettings from "./pages/settings/GoalSettings";
+import AddMonthlyIncome from "./pages/goal-creation/AddMonthlyIncome";
+import GoalView from "./pages/goal-view/GoalView";
+import NotificationSettings from "./pages/settings/NotificationSettings";
+import CreateSavingsGoal from "./pages/goal-creation/CreateSavingsGoal";
+import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
 
 declare var AppConfig: AppConfig;
 
@@ -19,27 +25,27 @@ const TermsCondition = lazy(
 const GoalCreationIntro = lazy(
   () => import("./pages/goal-creation/GoalCreationIntro")
 );
-const AddMonthlyIncome = lazy(
-  () => import("./pages/goal-creation/AddMonthlyIncome")
-);
-const CreateSavingsGoal = lazy(
-  () => import("./pages/goal-creation/CreateSavingsGoal")
-);
-const AddGoalDetails = lazy(
-  () => import("./pages/goal-creation/AddGoalDetails")
-);
-const GoalView = lazy(() => import("./pages/goal-view/GoalView"));
+// const AddMonthlyIncome = lazy(
+//   () => import("./pages/goal-creation/AddMonthlyIncome")
+// );
+// const CreateSavingsGoal = lazy(
+//   () => import("./pages/goal-creation/CreateSavingsGoal")
+// );
+// const AddGoalDetails = lazy(
+//   () => import("./pages/goal-creation/AddGoalDetails")
+// );
+// const GoalView = lazy(() => import("./pages/goal-view/GoalView"));
 const SavingsTrigger = lazy(
   () => import("./pages/savings-triggers/SavingsTrigger")
 );
 const Settings = lazy(() => import("./pages/settings/Settings"));
-const GoalSettings = lazy(() => import("./pages/settings/GoalSettings"));
+// const GoalSettings = lazy(() => import("./pages/settings/GoalSettings"));
 const SavingsTriggersSettings = lazy(
   () => import("./pages/settings/SavingsTriggersSettings")
 );
-const NotificationSettings = lazy(
-  () => import("./pages/settings/NotificationSettings")
-);
+// const NotificationSettings = lazy(
+//   () => import("./pages/settings/NotificationSettings")
+// );
 const Notifications = lazy(() => import("./pages/notications/Notifications"));
 const DeleteGoalSuccess = lazy(
   () => import("./pages/goal-view/DeleteGoalSuccess")

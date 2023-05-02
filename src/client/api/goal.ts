@@ -347,3 +347,27 @@ export const contributionMaturityDate = async ({
     return Promise.reject(reason);
   }
 };
+
+//update goal bank account
+export const updateGoalBankAccount = async ({
+  configuration,
+  goalId,
+  data,
+}: {
+  configuration: IConfig;
+  data: any;
+  goalId: number;
+}) => {
+  try {
+    const res = await postData({
+      endpoint: `/bank_accounts/${goalId}/update`,
+      token: configuration.token,
+      data: data,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};

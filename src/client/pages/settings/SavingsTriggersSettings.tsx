@@ -10,25 +10,16 @@ import { fetchAllTriggers } from "client/api/savings-triggers";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import SavingsTriggerCardSkeleton from "../savings-triggers/SavingsTriggerSkeleton";
 
-const SavingsTriggersSettings = () => {
+type SavingsTriggersSettingsProps = {
+  fetching?: boolean;
+};
+const SavingsTriggersSettings = ({
+  fetching,
+}: SavingsTriggersSettingsProps) => {
   const navigate = useNavigate();
   const savingsTriggersStore = useSavingsTriggerStore((state: any) => state);
-  const configuration = useConfigurationStore(
-    (state: any) => state.configuration
-  ) as IConfig;
-  const { refetch: fetchTriggers } = useQuery(
-    "goal-triggers",
-    () =>
-      fetchAllTriggers({
-        configuration: configuration,
-      }).then((result) => {
-        if (result) {
-          savingsTriggersStore.setAllSavingsTriggers(result);
-        }
-      }),
-    { refetchOnWindowFocus: false }
-  );
   return (
     <div className="flex flex-col h-screen w-screen pt-6 relative">
       <NavBar
@@ -50,17 +41,25 @@ const SavingsTriggersSettings = () => {
         }
       />
       <div className="mx-3.5 mt-5">
-        {savingsTriggersStore.allSavingsTriggers.map((trigger: any, i: any) => {
-          return (
-            <TriggerCard
-              key={trigger.id}
-              image={trigger.image}
-              percentage={trigger.round_up_percentage}
-              appliedTo={trigger.merchant_name}
-              created_at={trigger.created_at}
-            />
-          );
-        })}
+        {fetching
+          ? Array(10)
+              .fill("a")
+              .map((_, i) => {
+                return <SavingsTriggerCardSkeleton key={i} />;
+              })
+          : savingsTriggersStore.allSavingsTriggers.map(
+              (trigger: any, i: any) => {
+                return (
+                  <TriggerCard
+                    key={trigger.id}
+                    image={trigger.image}
+                    percentage={trigger.round_up_percentage}
+                    appliedTo={trigger.merchant_name}
+                    created_at={trigger.created_at}
+                  />
+                );
+              }
+            )}
       </div>
       <div className="absolute bottom-4 right-4">
         <AddButton

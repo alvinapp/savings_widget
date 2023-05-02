@@ -156,10 +156,12 @@ const GoalView = () => {
                   goal.setGoalImageUrl(currentGoal.image_url.image_url);
                   goal.setGoalName(currentGoal.name);
                   goal.setGoalAmount(currentGoal.amount);
+                  goal.setGoalFrequency(currentGoal.frequency_text);
+                  goal.setBankAccount(currentGoal.bank_account_details);
                   goalContributionSettings.setContributionFrequency(
                     currentGoal.frequency
                   );
-                  navigate("/update-goal");
+                  goal.navigate("/update-goal");
                 }}
               />
             </div>
