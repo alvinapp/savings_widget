@@ -64,22 +64,28 @@ const App = () => {
   const queryClient = new QueryClient();
   const userStore = useUserStore((state: any) => state);
   const notificationStore = useNotificationStore((state: any) => state);
-  const [receivedMessages, setReceivedMessages] = useState([]);
-  const socket = io(AppConfig.API_URL);
+  const [receivedMessages, setReceivedMessages] = useState<any[]>([]);
   const userId = userStore.user.user_id ?? "";
 
-  useEffect(() => {
-    socket.on(`schedule ${userId}`, (data: { message: any }) => {
-      // @ts-ignore
+  const eventSource = new EventSource(`${AppConfig.API_URL}/sse`);
+  eventSource.addEventListener(
+    `schedule ${userId}`,
+    function (event) {
+      const data = JSON.parse(event.data);
+      console.log(
+        `Received a message from server: ${data.message} with id ${data.id}`
+      );
       if (!receivedMessages.includes(data.message)) {
         notificationStore.setNotification(data);
-        // @ts-ignore
         setReceivedMessages((prevMessages) => [...prevMessages, data.message]);
       }
-    });
+    },
+    false
+  );
 
+  useEffect(() => {
     return () => {
-      socket.disconnect();
+      eventSource.close();
     };
   }, [receivedMessages, userId]);
 

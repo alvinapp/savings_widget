@@ -12,7 +12,7 @@ import arrowRight from "../../assets/images/savings/bell.svg";
 import SlideButton from "react-slide-button";
 import ReactSlider from "react-slider";
 import useGoalStore from "client/store/goalStore";
-import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import useSavingsTriggerStore from "client/store/savingsTriggerStore";
 import { useQuery } from "react-query";
 import { saveTrigger } from "client/api/savings-triggers";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
@@ -115,17 +115,9 @@ const SavingsTrigger = () => {
             dataset={savingsTriggerStore.merchants_dataset}
             icon={<FiCreditCard />}
             onClick={(merchantName: string) => {
-              savingsTriggerStore.setMerchantName(
-                savingsTriggerStore.merchant_name === ""
-                  ? savingsTriggerStore.merchants_dataset[0]
-                  : merchantName
-              );
+              savingsTriggerStore.setMerchantName(merchantName);
             }}
-            exactData={
-              savingsTriggerStore.merchant_name === ""
-                ? savingsTriggerStore.merchants_dataset[0]
-                : savingsTriggerStore.merchant_name
-            }
+            exactData={savingsTriggerStore.merchant_name}
           />
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>

@@ -1,14 +1,18 @@
 import React from "react";
 import { BankAccountCard } from "../BankAccountCard";
-import useBankAccountStore from "client/store/BankAccountStore";
+import useBankAccountStore from "client/store/bankAccountStore";
 import { useQuery } from "react-query";
 import { linkBankAccount } from "client/api/accounts";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 export type SelectBankProps = {
   accountList: Array<any>;
+  updateBank?: boolean;
 };
-export const SelectBank = ({ accountList }: SelectBankProps) => {
+export const SelectBank = ({
+  accountList,
+  updateBank = false,
+}: SelectBankProps) => {
   const accountStore = useBankAccountStore((state: any) => state);
   const goalStore = useGoalStore((state: any) => state);
   const configuration = useConfigurationStore(
@@ -33,7 +37,17 @@ export const SelectBank = ({ accountList }: SelectBankProps) => {
       </div>
       <div className="ml-3">
         {accountList.map((account) => {
-          return (
+          return updateBank ? (
+            <BankAccountCard
+              key={account.id}
+              accountNumber={account.account_number}
+              bankName={account.bank_name}
+              onClick={() => {
+                accountStore.setAccount({ bank_account: account });
+                accountStore.openUpdateAccountBottomSheet(false);
+              }}
+            />
+          ) : (
             <BankAccountCard
               key={account.id}
               accountNumber={account.account_number}

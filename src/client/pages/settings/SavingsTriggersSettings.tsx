@@ -9,7 +9,7 @@ import TriggerCard from "../components/TriggerCard";
 import { fetchAllTriggers } from "client/api/savings-triggers";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
-import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import useSavingsTriggerStore from "client/store/savingsTriggerStore";
 import SavingsTriggerCardSkeleton from "../savings-triggers/SavingsTriggerSkeleton";
 
 type SavingsTriggersSettingsProps = {

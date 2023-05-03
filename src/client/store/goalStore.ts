@@ -14,14 +14,14 @@ const useGoalStore = create((set) => ({
   goalName: "",
   goalAmount: "",
   goalContributionFrequency: "",
-  goalBankAccount: {},
+  goalBankAccount: null,
   customImageUrl: "",
   totalContribution: 0,
   maturityDate: "",
   percentageOfSavings: 0,
   goalSavingsTriggers: [],
   percentage: 0,
-  merchant_name: "",
+  merchant_name: "All merchants",
 
   setBankAccount: (account: any) => {
     return set(() => {

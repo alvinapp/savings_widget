@@ -186,19 +186,19 @@ export const resumeGoal = async ({
 //Delete goal
 export const deleteGoal = async ({
   configuration,
-  data,
+
   goalId,
 }: {
   configuration: IConfig;
-  data: any;
+
   goalId: number;
 }) => {
   try {
     const res = await postData({
       endpoint: `/goals/${goalId}/delete`,
       token: configuration.token,
-      data: data,
     });
+    console.log(res);
     return res;
   } catch (reason: any) {
     Sentry.captureException(reason);
@@ -351,16 +351,14 @@ export const contributionMaturityDate = async ({
 //update goal bank account
 export const updateGoalBankAccount = async ({
   configuration,
-  goalId,
   data,
 }: {
   configuration: IConfig;
   data: any;
-  goalId: number;
 }) => {
   try {
     const res = await postData({
-      endpoint: `/bank_accounts/${goalId}/update`,
+      endpoint: `/bank_accounts/goal_bank_accounts/update`,
       token: configuration.token,
       data: data,
     });

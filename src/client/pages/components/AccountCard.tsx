@@ -3,7 +3,7 @@ import { useLongPress } from "use-long-press";
 
 import Account from "client/models/Account";
 import Routes from "client/pages/routes";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import { cardBackground } from "client/utils/CardBackground";
 import { accountLogo } from "client/utils/AccountLogo";
 import { applyAsterix } from "client/utils/Formatters";

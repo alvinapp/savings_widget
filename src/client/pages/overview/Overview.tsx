@@ -26,6 +26,8 @@ import TabFilter from "../components/TabFilter";
 import { UpcomingSavings } from "../components/overview/UpcomingSavings";
 import { MyGoals } from "../components/overview/MyGoals";
 import { upcomingSavings, tabs } from "client/utils/MockData";
+import getBankAccounts from "client/api/accounts";
+import useBankAccountStore from "client/store/bankAccountStore";
 const Overview = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -39,7 +41,7 @@ const Overview = () => {
   );
   const notificationsStore = useNotificationStore((state: any) => state) ?? [];
   const [tabIndex, setTabIndex] = useState(0);
-
+  const accountStore = useBankAccountStore((state: any) => state);
   const allConfirmedGoals =
     useGoalStore((state: any) => state.confirmedGoals) ?? [];
   const { data } = useQuery(
@@ -86,6 +88,17 @@ const Overview = () => {
       totalContribution({ configuration: configuration }).then((result) => {
         if (result) {
           goal.setTotalContribution(result.total_contributions);
+        }
+      }),
+    { enabled: !!configuration.token }
+  );
+
+  const { isFetching: fetchingBankAccounts } = useQuery(
+    "bank-accounts",
+    () =>
+      getBankAccounts(configuration).then((result) => {
+        if (result) {
+          accountStore.setAccounts(result);
         }
       }),
     { enabled: !!configuration.token }

@@ -1,5 +1,5 @@
 import { checkIfDebitCredit, dateFormat } from "client/utils/Formatters";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import Accounts from "client/models/Accounts";
 import Transaction from "client/models/Transaction";
 import Trigger from "client/models/Trigger";

@@ -31,6 +31,9 @@ import { ToastContainer } from "react-toastify";
 import { DeleteGoal } from "./DeleteGoal";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import { fetchGoalTriggers } from "client/api/savings-triggers";
+import useBankAccountStore from "client/store/bankAccountStore";
+import { AddFunds } from "./AddFunds";
+import useAddFundsStore from "client/store/AddFundsStore";
 const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
@@ -52,7 +55,9 @@ const GoalView = () => {
       icon: <FiTrendingUp />,
     },
   ];
+  const accountStore = useBankAccountStore((state: any) => state);
   const goal = useGoalStore((state: any) => state);
+  const addFundsStore = useAddFundsStore((state: any) => state);
   const currentGoal = goal.confirmedGoals.find(
     (element: any) => element.id === goal.confirmedGoal.id
   );
@@ -79,7 +84,6 @@ const GoalView = () => {
       deleteGoal({
         configuration: configuration,
         goalId: goal.confirmedGoal.id,
-        data: {},
       }).then((result) => {
         if (result) {
           goal.openDeleteBottomSheet(false);
@@ -89,7 +93,7 @@ const GoalView = () => {
           });
         }
       }),
-    { refetchOnWindowFocus: true, enabled: false }
+    { refetchOnWindowFocus: false, enabled: false }
   );
   const { image_url } = goal.confirmedGoal.image_url;
   const { refetch: fetchTriggers } = useQuery(
@@ -119,12 +123,12 @@ const GoalView = () => {
           />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <GoalViewBalanceView
-              contributedAmount={goal.confirmedGoal.total_contributed}
-              amount={goal.confirmedGoal.amount}
+              contributedAmount={currentGoal.total}
+              amount={currentGoal.amount}
             />
             <div className="mt-8 w-screen px-3.5">
               <CustomProgressBar
-                progressPercentage={goal.confirmedGoal.progress}
+                progressPercentage={currentGoal.progress}
                 isActive={currentGoal.is_active}
               />
             </div>
@@ -153,15 +157,20 @@ const GoalView = () => {
                 background="bg-skin-base"
                 icon={settingNeutral}
                 onClick={() => {
+                  console.log(currentGoal.bank_account_details);
                   goal.setGoalImageUrl(currentGoal.image_url.image_url);
                   goal.setGoalName(currentGoal.name);
                   goal.setGoalAmount(currentGoal.amount);
                   goal.setGoalFrequency(currentGoal.frequency_text);
-                  goal.setBankAccount(currentGoal.bank_account_details);
+                  accountStore.setAccount(
+                    currentGoal.bank_account_details !== null
+                      ? currentGoal.bank_account_details
+                      : {}
+                  );
                   goalContributionSettings.setContributionFrequency(
                     currentGoal.frequency
                   );
-                  goal.navigate("/update-goal");
+                  navigate("/update-goal");
                 }}
               />
             </div>
@@ -174,12 +183,20 @@ const GoalView = () => {
             child={
               <AddFundsButton
                 onClick={() => {
-                  navigate("");
+                  addFundsStore.openAddFundBottomSheet(true);
                 }}
               />
             }
             title="Add funds"
           />
+          <BottomSheet
+            open={addFundsStore.bottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={<AddFunds />}
+            defaultSnap={300}
+          ></BottomSheet>
           <ActionComponent
             child={
               currentGoal.is_active ? (
@@ -270,7 +287,10 @@ const GoalView = () => {
         </div>
         <div className="mt-5">
           {tabIndex == 0 ? (
-            <ActivitiesView activities={activities} />
+            <ActivitiesView
+              activities={currentGoal.activity}
+              goal={currentGoal}
+            />
           ) : (
             <TriggersView triggers={goal.goalSavingsTriggers} />
           )}

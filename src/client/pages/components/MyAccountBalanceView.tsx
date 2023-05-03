@@ -1,7 +1,7 @@
 import { FiMoreHorizontal } from "react-icons/fi";
 
 import Account from "client/models/Account";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import { accountLogo } from "client/utils/AccountLogo";
 import { checkNAN } from "client/utils/Formatters";
 

@@ -1,7 +1,7 @@
 import { Emoji } from "client/pages/components/Emoji";
 import Transaction from "client/models/Goal";
 import Category from "client/models/Category";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import Accounts from "client/models/Accounts";
 import uncategorized from "client/assets/images/uncategorized.svg";
 import {

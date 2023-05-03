@@ -4,7 +4,7 @@ import Account from "client/models/Account";
 
 const useSavingsTriggerStore = create((set) => ({
   percentage: 0,
-  merchant_name: "",
+  merchant_name: "All merchants",
   goal_id: 0,
   merchants_dataset: [
     "All merchants",

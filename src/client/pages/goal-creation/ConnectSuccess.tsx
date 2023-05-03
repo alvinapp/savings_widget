@@ -9,7 +9,7 @@ import cloud1 from "client/assets/images/cloud1.svg";
 import cloud2 from "client/assets/images/cloud2.svg";
 import successIcon from "client/assets/images/connect-success-icon.svg";
 import Routes from "client/pages/routes";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import getAccounts from "client/api/accounts";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useFilterStore from "client/store/filterStore";

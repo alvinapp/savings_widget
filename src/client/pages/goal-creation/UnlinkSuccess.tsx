@@ -8,7 +8,7 @@ import Routes from "client/pages/routes";
 import UnlinkSuccessIcon from "client/pages/components/mono/unlink-success/connect-success/UnlinkSuccessIcon";
 import UnlinkSuccessProgress from "client/pages/components/mono/unlink-success/connect-success/UnlinkSuccessProgress";
 import getAccounts from "client/api/accounts";
-import useAccountStore from "client/store/BankAccountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import usePageStore from "client/store/pageStore";
 import getTransactions from "client/api/transactions";

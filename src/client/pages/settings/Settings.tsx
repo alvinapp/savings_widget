@@ -14,7 +14,7 @@ import BackButton from "../components/BackButton";
 import NavBar from "../components/NavBar";
 import NavBarTitle from "../components/NavBarTitle";
 import { SettingsCard } from "../components/settings/SettingsCard";
-import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import useSavingsTriggerStore from "client/store/savingsTriggerStore";
 import { fetchAllTriggers } from "client/api/savings-triggers";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";

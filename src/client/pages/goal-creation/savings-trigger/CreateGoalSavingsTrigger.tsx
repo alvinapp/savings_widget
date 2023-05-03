@@ -12,7 +12,7 @@ import arrowRight from "../../assets/images/savings/bell.svg";
 import SlideButton from "react-slide-button";
 import ReactSlider from "react-slider";
 import useGoalStore from "client/store/goalStore";
-import useSavingsTriggerStore from "client/store/SavingsTrigger";
+import useSavingsTriggerStore from "client/store/savingsTriggerStore";
 import { useQuery } from "react-query";
 import { saveTrigger } from "client/api/savings-triggers";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
@@ -100,11 +100,7 @@ const CreateGoalSavingsTrigger = () => {
             onClick={(merchantName: string) => {
               goal.setMerchantName(merchantName);
             }}
-            exactData={
-              goal.merchant_name === ""
-                ? savingsTriggerStore.merchants_dataset[0]
-                : goal.merchant_name
-            }
+            exactData={goal.merchant_name}
           />
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>

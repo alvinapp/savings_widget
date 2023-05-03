@@ -27,7 +27,7 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import useUserStore from "client/store/userStore";
-import useBankAccountStore from "client/store/BankAccountStore";
+import useBankAccountStore from "client/store/bankAccountStore";
 import { SelectBank } from "../components/goal-creation/SelectBank";
 import getBankAccounts, { linkBankAccount } from "client/api/accounts";
 import { convertDate, maskAccountNo } from "client/utils/Formatters";
@@ -130,13 +130,6 @@ const AddGoalDetails = () => {
       throw error;
     }
   };
-  const { isFetching: fetchingBankAccounts } = useQuery("bank-accounts", () =>
-    getBankAccounts(configuration).then((result) => {
-      if (result) {
-        accountStore.setAccounts(result);
-      }
-    })
-  );
 
   const { isFetching: saveGoalFetching, refetch: saveTheGoal } = useQuery(
     "save-goal-details",
