@@ -35,7 +35,7 @@ const UpcomingSavingsCard = ({
             <div className="flex flex-col mr-3">
               <div className="shadow-card rounded-full flex items-center">
                 <img
-                  className="rounded-full max-w-full align-middle border-none h-8 w-8
+                  className="rounded-full max-w-full align-middle border-none h-10 w-10
                       "
                   src={goalImage}
                 />

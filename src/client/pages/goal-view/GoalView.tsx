@@ -157,7 +157,6 @@ const GoalView = () => {
                 background="bg-skin-base"
                 icon={settingNeutral}
                 onClick={() => {
-                  console.log(currentGoal.bank_account_details);
                   goal.setGoalImageUrl(currentGoal.image_url.image_url);
                   goal.setGoalName(currentGoal.name);
                   goal.setGoalAmount(currentGoal.amount);

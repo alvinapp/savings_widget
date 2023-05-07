@@ -61,7 +61,7 @@ const SavingsTriggersSettings = ({
               }
             )}
       </div>
-      <div className="absolute bottom-4 right-4">
+      <div className="fixed bottom-4 right-4">
         <AddButton
           onClick={() => {
             // navigate("/savings-trigger");

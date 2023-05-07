@@ -8,7 +8,9 @@ export const DepositButton = ({ warning = false }: DepositButtonProps) => {
   return (
     <div
       className={`${
-        warning ? "bg-skin-warningWithOpacity" : "bg-skin-secondaryWithOpacity"
+        warning
+          ? "bg-skin-secondaryWithOpacity"
+          : "bg-skin-secondaryWithOpacity"
       } px-3 py-1 rounded-3xl`}
     >
       <div className="flex flex-row items-center">
@@ -17,7 +19,7 @@ export const DepositButton = ({ warning = false }: DepositButtonProps) => {
         </div>
         <div
           className={`${
-            warning ? "text-skin-warning" : "text-skin-primary"
+            warning ? "text-skin-primary" : "text-skin-primary"
           } font-poppins text-xs font-semibold tracking-tab_text`}
         >
           Deposit

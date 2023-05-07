@@ -67,6 +67,7 @@ const CreateGoalSavingsTrigger = () => {
         <div className="flex flex-row  mx-4 mt-5">
           <ReactSlider
             className="horizontal-slider"
+            defaultValue={1}
             marks={[1, 2, 5, 10]}
             markClassName="example-mark"
             min={0}

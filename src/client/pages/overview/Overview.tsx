@@ -28,6 +28,7 @@ import { MyGoals } from "../components/overview/MyGoals";
 import { upcomingSavings, tabs } from "client/utils/MockData";
 import getBankAccounts from "client/api/accounts";
 import useBankAccountStore from "client/store/bankAccountStore";
+import { element } from "prop-types";
 const Overview = () => {
   const navigate = useNavigate();
   const goal = useGoalStore((state: any) => state);
@@ -44,6 +45,13 @@ const Overview = () => {
   const accountStore = useBankAccountStore((state: any) => state);
   const allConfirmedGoals =
     useGoalStore((state: any) => state.confirmedGoals) ?? [];
+
+  const completeGoals = goal.confirmedGoals.filter(
+    (element: any) => element.progress === 100
+  );
+  const uncompleteGoals = goal.confirmedGoals.filter(
+    (element: any) => element.progress !== 100
+  );
   const { data } = useQuery(
     ["token"],
     () =>
@@ -133,7 +141,7 @@ const Overview = () => {
         <BalanceView balance={goal.totalContribution} currency="₦" />
       </div>
       <div className="mt-6">
-        {/* <NotificationCard amount={250000.54} /> */}
+        <NotificationCard amount={goal.totalContribution} />
       </div>
       {(goalsFetched && goal.confirmedGoals.length > 0) ||
       (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
@@ -147,7 +155,7 @@ const Overview = () => {
             {tabIndex == 1 ? (
               <UpcomingSavings upcomingSavings={upcomingSavings} />
             ) : (
-              <MyGoals goals={allConfirmedGoals} />
+              <MyGoals goals={uncompleteGoals} completeGoals={completeGoals} />
             )}
           </div>
         </div>

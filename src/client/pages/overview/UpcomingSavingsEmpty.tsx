@@ -6,7 +6,7 @@ export const UpcomingSavingsEmptyState = () => {
         <img src={image} />
       </div>
       <div className="flex flex-row justify-center font-workSans font-semibold text-base tracking-title text-skin-neutral mb-3">
-        No registered upcoming savings yet!
+        No upcoming savings yet!
       </div>
       <div className="flex flex-row justify-center font-workSans font-medium text-tiny tracking-listtile_subtitle text-center text-skin-subtitle mx-12"></div>
     </div>
