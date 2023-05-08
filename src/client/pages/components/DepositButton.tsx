@@ -1,6 +1,6 @@
 import React from "react";
 import depositIcon from "client/assets/images/savings/deposit.webp";
-import warningDepositIcon from "client/assets/images/savings/deposit.webp";
+import warningDepositIcon from "client/assets/images/savings/yellow-add-funds.svg";
 type DepositButtonProps = {
   warning?: boolean;
 };
@@ -8,9 +8,7 @@ export const DepositButton = ({ warning = false }: DepositButtonProps) => {
   return (
     <div
       className={`${
-        warning
-          ? "bg-skin-secondaryWithOpacity"
-          : "bg-skin-secondaryWithOpacity"
+        warning ? "bg-skin-warningWithOpacity" : "bg-skin-secondaryWithOpacity"
       } px-3 py-1 rounded-3xl`}
     >
       <div className="flex flex-row items-center">
@@ -19,7 +17,7 @@ export const DepositButton = ({ warning = false }: DepositButtonProps) => {
         </div>
         <div
           className={`${
-            warning ? "text-skin-primary" : "text-skin-primary"
+            warning ? "text-skin-warning" : "text-skin-primary"
           } font-poppins text-xs font-semibold tracking-tab_text`}
         >
           Deposit

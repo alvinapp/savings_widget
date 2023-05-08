@@ -46,11 +46,17 @@ const UpcomingSavingsCard = ({
                 {goalName}
               </div>
               <div className="flex flex-row items-center mt-1">
-                <div className="font-poppins text-xs font-medium text-skin-primary tracking-wide text-start mr-1">
+                <div
+                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                    warning ? "text-skin-warning" : "text-skin-primary"
+                  }`}
+                >
                   {currencySymbol}
                 </div>
                 <div
-                  className={`font-poppins text-xs font-medium text-skin-primary tracking-wide text-start mr-1`}
+                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                    warning ? "text-skin-warning" : "text-skin-primary"
+                  }`}
                 >
                   {amount}
                 </div>

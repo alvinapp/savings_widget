@@ -6,6 +6,7 @@ import TransactionCard from "../GoalCard";
 import { useNavigate } from "react-router-dom";
 import useGoalStore from "client/store/goalStore";
 import { resumeAGoal } from "client/utils/ResumeGoal";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
 
 type MyGoalsProps = {
   goals: Array<Goal>;
@@ -15,6 +16,7 @@ export const MyGoals = ({ goals, completeGoals }: MyGoalsProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const confirmedGoal = useGoalStore((state: any) => state);
+  const currencySymbol = useMonthlyIncomeStore((state: any) => state);
   return (
     <div>
       {goals.map((goal: any, i) => {
@@ -30,7 +32,13 @@ export const MyGoals = ({ goals, completeGoals }: MyGoalsProps) => {
             amount={goal.amount}
             progress={goal.progress}
             imageUrl={goal.image_url.image_url}
-            status={goal.status}
+            status={
+              goal.progress === 50
+                ? "🚀 Halfway there"
+                : goal.is_active
+                ? ""
+                : `🪴 Resume goal, ${currencySymbol.currencySymbol} ${goal.amount}`
+            }
             transacted_at={goal.transacted_at}
             is_active={goal.is_active}
             resume={() => {}}
