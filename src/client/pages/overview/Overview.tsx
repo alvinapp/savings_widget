@@ -140,25 +140,30 @@ const Overview = () => {
       <div className="mt-6 flex flex-row justify-center">
         <BalanceView balance={goal.totalContribution} currency="₦" />
       </div>
-      <div className="mt-6">
-        <NotificationCard amount={goal.totalContribution} />
-      </div>
       {(goalsFetched && goal.confirmedGoals.length > 0) ||
       (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
-        <div className="mt-6">
-          <TabFilter
-            tabs={tabs}
-            activeTab={tabIndex}
-            onClick={(tab: any) => setTabIndex(tab.tab_id)}
-          />
-          <div className="mt-4">
-            {tabIndex == 1 ? (
-              <UpcomingSavings upcomingSavings={upcomingSavings} />
-            ) : (
-              <MyGoals goals={uncompleteGoals} completeGoals={completeGoals} />
-            )}
+        <>
+          <div className="mt-6">
+            <NotificationCard amount={goal.totalContribution} />
           </div>
-        </div>
+          <div className="mt-6">
+            <TabFilter
+              tabs={tabs}
+              activeTab={tabIndex}
+              onClick={(tab: any) => setTabIndex(tab.tab_id)}
+            />
+            <div className="mt-4">
+              {tabIndex == 1 ? (
+                <UpcomingSavings upcomingSavings={upcomingSavings} />
+              ) : (
+                <MyGoals
+                  goals={uncompleteGoals}
+                  completeGoals={completeGoals}
+                />
+              )}
+            </div>
+          </div>
+        </>
       ) : goalsFetched && goal.confirmedGoals.length === 0 ? (
         <OverviewTrackGoalCreationProgress />
       ) : (
