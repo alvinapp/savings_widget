@@ -10,10 +10,85 @@ const useGoalStore = create((set) => ({
   pauseDeleteBottomSheet: false,
   deleteGoalBottomSheet: false,
   goalImageUrl: "",
+  goalId: 0,
   goalName: "",
   goalAmount: "",
+  goalContributionFrequency: "",
+  goalBankAccount: null,
   customImageUrl: "",
   totalContribution: 0,
+  maturityDate: "",
+  percentageOfSavings: 0,
+  goalSavingsTriggers: [],
+  percentage: 0,
+  merchant_name: "All merchants",
+
+  setBankAccount: (account: any) => {
+    return set(() => {
+      const results = {
+        goalBankAccount: account,
+      };
+      return results;
+    });
+  },
+
+  setGoalFrequency: (frequency: string) => {
+    return set(() => {
+      const results = {
+        goalContributionFrequency: frequency,
+      };
+      return results;
+    });
+  },
+
+  setPercentage: (value: number) => {
+    return set(() => {
+      const results = {
+        percentage: value,
+      };
+      return results;
+    });
+  },
+  setMerchantName: (name: string) => {
+    return set(() => {
+      const results = {
+        merchant_name: name,
+      };
+      return results;
+    });
+  },
+  setGoalSavingsTriggers: (triggers: Array<any>) => {
+    return set(() => {
+      const result = {
+        goalSavingsTriggers: triggers,
+      };
+      return result;
+    });
+  },
+  setGoalId: (id: number) => {
+    return set(() => {
+      const result = {
+        goalId: id,
+      };
+      return result;
+    });
+  },
+  setPercentageOfSavings: (perc: number) => {
+    return set(() => {
+      const result = {
+        percentageOfSavings: perc,
+      };
+      return result;
+    });
+  },
+  setMaturityDate: (date: any) => {
+    return set(() => {
+      const result = {
+        maturityDate: date,
+      };
+      return result;
+    });
+  },
   setGoal: (goal: Goal) => {
     return set((state: any) => {
       const result = {

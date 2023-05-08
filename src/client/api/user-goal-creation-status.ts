@@ -4,11 +4,17 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { fetchData, postData } from "client/api/api";
 
 const checkStatusOfGoalCreation = async (configuration: IConfig) => {
-  const res = await fetchData({
-    endpoint: "/users/status/",
-    token: configuration.token,
-  });
-  return res;
+  try {
+    const res = await fetchData({
+      endpoint: "/users/status/",
+      token: configuration.token,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
 };
 
 export default checkStatusOfGoalCreation;

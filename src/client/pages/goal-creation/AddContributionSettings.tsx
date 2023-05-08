@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import TabFilter from "client/pages/components/TabFilter";
 import { FiToggleLeft, FiToggleRight } from "react-icons/fi";
 import { Amount } from "client/pages/components/Amount";
@@ -11,13 +11,21 @@ import useUserStore from "client/store/userStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import { useQuery } from "react-query";
 import {
+  contributionMaturityDate,
+  getScheduleFrequencyText,
   saveGoalContributionSettings,
   updateGoalContributionSettings,
 } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import useMonthlyIncomeStore from "client/store/monthlyIncome";
-import { convertDate } from "client/utils/Formatters";
+import {
+  calculateGoalMaturityDate,
+  convertDate,
+  debounce,
+  rightDateFormat,
+} from "client/utils/Formatters";
+import { dateFormat } from "client/utils/Formatters";
 type AddContributionSettingsProps = {
   onClick?: () => void;
   updatingGoal?: boolean;
@@ -26,8 +34,6 @@ export const AddContributionSettings = ({
   onClick,
   updatingGoal = false,
 }: AddContributionSettingsProps) => {
-  const currency = "₦";
-  const [tabIndex, setTabIndex] = useState(0);
   const contributionSettingsTabs = [
     {
       tab_id: 0,
@@ -45,7 +51,6 @@ export const AddContributionSettings = ({
   );
   const user = useUserStore((state: any) => state.user);
   const monthlyIncomeAmount = monthlyIncome || user.income;
-  const [percentageOfMonthlyIncome, setPercentageOfMonthlyIncome] = useState(0);
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
@@ -55,56 +60,114 @@ export const AddContributionSettings = ({
   const goal = useGoalStore((state: any) => state);
   const weeklyCronString = `every ${goalContributionSettings.weekDayToContibute}`;
   const monthlyCronString = `every ${goalContributionSettings.monthlyWeek} ${goalContributionSettings.weekDayOfTheMonth}`;
-  const saveSettings = () => {
-    saveGoalContributionSettings({
-      configuration: configuration,
-      data: {
-        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
-        savings_amount: goalContributionSettings.contributionAmount,
-        contribute_from: convertDate(
-          goalContributionSettings.startingFromDate.toString()
-        ),
-      },
-      goalId: goal.contributionSettingsGoalId,
-    }).then((result) => {
-      if (result.frequency !== "") {
-        goalContributionSettings.setContributionFrequency(result.frequency);
-        goalContributionSettings.openContributionSettingsBottomSheet(false);
-      }
-    });
-  };
-  const updateSettings = () => {
-    updateGoalContributionSettings({
-      configuration: configuration,
-      data: {
-        cron_string: tabIndex === 1 ? monthlyCronString : weeklyCronString,
-        savings_amount: goalContributionSettings.contributionAmount,
-        contribute_from: convertDate(
-          goalContributionSettings.startingFromDate.toString()
-        ),
-      },
-      goalId: goal.confirmedGoal.id,
-    }).then((result) => {
-      if (result.frequency !== "") {
-        goalContributionSettings.setContributionFrequency(result.frequency);
-        goalContributionSettings.openContributionSettingsBottomSheet(false);
-      }
-    });
-  };
+
+  const { isFetching: frequencyFetching, refetch: getFrequencyText } = useQuery(
+    "frequency-text",
+    () =>
+      getScheduleFrequencyText({
+        configuration: configuration,
+        data: {
+          cron_string:
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString,
+          savings_amount: goalContributionSettings.contributionAmount,
+        },
+      }).then((result) => {
+        if (result.frequency) {
+          goalContributionSettings.setContributionFrequency(result.frequency);
+          goalContributionSettings.setCronString(
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString
+          );
+          goalContributionSettings.openContributionSettingsBottomSheet(false);
+        }
+      }),
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
+  // const {
+  //   isFetching: saveContributionFetching,
+  //   refetch: saveContributionSettings,
+  // } = useQuery(
+  //   "save-contribution-settings",
+  //   () =>
+  //     saveGoalContributionSettings({
+  //       configuration: configuration,
+  //       data: {
+  //         cron_string:
+  //           goalContributionSettings.tabIndex === 1
+  //             ? monthlyCronString
+  //             : weeklyCronString,
+  //         savings_amount: goalContributionSettings.contributionAmount,
+  //         contribute_from: convertDate(
+  //           goalContributionSettings.startingFromDate.toString()
+  //         ),
+  //       },
+  //       goalId: goal.contributionSettingsGoalId,
+  //     }).then((result) => {
+  //       if (result.frequency !== "") {
+  //         // goalContributionSettings.setContributionFrequency(result.frequency);
+  //         // goalContributionSettings.openContributionSettingsBottomSheet(false);
+  //       }
+  //     }),
+  //   {
+  //     refetchOnWindowFocus: true,
+  //     enabled: false,
+  //   }
+  // );
   const {
-    isLoading: saveContributionLoading,
-    refetch: saveContributionSettings,
-  } = useQuery("save-contribution-settings", () => saveSettings, {
-    refetchOnWindowFocus: true,
-    enabled: false,
-  });
-  const {
-    isLoading: updateContributionLoading,
+    isFetching: updateContributionFetching,
     refetch: updateContributionSettings,
-  } = useQuery("update-contribution-settings", () => updateSettings, {
-    refetchOnWindowFocus: true,
-    enabled: false,
-  });
+  } = useQuery(
+    "update-contribution-settings",
+    () =>
+      updateGoalContributionSettings({
+        configuration: configuration,
+        data: {
+          cron_string:
+            goalContributionSettings.tabIndex === 1
+              ? monthlyCronString
+              : weeklyCronString,
+          savings_amount: goalContributionSettings.contributionAmount,
+          contribute_from: convertDate(
+            goalContributionSettings.startingFromDate.toString()
+          ),
+        },
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result.frequency !== "") {
+          goalContributionSettings.setContributionFrequency(result.frequency);
+          goalContributionSettings.openContributionSettingsBottomSheet(false);
+        }
+      }),
+    {
+      refetchOnWindowFocus: true,
+      enabled: false,
+    }
+  );
+  const debouncedMaturityDate = debounce(
+    (value: number, frequency?: string) => {
+      goalContributionSettings.setMaturityDateText(
+        calculateGoalMaturityDate({
+          goalAmount: goal.goalAmount,
+          contributionAmount: (monthlyIncomeAmount * value) / 100,
+          frequency: frequency,
+          dateStr: goalContributionSettings.startingFromDate.toString(),
+        })
+      );
+    },
+    1000
+  );
+  useEffect(() => {
+    debouncedMaturityDate(
+      goal.percentageOfSavings,
+      goalContributionSettings.tabIndex === 0 ? "weekly" : "monthly"
+    );
+  }, [goalContributionSettings.startingFromDate]);
   return (
     <div className="flex flex-col relative">
       <div className="absolute top-0 right-2">
@@ -121,8 +184,23 @@ export const AddContributionSettings = ({
       <div className="mb-6">
         <TabFilter
           tabs={contributionSettingsTabs}
-          activeTab={tabIndex}
-          onClick={(tab: any) => setTabIndex(tab.tab_id)}
+          activeTab={goalContributionSettings.tabIndex}
+          onClick={(tab: any) => {
+            goalContributionSettings.setTabIndex(tab.tab_id);
+            if (tab.tab_id === 0) {
+              goalContributionSettings.setContributionAmount(
+                (monthlyIncomeAmount * 5) / 100
+              );
+              goal.setPercentageOfSavings(5);
+              debouncedMaturityDate(5, "weekly");
+            } else {
+              goalContributionSettings.setContributionAmount(
+                (monthlyIncomeAmount * 20) / 100
+              );
+              goal.setPercentageOfSavings(20);
+              debouncedMaturityDate(20, "monthly");
+            }
+          }}
         />
       </div>
       <div className="mb-2.5 flex flex-row justify-center items-center">
@@ -130,6 +208,7 @@ export const AddContributionSettings = ({
       </div>
       <div className="mb-6 px-10">
         <ReactSlider
+          value={goal.percentageOfSavings}
           className="horizontal-slider"
           thumbClassName="example-thumb"
           trackClassName="example-track"
@@ -137,34 +216,40 @@ export const AddContributionSettings = ({
           renderThumb={(props, state) => (
             <div {...props}>{`${state.valueNow}%`}</div>
           )}
-          onChange={(value, index) => {
+          onChange={(value) => {
             goalContributionSettings.setContributionAmount(
               (monthlyIncomeAmount * value) / 100
             );
-            setPercentageOfMonthlyIncome(value);
+            goal.setPercentageOfSavings(value);
+            debouncedMaturityDate(
+              value,
+              goalContributionSettings.tabIndex === 0 ? "weekly" : "monthly"
+            );
           }}
         />
       </div>
       <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
-        {`${percentageOfMonthlyIncome}% of my monthly net income`}
+        {`${goal.percentageOfSavings}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On
       </div>
-      {tabIndex === 1 ? (
+      {goalContributionSettings.tabIndex === 1 ? (
         <MonthlyContributionSelector />
       ) : (
         <WeeklyContributionSelector />
       )}
       <div className="mt-12">
         <BottomSheetFooter
-          title={`Save weekly ${currency}10,000 by Thur, Jul 8th 2023.`}
-          onClick={() =>
-            updatingGoal
-              ? updateContributionSettings()
-              : saveContributionSettings()
+          title={
+            goalContributionSettings.tabIndex === 0
+              ? `Save ${goalContributionSettings.contributionAmount} weekly to reach your goal on ${goalContributionSettings.maturityDateText}`
+              : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}`
           }
-          loading={saveContributionLoading || updateContributionLoading}
+          onClick={() =>
+            updatingGoal ? updateContributionSettings() : getFrequencyText()
+          }
+          loading={frequencyFetching || updateContributionFetching}
         />
       </div>
     </div>

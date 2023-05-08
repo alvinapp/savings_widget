@@ -1,24 +1,24 @@
-import {useCallback, useEffect, useState} from 'react';
-import Lottie from 'react-lottie';
+import { useCallback, useEffect, useState } from "react";
+import Lottie from "react-lottie";
 
-import ConnectSuccessIcon from 'client/pages/components/mono/connect-success/ConnectSuccessIcon';
-import ConnectSuccessTitle from 'client/pages/components/mono/connect-success/ConnectSuccessTitle';
-import ConnectSuccessProgress from 'client/pages/components/mono/connect-success/ConnectSuccessProgress';
-import CloudImage from 'client/pages/components/mono/connect-success/ConnectSuccessCloud';
-import cloud1 from 'client/assets/images/cloud1.svg';
-import cloud2 from 'client/assets/images/cloud2.svg';
-import successIcon from 'client/assets/images/connect-success-icon.svg';
-import Routes from 'client/pages/routes';
-import useAccountStore from 'client/store/accountStore';
-import getAccounts from 'client/api/accounts';
-import {IConfig, useConfigurationStore} from 'client/store/configuration';
-import useFilterStore from 'client/store/filterStore';
-import getTransactions from 'client/api/transactions';
-import useTransactionStore from 'client/store/transactionStore';
-import scrollViewTo from 'client/utils/ScrollView';
-import usePageStore from 'client/store/pageStore';
-import Clouds from 'client/assets/json_lottie/clouds.json';
-import Confetti from 'client/assets/json_lottie/confetti.json';
+import ConnectSuccessIcon from "client/pages/components/mono/connect-success/ConnectSuccessIcon";
+import ConnectSuccessTitle from "client/pages/components/mono/connect-success/ConnectSuccessTitle";
+import ConnectSuccessProgress from "client/pages/components/mono/connect-success/ConnectSuccessProgress";
+import CloudImage from "client/pages/components/mono/connect-success/ConnectSuccessCloud";
+import cloud1 from "client/assets/images/cloud1.svg";
+import cloud2 from "client/assets/images/cloud2.svg";
+import successIcon from "client/assets/images/connect-success-icon.svg";
+import Routes from "client/pages/routes";
+import useAccountStore from "client/store/bankAccountStore";
+import getAccounts from "client/api/accounts";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useFilterStore from "client/store/filterStore";
+import getTransactions from "client/api/transactions";
+import useTransactionStore from "client/store/transactionStore";
+import scrollViewTo from "client/utils/ScrollView";
+import usePageStore from "client/store/pageStore";
+import Clouds from "client/assets/json_lottie/clouds.json";
+import Confetti from "client/assets/json_lottie/confetti.json";
 
 const ConnectSuccess = () => {
   const pageStore = usePageStore((state: any) => state);
@@ -62,8 +62,8 @@ const ConnectSuccess = () => {
       refreshAccounts()
         .then((_) => {
           document.dispatchEvent(
-            new CustomEvent('toPage', {
-              detail: {page: Routes.MYACCOUNT, replace: true},
+            new CustomEvent("toPage", {
+              detail: { page: Routes.MYACCOUNT, replace: true },
             })
           );
         })
@@ -78,7 +78,7 @@ const ConnectSuccess = () => {
     autoplay: true,
     animationData: Clouds,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
 
@@ -89,7 +89,7 @@ const ConnectSuccess = () => {
     speed: 0.02,
     direction: -1,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
 
@@ -99,7 +99,7 @@ const ConnectSuccess = () => {
     animationData: Confetti,
     speed: 0.02,
     rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      preserveAspectRatio: "xMidYMid slice",
     },
   };
 

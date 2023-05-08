@@ -1,7 +1,7 @@
 import { Emoji } from "client/pages/components/Emoji";
 import Transaction from "client/models/Goal";
 import Category from "client/models/Category";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import Accounts from "client/models/Accounts";
 import uncategorized from "client/assets/images/uncategorized.svg";
 import {
@@ -35,7 +35,7 @@ const UpcomingSavingsCard = ({
             <div className="flex flex-col mr-3">
               <div className="shadow-card rounded-full flex items-center">
                 <img
-                  className="rounded-full max-w-full align-middle border-none h-8 w-8
+                  className="rounded-full max-w-full align-middle border-none h-10 w-10
                       "
                   src={goalImage}
                 />
@@ -46,11 +46,17 @@ const UpcomingSavingsCard = ({
                 {goalName}
               </div>
               <div className="flex flex-row items-center mt-1">
-                <div className="font-poppins text-xs font-medium text-skin-primary tracking-wide text-start mr-1">
+                <div
+                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                    warning ? "text-skin-warning" : "text-skin-primary"
+                  }`}
+                >
                   {currencySymbol}
                 </div>
                 <div
-                  className={`font-poppins text-xs font-medium text-skin-primary tracking-wide text-start mr-1`}
+                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                    warning ? "text-skin-warning" : "text-skin-primary"
+                  }`}
                 >
                   {amount}
                 </div>

@@ -21,7 +21,7 @@ const CustomImageSelection = () => {
     clearTimeout(timer);
 
     const newTimer: any = setTimeout(() => {
-      deleteTheGoal();
+      searchTheImages();
     }, 700);
 
     setTimer(newTimer);
@@ -30,9 +30,9 @@ const CustomImageSelection = () => {
     data: images,
     isLoading,
     error,
-    refetch: deleteTheGoal,
-  } = useQuery("delete goal", () => searchImages({ searchText: search }), {
-    refetchOnWindowFocus: true,
+    refetch: searchTheImages,
+  } = useQuery("search-images", () => searchImages({ searchText: search }), {
+    refetchOnWindowFocus: false,
     enabled: false,
   });
   const unSplashImages = images ?? [];

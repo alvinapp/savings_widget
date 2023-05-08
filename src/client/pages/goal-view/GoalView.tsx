@@ -30,6 +30,10 @@ import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { DeleteGoal } from "./DeleteGoal";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import { fetchGoalTriggers } from "client/api/savings-triggers";
+import useBankAccountStore from "client/store/bankAccountStore";
+import { AddFunds } from "./AddFunds";
+import useAddFundsStore from "client/store/AddFundsStore";
 const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
@@ -51,68 +55,80 @@ const GoalView = () => {
       icon: <FiTrendingUp />,
     },
   ];
+  const accountStore = useBankAccountStore((state: any) => state);
   const goal = useGoalStore((state: any) => state);
+  const addFundsStore = useAddFundsStore((state: any) => state);
   const currentGoal = goal.confirmedGoals.find(
     (element: any) => element.id === goal.confirmedGoal.id
   );
 
-  const resumeAGoal = async () => {
-    resumeGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
-  const deleteAGoal = async () => {
-    deleteGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        goal.openDeleteBottomSheet(false);
-        goal.openPauseDeleteBottomSheet(false);
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
-
   const { refetch: resumeTheGoal } = useQuery(
     "resume-goal",
-    () => resumeAGoal,
+    () =>
+      resumeGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {},
+      }).then((result) => {
+        if (result) {
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
     { refetchOnWindowFocus: true, enabled: false }
   );
   const { refetch: deleteTheGoal } = useQuery(
     "delete goal",
-    () => deleteAGoal,
-    { refetchOnWindowFocus: true, enabled: false }
+    () =>
+      deleteGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result) {
+          goal.openDeleteBottomSheet(false);
+          goal.openPauseDeleteBottomSheet(false);
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
+    { refetchOnWindowFocus: false, enabled: false }
   );
   const { image_url } = goal.confirmedGoal.image_url;
+  const { refetch: fetchTriggers } = useQuery(
+    "goal-triggers",
+    () =>
+      fetchGoalTriggers({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result) {
+          goal.setGoalSavingsTriggers(result);
+        }
+      }),
+    { refetchOnWindowFocus: false }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
-          <img src={image_url} className="absolute top-0 right-0 left-0" />
+          <img
+            src={image_url}
+            className="absolute top-0 right-0 left-0 w-screen object-cover h-80"
+          />
           <img
             src={goalviewOverlay}
-            className="absolute object-cover w-screen"
+            className="absolute top-0 right-0 left-0 object-cover w-screen"
           />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <GoalViewBalanceView
-              contributedAmount={goal.confirmedGoal.total_contributed}
-              amount={goal.confirmedGoal.amount}
+              contributedAmount={currentGoal.total}
+              amount={currentGoal.amount}
             />
             <div className="mt-8 w-screen px-3.5">
               <CustomProgressBar
-                progressPercentage={goal.confirmedGoal.progress}
+                progressPercentage={currentGoal.progress}
                 isActive={currentGoal.is_active}
               />
             </div>
@@ -128,7 +144,10 @@ const GoalView = () => {
             <div className="flex flex-row justify-between items-center">
               <BackButton
                 background="bg-skin-base"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  goal.setGoalSavingsTriggers([]);
+                  navigate(-1);
+                }}
               />
               <NavBarTitle
                 title={`${goal.confirmedGoal.name}`}
@@ -141,6 +160,12 @@ const GoalView = () => {
                   goal.setGoalImageUrl(currentGoal.image_url.image_url);
                   goal.setGoalName(currentGoal.name);
                   goal.setGoalAmount(currentGoal.amount);
+                  goal.setGoalFrequency(currentGoal.frequency_text);
+                  accountStore.setAccount(
+                    currentGoal.bank_account_details !== null
+                      ? currentGoal.bank_account_details
+                      : {}
+                  );
                   goalContributionSettings.setContributionFrequency(
                     currentGoal.frequency
                   );
@@ -157,12 +182,20 @@ const GoalView = () => {
             child={
               <AddFundsButton
                 onClick={() => {
-                  navigate("");
+                  addFundsStore.openAddFundBottomSheet(true);
                 }}
               />
             }
             title="Add funds"
           />
+          <BottomSheet
+            open={addFundsStore.bottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={<AddFunds />}
+            defaultSnap={300}
+          ></BottomSheet>
           <ActionComponent
             child={
               currentGoal.is_active ? (
@@ -186,7 +219,7 @@ const GoalView = () => {
               <MoreButton
                 size="h-12 w-12"
                 onClick={() => {
-                  navigate("");
+                  goal.openPauseDeleteBottomSheet(true);
                 }}
               />
             }
@@ -215,7 +248,10 @@ const GoalView = () => {
               borderRadius: 24,
             }}
             children={
-              <PauseGoal onClick={() => goal.openPauseGoalBottomSheet(false)} />
+              <PauseGoal
+                onClick={() => goal.openPauseGoalBottomSheet(false)}
+                goalName={goal.confirmedGoal.name}
+              />
             }
             defaultSnap={300}
           ></BottomSheet>
@@ -229,6 +265,12 @@ const GoalView = () => {
                 pauseGoal={() => goal.openPauseGoalBottomSheet(true)}
                 deleteGoal={() => goal.openDeleteBottomSheet(true)}
                 onClick={() => goal.openPauseDeleteBottomSheet(false)}
+                isPaused={!currentGoal.is_active}
+                resumeGoal={() =>
+                  resumeTheGoal().finally(() => {
+                    goal.openPauseGoalBottomSheet(false);
+                  })
+                }
               />
             }
             defaultSnap={300}
@@ -244,9 +286,12 @@ const GoalView = () => {
         </div>
         <div className="mt-5">
           {tabIndex == 0 ? (
-            <ActivitiesView activities={activities} />
+            <ActivitiesView
+              activities={currentGoal.activity}
+              goal={currentGoal}
+            />
           ) : (
-            <TriggersView triggers={triggers} />
+            <TriggersView triggers={goal.goalSavingsTriggers} />
           )}
         </div>
       </div>

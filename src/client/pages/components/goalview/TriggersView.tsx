@@ -11,14 +11,14 @@ export const TriggersView = ({ triggers }: TriggersViewProps) => {
   return (
     <div className="flex flex-col px-3.5">
       <div>
-        {triggers.map((trigger: Trigger, i) => {
+        {triggers.map((trigger: any, i) => {
           return (
             <TriggerCard
-              key={i}
-              triggerName={trigger.triggerName}
+              key={trigger.id}
+              triggerName={trigger.merchant_name}
               image={trigger.image}
-              percentage={trigger.percentage}
-              appliedTo={trigger.appliedTo}
+              percentage={trigger.round_up_percentage}
+              appliedTo={trigger.goal.name}
               created_at={trigger.created_at}
             />
           );

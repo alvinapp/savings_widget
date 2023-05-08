@@ -11,6 +11,9 @@ import Goal from "client/models/Goal";
 import CreateGoalCard from "../components/goal-creation/CreateGoalCard";
 import useGoalStore from "client/store/goalStore";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
+import { useQuery } from "react-query";
+import { defaultFrequency } from "client/api/goal";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
 
 const CreateSavingsGoal = () => {
   const navigate = useNavigate();
@@ -19,6 +22,10 @@ const CreateSavingsGoal = () => {
     (state: any) => state
   );
   const setChosenGoal = goalStore.setGoal;
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-6 bg-no-repeat h-64 bg-cover">
@@ -42,18 +49,17 @@ const CreateSavingsGoal = () => {
           <Header
             title="Create a savings goal."
             children={<FiFlag color="#6F89A5" />}
-            subtitle="Excepteur sint occaecat cupidatat non proident"
+            subtitle="Select a popular goal or create your own"
           />
         </div>
         <div className="mt-16 mx-3.5">
           <BuildGoalCard
-            title="Let's buld one together"
+            title="Let's build one together"
             click={() => {
               goalStore.setGoalImageUrl("");
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
               setChosenGoal({});
-              goalContributionSettings.setContributionFrequency("");
               navigate("/add-goal-details");
             }}
           />
@@ -63,16 +69,16 @@ const CreateSavingsGoal = () => {
             Tailored inspirations just for you
           </div>
           <div className="tracking-widest font-poppins text-skin-secondary text-xxxs">
-            Excepteur sint occaecat cupidatat non proident
+            We'll help you get to whatever your dream is
           </div>
         </div>
         <div className=" mt-4.5 mx-3.5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {predefinedGoals.map((goal: Goal, index) => {
+            {predefinedGoals.map((goal: Goal, i) => {
               return (
                 <div className="mb-4">
                   <CreateGoalCard
-                    key={index}
+                    key={i}
                     goalImage={goal.imageUrl}
                     goalName={goal.name}
                     onClick={() => {
@@ -80,7 +86,6 @@ const CreateSavingsGoal = () => {
                       goalStore.setGoalName(goal.name);
                       goalStore.setGoalAmount(goal.amount);
                       setChosenGoal(goal);
-                      goalContributionSettings.setContributionFrequency("");
                       navigate("/add-goal-details");
                     }}
                   />

@@ -4,7 +4,10 @@ import NavBar from "../components/NavBar";
 import BackButton from "../components/BackButton";
 import CloseButton from "../components/CloseButton";
 import { AddPhotoButton } from "../components/AddPhotoButton";
-import { GoalCreationInput } from "../components/goal-creation/Input";
+import {
+  TextInput,
+  TextInputWithPopup,
+} from "../components/goal-creation/Input";
 import { FiFlag, FiTarget, FiPocket, FiTrendingUp } from "react-icons/fi";
 import MainButton from "../components/MainButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -17,57 +20,60 @@ import {
   saveAGoal,
   saveGoalImage,
   updateGoal,
+  updateGoalBankAccount,
 } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import { AddContributionSettings } from "../goal-creation/AddContributionSettings";
+import { maskAccountNo } from "client/utils/Formatters";
+import useBankAccountStore from "client/store/bankAccountStore";
+import { SelectBank } from "../components/goal-creation/SelectBank";
 const UpdateGoalDetails = () => {
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
-  const currencySymbol = useMonthlyIncomeStore(
-    (state: any) => state.currencySymbol
-  );
   const goal = useGoalStore((state: any) => state);
+
   const navigate = useNavigate();
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  const saveTheGoalImage = () => {
-    saveGoalImage({
-      configuration: configuration,
-      data: {
-        image_url: goal.goalImageUrl,
-      },
-      goalId: goal.confirmedGoal.id,
-    });
-  };
-  const updateGoalNameAndAmount = () => {
-    updateGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {
-        extern_id: "",
-        name: goal.goalName,
-        title: "",
-        amount: parseFloat(goal.goalAmount),
-        contribute_from: "",
-        is_customized: false,
-      },
-    })
-      .then((result) => {
-        if (result.id) {
-          console.log(result);
-          goal.setContributionSettingsGoalId(result.id);
-        }
-      })
-      .finally(() => navigate(-2));
-  };
-
+  const accountStore = useBankAccountStore((state: any) => state);
   const { isLoading, refetch: updateGoals } = useQuery(
     "update-goals",
-    () => updateGoalNameAndAmount,
+    () =>
+      updateGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {
+          extern_id: "",
+          name: goal.goalName,
+          title: "",
+          amount: parseFloat(goal.goalAmount),
+          contribute_from: "",
+          is_customized: false,
+        },
+      })
+        .then((result) => {
+          if (result.id) {
+            console.log(result.id);
+            goal.setContributionSettingsGoalId(result.id);
+            //update bank account
+            if (accountStore.account) {
+              updateGoalBankAccount({
+                configuration: configuration,
+                data: {
+                  goal_id: result.id,
+                  bank_account_id: accountStore.account.bank_account?.id,
+                },
+              });
+            }
+          }
+        })
+        .finally(() => {
+          navigate(-2);
+        }),
     {
       refetchOnWindowFocus: false,
       enabled: false,
@@ -75,20 +81,29 @@ const UpdateGoalDetails = () => {
   );
   const { data: saveImage } = useQuery(
     "save-goal-image",
-    () => saveTheGoalImage,
+    () =>
+      saveGoalImage({
+        configuration: configuration,
+        data: {
+          image_url: goal.goalImageUrl,
+        },
+        goalId: goal.confirmedGoal.id,
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: !!goal.confirmedGoal.id,
     }
   );
 
+  const valid =
+    !!goal.goalAmount && goal.goalName && accountStore.account.bank_account;
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
         <div className="relative">
           <img
             src={goal.goalImageUrl ? goal.goalImageUrl : ""}
-            className="absolute top-0 right-0 left-0"
+            className="absolute top-0 right-0 left-0 w-screen h-72"
           />
           <img src={overlay} className="absolute object-cover w-screen h-72" />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
@@ -125,18 +140,19 @@ const UpdateGoalDetails = () => {
       </div>
       <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-48 bottom-0 px-3.5 pt-9">
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             placeHolder="Add goal name"
             label="Let’s name your goal"
             value={goal.goalName ? goal.goalName : ""}
             leadingIcon={<FiFlag size="1.375rem" />}
             addValue={(e) => goal.setGoalName(e)}
-            hasValue={!!goal.goalName}
-            clearInput={() => goal.setGoalName("")}
+            clearInput={() => {
+              goal.setGoalName("");
+            }}
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInput
             hasCurrencySymbol={true}
             type="number"
             placeHolder="Add target amount"
@@ -144,28 +160,20 @@ const UpdateGoalDetails = () => {
             value={goal.goalAmount ? goal.goalAmount : ""}
             leadingIcon={<FiTarget size="1.375rem" />}
             addValue={(e) => goal.setGoalAmount(e)}
-            hasValue={!!goal.goalAmount}
             clearInput={() => goal.setGoalAmount("")}
           />
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Add contribution"
-            label="How would you like to contribute?"
-            value={
-              goalContributionSettings.contributionFrequency
-                ? goalContributionSettings.contributionFrequency
-                : ""
-            }
+            value={`${goal.confirmedGoal.frequency_text}`}
             leadingIcon={<FiPocket size="1.375rem" />}
-            hasValue={!!goalContributionSettings.contributionFrequency}
+            hasValue={!!goal.goalContributionFrequency}
             onClick={() =>
               goalContributionSettings.openContributionSettingsBottomSheet(true)
             }
             addValue={(e) => e}
-            clearInput={() =>
-              goalContributionSettings.setContributionFrequency("")
-            }
+            clearInput={() => goal.setGoalFrequency("")}
           />
           <BottomSheet
             open={goalContributionSettings.openContributionSettingsSheet}
@@ -187,17 +195,57 @@ const UpdateGoalDetails = () => {
           ></BottomSheet>
         </div>
         <div className="mb-6">
-          <GoalCreationInput
+          <TextInputWithPopup
             placeHolder="Link bank or wallet"
-            hasValue={false}
             label="Link an account and track savings with ease"
-            value=""
+            value={
+              Object.keys(accountStore.account).length !== 0
+                ? `${
+                    accountStore.account.bank_account.bank_name === undefined
+                      ? ""
+                      : accountStore.account.bank_account?.bank_name
+                  },${
+                    accountStore.account.bank_account.account_number ===
+                    undefined
+                      ? ""
+                      : maskAccountNo(
+                          accountStore.account.bank_account?.account_number.toString(),
+                          4
+                        )
+                  }`
+                : ""
+            }
+            hasValue={
+              Object.keys(accountStore.account).length !== 0
+                ? !!accountStore.account.bank_account?.bank_name
+                : false
+            }
             leadingIcon={<FiPocket size="1.375rem" />}
             addValue={(e) => e}
+            onClick={() => {
+              accountStore.openUpdateAccountBottomSheet(true);
+            }}
+            clearInput={() => {
+              accountStore.setAccount({});
+            }}
           />
+          <BottomSheet
+            onDismiss={() => accountStore.openUpdateAccountBottomSheet(false)}
+            open={accountStore.updateAccountBottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={
+              <SelectBank
+                accountList={accountStore.accounts}
+                updateBank={true}
+              />
+            }
+            defaultSnap={300}
+          ></BottomSheet>
         </div>
-        <div className="mb-10">
-          <GoalCreationInput
+        {/* <div className="mb-10">
+          <TextInputWithPopup
             placeHolder="Apply savings rule"
             hasValue={false}
             label="Boost your savings journey with rules"
@@ -205,11 +253,12 @@ const UpdateGoalDetails = () => {
             leadingIcon={<FiTrendingUp size="1.375rem" />}
             addValue={(e) => e}
           />
-        </div>
+        </div> */}
         <MainButton
           title="Save changes"
           click={() => updateGoals()}
           loading={isLoading}
+          isDisabled={!valid}
         />
       </div>
     </div>

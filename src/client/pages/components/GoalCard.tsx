@@ -8,6 +8,8 @@ import { useQuery } from "react-query";
 import { getConfirmedGoals, resumeGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
+import goalStar from "client/assets/images/savings/complete-goal-star.svg";
+import goalGreenFlag from "client/assets/images/savings/attained_flag.svg";
 const GoalCard = ({
   id,
   name,
@@ -27,22 +29,21 @@ const GoalCard = ({
     event.stopPropagation();
     resumeTheGoal();
   };
-  const resumeAGoal = async () => {
-    resumeGoal({
-      configuration: configuration,
-      goalId: id,
-      data: {},
-    }).then((result) => {
-      if (result) {
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-        });
-      }
-    });
-  };
+
   const { data, refetch: resumeTheGoal } = useQuery(
     "resume a goal",
-    () => resumeAGoal,
+    () =>
+      resumeGoal({
+        configuration: configuration,
+        goalId: id,
+        data: {},
+      }).then((result) => {
+        if (result) {
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+          });
+        }
+      }),
     {
       refetchOnWindowFocus: false,
       enabled: false,
@@ -80,6 +81,13 @@ const GoalCard = ({
                     <FiPause color="#4E6783" />
                   </div>
                 )}
+                {progress === 100 ? (
+                  <div className="absolute -top-4.5">
+                    <img src={goalStar} />
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
             <div className="flex flex-col">
@@ -100,12 +108,18 @@ const GoalCard = ({
         <div className="flex flex-col">
           {is_active ? (
             <div
-              className="font-poppins text-sm font-medium text-black text-end text-ellipsis overflow-hidden whitespace-nowrap flex-row"
-              id="al-transaction-card--amount"
+              className={`font-poppins text-sm font-medium ${
+                progress == 100 ? "text-skin-success" : "text-skin-base"
+              } flex flex-row items-center`}
             >
-              <span className="font-poppins text-sm font-medium text-black mx-1">
-                {currencySymbol}
-              </span>
+              {progress == 100 ? (
+                <div className="w-3 h-3">
+                  <img src={goalGreenFlag} />
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <span className="mx-1">{currencySymbol}</span>
               {Math.round(amount).toLocaleString("en-US")}
             </div>
           ) : (

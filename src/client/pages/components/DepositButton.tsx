@@ -1,6 +1,6 @@
 import React from "react";
 import depositIcon from "client/assets/images/savings/deposit.webp";
-import warningDepositIcon from "client/assets/images/savings/deposit.webp";
+import warningDepositIcon from "client/assets/images/savings/yellow-add-funds.svg";
 type DepositButtonProps = {
   warning?: boolean;
 };

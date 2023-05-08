@@ -8,7 +8,7 @@ import money1 from "client/assets/images/money1.svg";
 import money2 from "client/assets/images/money2.svg";
 import money3 from "client/assets/images/money3.svg";
 import Routes from "client/pages/routes";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import useConnectInfoStore from "client/store/connectIntroStore";
 import useUserStore from "client/store/userStore";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +18,13 @@ const connectDetailsList = [
   {
     title: "Save with ease",
     subtitle:
-      "Double your money by automatically folding it over and putting it it back into your pocket",
+      "Set individual savings schedules or fun savings rules for each goal you have",
     image: money1,
   },
   {
     title: "Track with ease",
     subtitle:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Track your savings progress from your Your Bank app so you can spend day-to-day with peace of mind",
     image: money3,
   },
 ];

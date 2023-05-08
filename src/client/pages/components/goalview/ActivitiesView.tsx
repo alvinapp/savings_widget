@@ -4,23 +4,23 @@ import { GoalViewEmptyState } from "client/pages/goal-view/GoalViewEmptyState";
 
 type ActivitiesViewProps = {
   activities: Array<Transaction>;
+  goal: any;
 };
-export const ActivitiesView = ({ activities }: ActivitiesViewProps) => {
+export const ActivitiesView = ({ activities, goal }: ActivitiesViewProps) => {
   return (
     <div className="overflow-y-auto px-3.5">
       {activities.length === 0 ? (
         <GoalViewEmptyState />
       ) : (
-        activities.map((activity: Transaction, i) => {
+        activities.map((activity: any, i) => {
           return (
             <TransactionCard
-              goalName={activity.goalName}
-              key={i}
+              goalName={goal.name}
+              activityName="Deposit"
+              key={activity.id}
               amount={activity.amount}
-              emoji={activity.emoji}
-              type={activity.type}
-              activityName={activity.activityName}
-              transacted_at={activity.transacted_at}
+              emoji="🎯"
+              transacted_at={activity.contribution_date}
             />
           );
         })

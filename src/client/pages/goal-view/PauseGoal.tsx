@@ -4,21 +4,26 @@ import CloseButton from "../components/CloseButton";
 import { BottomSheetFooter } from "../components/goal-creation/BottomSheetFooter";
 import useGoalStore from "client/store/goalStore";
 import SelectResumeDate from "../components/goalview/SelectResumeDate";
-import { getConfirmedGoals, pauseGoal } from "client/api/goal";
+import { getConfirmedGoals, getMaturityDate, pauseGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import { useQuery } from "react-query";
-import { convertDate, dateFormat, nthNumber } from "client/utils/Formatters";
+import {
+  convertDate,
+  dateFormat,
+  nthNumber,
+  rightDateFormat,
+} from "client/utils/Formatters";
 import { toast } from "react-toastify";
 type PauseGoalProps = {
   onClick?: () => void;
+  goalName?: string;
 };
-export const PauseGoal = ({ onClick }: PauseGoalProps) => {
+export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
   const nextMonth = new Date();
   nextMonth.setMonth(nextMonth.getMonth() + 1);
   const day = nextMonth.getDate();
   const [activeDateOption, setActiveDateOption] = useState(0);
   const goal = useGoalStore((state: any) => state);
-  const currency = "₦";
   const selectDateOptions = [
     { id: 0, title: `${day}${nthNumber(day)} next month` },
     { id: 1, title: "Custom" },
@@ -26,8 +31,9 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
   const showToastMessage = () => {
     toast(
       `Your goal has been paused and i’ll remind you to resume on ${dateFormat(
-        goal.resume_at
-      )}next month.`,
+        goal.resume_at,
+        true
+      )}`,
       {
         position: toast.POSITION.BOTTOM_RIGHT,
         hideProgressBar: true,
@@ -41,28 +47,43 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
-  const pauseAGoal = async () => {
-    pauseGoal({
-      configuration: configuration,
-      goalId: goal.confirmedGoal.id,
-      data: {
-        resume_at: convertDate(goal.resume_at.toString()),
-      },
-    }).then((result) => {
-      if (result) {
-        getConfirmedGoals({ configuration: configuration }).then((result) => {
-          goal.setConfirmedGoals(result);
-          goal.openPauseGoalBottomSheet(false);
-          goal.openPauseDeleteBottomSheet(false);
-          showToastMessage();
-        });
-      }
-    });
-  };
-  const { isLoading: pausingGoal, refetch: pauseTheGoal } = useQuery(
+
+  const { isFetching: pausingGoal, refetch: pauseTheGoal } = useQuery(
     "pause-goal",
-    () => pauseAGoal,
+    () =>
+      pauseGoal({
+        configuration: configuration,
+        goalId: goal.confirmedGoal.id,
+        data: {
+          resume_at: convertDate(goal.resume_at.toString()),
+        },
+      }).then((result) => {
+        if (result) {
+          getConfirmedGoals({ configuration: configuration }).then((result) => {
+            goal.setConfirmedGoals(result);
+            goal.openPauseGoalBottomSheet(false);
+            goal.openPauseDeleteBottomSheet(false);
+            showToastMessage();
+          });
+        }
+      }),
     { refetchOnWindowFocus: false, enabled: false }
+  );
+  const { isFetching: fetchingMaturityDate, refetch: maturiryDate } = useQuery(
+    "maturity-date",
+    () =>
+      getMaturityDate({
+        configuration: configuration,
+        data: {
+          date_str: rightDateFormat(goal.resume_at.toString()),
+        },
+        goalId: goal.confirmedGoal.id,
+      }).then((result) => {
+        if (result) {
+          goal.setMaturityDate(result.maturity_date);
+        }
+      })
+    // { refetchOnWindowFocus: false, enabled: false }
   );
   return (
     <div className="flex flex-col relative">
@@ -82,7 +103,7 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
           <FiFlag />
         </div>
         <div className="font-workSans font-semibold text-tiny text-skin-base text-center tracking-title">
-          My Spend responsibly goal
+          {`My ${goalName} goal`}
         </div>
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
@@ -94,7 +115,7 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
           onClick={(selected: number) => {
             if (selected === 0) {
               goal.setResumeAtDate(nextMonth);
-            } else {
+              maturiryDate();
             }
             setActiveDateOption(selected);
           }}
@@ -105,7 +126,7 @@ export const PauseGoal = ({ onClick }: PauseGoalProps) => {
         <BottomSheetFooter
           loading={pausingGoal}
           onClick={() => pauseTheGoal()}
-          title={`By resuming next month, your goal will 🪴mature by Tue, Apr 8th 2023`}
+          title={`${goal.maturityDate}`}
         />
       </div>
     </div>

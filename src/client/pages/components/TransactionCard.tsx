@@ -1,5 +1,4 @@
 import { checkIfDebitCredit, dateFormat } from "client/utils/Formatters";
-import useAccountStore from "client/store/accountStore";
 import Accounts from "client/models/Accounts";
 import Transaction from "client/models/Transaction";
 
@@ -11,7 +10,7 @@ const TransactionCard = ({
   amount,
   transacted_at,
   type,
-}: Transaction) => {
+}: any) => {
   const transactedAt = new Date(transacted_at);
   const currencySymbol = "₦";
   return (

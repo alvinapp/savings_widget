@@ -12,7 +12,7 @@ const MainButton = ({
   title,
   click,
   isDisabled = false,
-  loading = false,
+  loading,
 }: MainButonProps) => {
   return (
     <button
@@ -26,8 +26,8 @@ const MainButton = ({
         <div>
           {loading ? (
             <TailSpin
-              height="25"
-              width="25"
+              height="30"
+              width="30"
               color="#ffffff"
               ariaLabel="tail-spin-loading"
               wrapperStyle={{}}

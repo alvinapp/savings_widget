@@ -1,14 +1,13 @@
 import { checkIfDebitCredit, dateFormat } from "client/utils/Formatters";
-import useAccountStore from "client/store/accountStore";
+import useAccountStore from "client/store/bankAccountStore";
 import Accounts from "client/models/Accounts";
 import Transaction from "client/models/Transaction";
 import Trigger from "client/models/Trigger";
-
+import trigger from "client/assets/images/savings/trigger.png";
 const TriggerCard = ({
   id,
   appliedTo,
   percentage,
-  triggerName,
   image,
   created_at,
 }: Trigger) => {
@@ -22,43 +21,26 @@ const TriggerCard = ({
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col">
           <div className="flex flex-row items-center">
-            <div className="flex flex-col mr-3">
+            <div className="flex flex-col mr-3 justify-start">
               <div className="relative">
                 {/* <div className=""></div> */}
                 <div className="rounded-full bg-skin-secondaryWithOpacity h-8 w-8 flex justify-center">
-                  <img src={image} />
+                  <img src={image ?? trigger} />
                 </div>
               </div>
             </div>
             <div className="flex flex-col">
-              <div
-                className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
-              >
-                {triggerName}
+              <div className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40">
+                Round it up
               </div>
               <div
                 className={`font-poppins text-xs font-medium text-skin-subtitle tracking-wide text-start`}
               >
-                {`x${percentage}, ${appliedTo}`}
+                {`x${percentage}%, ${appliedTo}`}
               </div>
             </div>
           </div>
         </div>
-        {/* <div className="flex flex-col">
-          <div
-            className="font-poppins text-sm font-medium text-skin-successSecondary text-end text-ellipsis overflow-hidden whitespace-nowrap flex-row"
-            id="al-transaction-card--amount"
-          >
-            <span>{checkIfDebitCredit(type)}</span>
-            <span className="font-poppins text-sm font-medium text-skin-successSecondary mx-1">
-              KES
-            </span>
-            {Math.round(amount).toLocaleString("en-US")}
-          </div>
-          <div className="font-poppins text-xxxs text-skin-subtitle text-end tracking-wide font-medium">
-            {dateFormat(transactedAt)}
-          </div>
-        </div> */}
       </div>
     </div>
   );

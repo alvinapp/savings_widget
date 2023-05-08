@@ -1,8 +1,6 @@
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { useState } from "react";
-import {
-  CustomResumeDateButton,
-} from "./CustomResumeDateButton";
+import { CustomResumeDateButton } from "./CustomResumeDateButton";
 type SelectResumeDateProps = {
   title?: string;
   activeOption: number;
@@ -58,7 +56,7 @@ const SelectResumeDate = ({
         {selectDateOptions.map((option, i) => {
           const active = option.id === activeOption;
           return (
-            <div>
+            <div key={i}>
               {i === 1 ? (
                 <CustomResumeDateButton
                   isActive={active}

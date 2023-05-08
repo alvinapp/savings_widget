@@ -11,7 +11,7 @@ export const dateFormat = (date: Date, includeYear?: boolean) => {
   if (diffInDays == 0) {
     return "Today";
   }
-  if (diffInDays == 1) {
+  if (diffInDays == -1) {
     return "Yesterday";
   }
   const dateProperties: any = includeYear
@@ -108,6 +108,26 @@ export const convertDate = (dateString: string): string => {
   const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${timezone}`;
 };
+export const rightDateFormat = (dateString: string): string => {
+  const date = new Date(dateString);
+  const year = date.getUTCFullYear().toString();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+  const day = date.getUTCDate().toString().padStart(2, "0");
+  const hours = date.getUTCHours().toString().padStart(2, "0");
+  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  const seconds = date.getUTCSeconds().toString().padStart(2, "0");
+  const milliseconds = date.getUTCMilliseconds().toString().padStart(3, "0");
+  const timezoneOffset = date.getTimezoneOffset();
+  const timezoneHours = Math.abs(Math.floor(timezoneOffset / 60))
+    .toString()
+    .padStart(2, "0");
+  const timezoneMinutes = Math.abs(timezoneOffset % 60)
+    .toString()
+    .padStart(2, "0");
+  const timezoneSign = timezoneOffset < 0 ? "+" : "-";
+  const timezone = `${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 export const nthNumber = (number: any) => {
   return number > 0
     ? ["th", "st", "nd", "rd"][
@@ -115,3 +135,56 @@ export const nthNumber = (number: any) => {
       ]
     : "";
 };
+export const maskAccountNo = (str: string, pad = 1) => {
+  const slicedStr = str.slice(1, pad);
+  const masked = slicedStr.padEnd(str.length, "*");
+  return masked;
+};
+export const calculateGoalMaturityDate = ({
+  goalAmount,
+  frequency,
+  contributionAmount,
+  dateStr,
+}: {
+  goalAmount?: any;
+  frequency?: string;
+  contributionAmount?: any;
+  dateStr?: any;
+}) => {
+  // Convert start date string to datetime object
+  const startDate = new Date(rightDateFormat(dateStr));
+  //calculate number of weeks or months required to reach the goal amount
+  if (goalAmount > 0) {
+    const numPeriods = parseInt(goalAmount) / parseInt(contributionAmount);
+    //calculate the goal maturity date base on the start date and number of periods
+    let date;
+    if (frequency == "weekly") {
+      const maturityDate: any = startDate.setDate(
+        startDate.getDate() + 7 * numPeriods
+      );
+      date = dateFormat(new Date(maturityDate), true);
+      return date;
+    } else {
+      const maturityDate: any = startDate.setDate(
+        startDate.getDate() + 30 * numPeriods
+      );
+      date = dateFormat(new Date(maturityDate), true);
+      return date;
+    }
+  }
+};
+
+/** @ts-ignore */
+export function debounce<F extends (...args: any[]) => any>(
+  func: F,
+  wait: number
+): (...args: Parameters<F>) => void {
+  let timeout: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<F>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      /** @ts-ignore */
+      func.apply(this, args);
+    }, wait);
+  };
+}

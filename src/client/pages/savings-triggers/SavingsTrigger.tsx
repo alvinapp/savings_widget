@@ -10,10 +10,38 @@ import { FiArrowRight, FiCreditCard, FiFlag } from "react-icons/fi";
 import arrowRight from "../../assets/images/savings/bell.svg";
 /* @ts-ignore */
 import SlideButton from "react-slide-button";
-
+import ReactSlider from "react-slider";
+import useGoalStore from "client/store/goalStore";
+import useSavingsTriggerStore from "client/store/savingsTriggerStore";
+import { useQuery } from "react-query";
+import { saveTrigger } from "client/api/savings-triggers";
+import { IConfig, useConfigurationStore } from "client/store/configuration";
+import { TailSpin } from "react-loader-spinner";
+import successTrigger from "client/assets/images/savings/trigger-success.svg";
 const SavingsTrigger = () => {
   const navigate = useNavigate();
-  const [sliderValue, setSliderValue] = useState(0);
+  const goal = useGoalStore((state: any) => state);
+  const configuration = useConfigurationStore(
+    (state: any) => state.configuration
+  ) as IConfig;
+  const savingsTriggerStore = useSavingsTriggerStore((state: any) => state);
+  const { isFetching: savingTrigger, refetch: saveTheTrigger } = useQuery(
+    "save-trigger",
+    () =>
+      saveTrigger({
+        configuration: configuration,
+        data: {
+          round_up_percentage: savingsTriggerStore.percentage,
+          merchant_name: savingsTriggerStore.merchant_name,
+          goal_id: goal.confirmedGoal.id,
+        },
+      }).then((result) => {
+        if (result) {
+          navigate("/savings-triggers-success");
+        }
+      }),
+    { refetchOnWindowFocus: false, enabled: false }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -37,7 +65,7 @@ const SavingsTrigger = () => {
           }
         />
       </div>
-      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-40 bottom-0 px-3.5 pt-9">
+      <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-40 bottom-0 px-3.5 pt-12">
         <div className="flex flex-row justify-center">
           <div className="font-workSans font-semibold text-2xl text-skin-base">
             Round it up
@@ -45,7 +73,7 @@ const SavingsTrigger = () => {
         </div>
         <div className="flex flex-row justify-center mt-2 mx-12">
           <div className="font-poppins font-medium text-tiny text-skin-subtitle tracking-listtile_subtitle text-center">
-            Save the change by rounding up, everytime you use your card.
+            Automatically save the change from daily transactions
           </div>
         </div>
         <div className="flex flex-row justify-center mt-6">
@@ -54,55 +82,44 @@ const SavingsTrigger = () => {
           </div>
         </div>
         <div className="flex flex-row  mx-4 mt-5">
-          <Slider
-            value={sliderValue}
-            onChange={(value: any) => setSliderValue(value)}
-            ariaLabelledByForHandle="2"
-            step={33.33}
-            dots
-            dotStyle={{
-              background: "#6F89A5",
-              height: "1.925rem",
-              width: "1.925rem",
-              borderRadius: "50%",
-              top: "-13px",
-            }}
-            activeDotStyle={{
-              height: "0.75rem",
-              width: "0.75rem",
-              borderRadius: "50%",
-              background: "#056489",
-              top: "-4px",
-              border: "none",
-            }}
-            trackStyle={{
-              background: "#056489",
-            }}
-            handleStyle={{
-              height: "2.75rem",
-              width: "2.75rem",
-              borderRadius: "50%",
-              background: "#056489",
-              boxShadow: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
-              top: "-10px",
-              border: "none",
-              opacity: 1,
+          <ReactSlider
+            defaultValue={1}
+            className="horizontal-slider"
+            marks={[1, 2, 5, 10]}
+            markClassName="example-mark"
+            min={0}
+            max={10}
+            thumbClassName="example-thumb"
+            trackClassName="example-track"
+            renderThumb={(props, state) => (
+              <div {...props}>{`${state.valueNow}%`}</div>
+            )}
+            onChange={(value) => {
+              savingsTriggerStore.setPercentage(value);
             }}
           />
         </div>
-        <div className="flex flex-row mt-6 justify-center">
+        {/* <div className="flex flex-row mt-6 justify-center">
           <div className="font-workSans font-semibold text-base text-skin-base tracking-title mr-2">
             or by
           </div>
           <CustomAmountButton />
-        </div>
+        </div> */}
         <div className="flex flex-row justify-center mt-6">
           <div className="font-workSans font-semibold text-base text-skin-base tracking-title">
-            every time i use my card at
+            every time I transact at
           </div>
         </div>
         <div className="mt-4 flex flex-row justify-center">
-          <CustomDropDown dataset={["All merchants"]} icon={<FiCreditCard />} />
+          <CustomDropDown
+            height="h-56"
+            dataset={savingsTriggerStore.merchants_dataset}
+            icon={<FiCreditCard />}
+            onClick={(merchantName: string) => {
+              savingsTriggerStore.setMerchantName(merchantName);
+            }}
+            exactData={savingsTriggerStore.merchant_name}
+          />
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>
         <div className="flex flex-row justify-center mt-6">
@@ -111,23 +128,45 @@ const SavingsTrigger = () => {
           </div>
         </div>
         <div className="mt-4 flex flex-row justify-center">
-          <CustomDropDown dataset={["Spend responsibly"]} icon={<FiFlag />} />
+          <CustomDropDown
+            dataset={[`${goal.confirmedGoal.name}`]}
+            icon={<FiFlag />}
+            height="h-4"
+            exactData={`${goal.confirmedGoal.name}`}
+          />
         </div>
         <div className="flex flex-row justify-center mt-8">
           <div className="font-poppins font-medium text-xs text-skin-subtitle tracking-listtile_subtitle text-center">
             savings goal
           </div>
         </div>
-        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary">
-          <SlideButton
-            mainText="Swipe to activate"
-            caret={<FiArrowRight color="#ffffff" className="absolute" />}
-            onSlideDone={function () {}}
-            classList="my-class"
-            caretClassList="my-caret-class"
-            overlayClassList="my-overlay-class"
-            overlayWrapperClassList="my-overlay-wrapper-class"
-          />
+        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary justify-center">
+          {savingTrigger ? (
+            <TailSpin
+              height="30"
+              width="30"
+              color="#056489"
+              ariaLabel="tail-spin-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          ) : (
+            <SlideButton
+              mainText="Swipe to activate"
+              caret={<FiArrowRight color="#ffffff" className="absolute" />}
+              onSlideDone={() => saveTheTrigger()}
+              classList="my-class"
+              caretClassList="my-caret-class"
+              overlayClassList="my-overlay-class"
+              overlayWrapperClassList="my-overlay-wrapper-class"
+            />
+          )}
+        </div>
+      </div>
+      <div className="flex flex-row justify-center items-center absolute left-0 right-0 top-28">
+        <div className="h-23 w-23">
+          <img src={successTrigger} />
         </div>
       </div>
     </div>

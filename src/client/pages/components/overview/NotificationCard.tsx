@@ -7,7 +7,7 @@ type NotificationCardProps = {
 export const NotificationCard = ({ amount }: NotificationCardProps) => {
   const currencySymbol = "₦";
   return (
-    <div className="p-3.5 shadow-card bg-skin-successWithOpacity rounded-lg relative">
+    <div className="px-5 py-3.5 shadow-card bg-skin-successWithOpacity rounded-lg relative">
       <div className="flex flex-row">
         <div className="flex flex-col">
           <div className="text-2xl mr-3">🔥</div>
