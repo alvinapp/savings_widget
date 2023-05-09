@@ -20,7 +20,7 @@ const useGoalStore = create((set) => ({
   maturityDate: "",
   percentageOfSavings: 0,
   goalSavingsTriggers: [],
-  percentage: 0,
+  percentage: 1,
   merchant_name: "All merchants",
 
   setBankAccount: (account: any) => {
