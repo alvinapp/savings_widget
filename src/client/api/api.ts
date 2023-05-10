@@ -13,14 +13,20 @@ const get = async ({
   token?: string | null;
   publicKey?: string | null;
 }) => {
+  // Add cache-busting parameter
+  const cacheBuster = new Date().getTime().toString(); // Convert to string
+  const updatedParams = { ...params, cacheBuster };
+
   const domain = `${AppConfig.API_URL}${endpoint.replace("//", "/")}`;
-  const url = params ? domain + new URLSearchParams({ ...params }) : domain;
+  const url = updatedParams ? domain + '?' + new URLSearchParams(updatedParams) : domain;
+  
   var headers = {
     "Content-Type": "application/json",
-    cache: "force-cache",
+    cache: "no-cache", // Changed to 'no-cache' to instruct the browser not to cache this request
   };
   if (publicKey) headers = { ...headers, ...{ sdk_key: publicKey } };
   if (token) headers = { ...headers, ...{ Authorization: `Bearer ${token}` } };
+
   try {
     const response: any = await fetch(url, {
       method: "GET",
@@ -35,6 +41,7 @@ const get = async ({
     return Promise.reject(error);
   }
 };
+
 
 async function post({
   endpoint,
