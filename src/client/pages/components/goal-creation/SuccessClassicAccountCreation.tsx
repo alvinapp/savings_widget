@@ -25,7 +25,7 @@ export const SuccessClassicAccountCreation = ({
                 </div>
                 <MainButton
                     // isDisabled={!isValid}
-                    title="Open new account"
+                    title="Continue"
                     click={() => { }}
                 // loading={saveGoalFetching}
                 />
