@@ -140,14 +140,11 @@ const Overview = () => {
       <div className="mt-6 flex flex-row justify-center">
         <BalanceView balance={goal.totalContribution} currency="₦" />
       </div>
-      <div className="mt-6">
-        {goal.totalContribution > 0?<NotificationCard amount={goal.totalContribution} />:null}
-      </div>
       {(goalsFetched && goal.confirmedGoals.length > 0) ||
-      (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
+        (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
         <>
           <div className="mt-6">
-            <NotificationCard amount={goal.totalContribution} />
+            {goal.totalContribution > 0 ? <NotificationCard amount={goal.totalContribution} /> : null}
           </div>
           <div className="mt-6">
             <TabFilter
