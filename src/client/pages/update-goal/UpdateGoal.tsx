@@ -26,7 +26,7 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import { AddContributionSettings } from "../goal-creation/AddContributionSettings";
-import { maskAccountNo } from "client/utils/Formatters";
+import { maskCreditCardNumber } from "client/utils/Formatters";
 import useBankAccountStore from "client/store/bankAccountStore";
 import { SelectBank } from "../components/goal-creation/SelectBank";
 const UpdateGoalDetails = () => {
@@ -57,18 +57,18 @@ const UpdateGoalDetails = () => {
       })
         .then((result) => {
           if (result.id) {
-            console.log(result.id);
             goal.setContributionSettingsGoalId(result.id);
             //update bank account
-            if (accountStore.account) {
-              updateGoalBankAccount({
-                configuration: configuration,
-                data: {
-                  goal_id: result.id,
-                  bank_account_id: accountStore.account.bank_account?.id,
-                },
-              });
-            }
+            // if (accountStore.account) {
+            //   updateGoalBankAccount({
+            //     configuration: configuration,
+            //     data: {
+            //       goal_id: result.id,
+            //       bank_account_id:
+            //         accountStore.savingAccount.savings_account?.id,
+            //     },
+            //   });
+            // }
           }
         })
         .finally(() => {
@@ -199,34 +199,36 @@ const UpdateGoalDetails = () => {
             placeHolder="Link bank or wallet"
             label="Link an account and track savings with ease"
             value={
-              Object.keys(accountStore.account).length !== 0
+              Object.keys(accountStore.savingAccount).length !== 0
                 ? `${
-                    accountStore.account.bank_account.bank_name === undefined
+                    accountStore.savingAccount.savings_account
+                      .savings_account_details.bank_name === undefined
                       ? ""
-                      : accountStore.account.bank_account?.bank_name
+                      : accountStore.savingAccount.savings_account
+                          .savings_account_details?.bank_name
                   },${
-                    accountStore.account.bank_account.account_number ===
-                    undefined
+                    accountStore.savingAccount.savings_account
+                      .savings_account_details.account_number === undefined
                       ? ""
-                      : maskAccountNo(
-                          accountStore.account.bank_account?.account_number.toString(),
-                          4
+                      : maskCreditCardNumber(
+                          accountStore.savingAccount.savings_account.savings_account_details?.account_number.toString()
                         )
                   }`
                 : ""
             }
             hasValue={
-              Object.keys(accountStore.account).length !== 0
-                ? !!accountStore.account.bank_account?.bank_name
+              Object.keys(accountStore.savingAccount).length !== 0
+                ? !!accountStore.savingAccount.savings_account
+                    .savings_account_details?.bank_name
                 : false
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             addValue={(e) => e}
             onClick={() => {
-              accountStore.openUpdateAccountBottomSheet(true);
+              // accountStore.openUpdateAccountBottomSheet(true);
             }}
             clearInput={() => {
-              accountStore.setAccount({});
+              // accountStore.setSavingAccount({});
             }}
           />
           <BottomSheet
@@ -235,12 +237,7 @@ const UpdateGoalDetails = () => {
             style={{
               borderRadius: 24,
             }}
-            children={
-              <SelectBank
-                accountList={accountStore.accounts}
-                updateBank={true}
-              />
-            }
+            children={<SelectBank updateBank={true} />}
             defaultSnap={300}
           ></BottomSheet>
         </div>

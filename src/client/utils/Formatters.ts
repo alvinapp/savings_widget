@@ -135,10 +135,16 @@ export const nthNumber = (number: any) => {
       ]
     : "";
 };
-export const maskAccountNo = (str: string, pad = 1) => {
-  const slicedStr = str.slice(1, pad);
-  const masked = slicedStr.padEnd(str.length, "*");
-  return masked;
+
+export const maskCreditCardNumber = (creditCardNumber: string): string => {
+  const visibleDigits = 5; // show first digit and last 4 digits
+  const maskedLength = creditCardNumber.length - visibleDigits;
+  const maskedDigits = "*".repeat(maskedLength);
+  const visiblePart =
+    creditCardNumber.substring(0, 1) +
+    maskedDigits +
+    creditCardNumber.substring(creditCardNumber.length - 4);
+  return visiblePart;
 };
 export const calculateGoalMaturityDate = ({
   goalAmount,

@@ -37,4 +37,33 @@ const getBankAccounts = async (configuration: IConfig) => {
     return Promise.reject(reason);
   }
 };
+//Get list of checking accounts
+
+export const getCheckingAccounts = async (configuration: IConfig) => {
+  try {
+    const res = await fetchData({
+      endpoint: "/bank_accounts/checking_accounts",
+      token: configuration.token,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
+export const getSavingsAccounts = async (configuration: IConfig) => {
+  try {
+    const res = await fetchData({
+      endpoint: "/bank_accounts/savings_accounts",
+      token: configuration.token,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
 export default getBankAccounts;

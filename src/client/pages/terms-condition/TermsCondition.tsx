@@ -20,7 +20,7 @@ const TermsCondition = () => {
     (state: any) => state.configuration
   ) as IConfig;
   const userStore = useUserStore((state: any) => state);
-  const { refetch }: any = useQuery(
+  const { isFetching: acceptingTerms, refetch }: any = useQuery(
     "accept-terms",
     () =>
       acceptTerms({ configuration: configuration, accept: true })
@@ -81,7 +81,11 @@ const TermsCondition = () => {
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 px-3.5 bg-white">
-        <MainButton title="Ok" click={() => refetch()} />
+        <MainButton
+          title="Ok"
+          click={() => refetch()}
+          loading={acceptingTerms}
+        />
       </div>
     </div>
   );

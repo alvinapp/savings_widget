@@ -161,7 +161,7 @@ const GoalView = () => {
                   goal.setGoalName(currentGoal.name);
                   goal.setGoalAmount(currentGoal.amount);
                   goal.setGoalFrequency(currentGoal.frequency_text);
-                  accountStore.setAccount(
+                  accountStore.setSavingAccount(
                     currentGoal.bank_account_details !== null
                       ? currentGoal.bank_account_details
                       : {}

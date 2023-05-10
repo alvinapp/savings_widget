@@ -14,6 +14,7 @@ import useGoalContributionSettingsStore from "client/store/goalContributionSetti
 import { useQuery } from "react-query";
 import { defaultFrequency } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useBankAccountStore from "client/store/bankAccountStore";
 
 const CreateSavingsGoal = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const CreateSavingsGoal = () => {
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
+  const accountStore = useBankAccountStore((state: any) => state);
 
   return (
     <div className="h-screen w-screen relative">
@@ -59,6 +61,9 @@ const CreateSavingsGoal = () => {
               goalStore.setGoalImageUrl("");
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
+              goalStore.setPercentage(0);
+              goalStore.setMerchantName("");
+              accountStore.setSavingAccount({});
               setChosenGoal({});
               navigate("/add-goal-details");
             }}
@@ -74,7 +79,7 @@ const CreateSavingsGoal = () => {
         </div>
         <div className=" mt-4.5 mx-3.5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {predefinedGoals.map((goal: Goal, i) => {
+            {predefinedGoals.map((goal: Goal, i: any) => {
               return (
                 <div className="mb-4">
                   <CreateGoalCard
@@ -85,6 +90,9 @@ const CreateSavingsGoal = () => {
                       goalStore.setGoalImageUrl(goal.imageUrl);
                       goalStore.setGoalName(goal.name);
                       goalStore.setGoalAmount(goal.amount);
+                      goalStore.setPercentage(0);
+                      goalStore.setMerchantName("");
+                      accountStore.setSavingAccount({});
                       setChosenGoal(goal);
                       navigate("/add-goal-details");
                     }}
