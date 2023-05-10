@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import { linkBankAccount } from "client/api/accounts";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
+import { AccountTypeCard } from "../AccountTypeCard";
 export type SelectBankProps = {
   accountList: Array<any>;
   updateBank?: boolean;

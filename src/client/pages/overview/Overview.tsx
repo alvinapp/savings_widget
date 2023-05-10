@@ -141,10 +141,10 @@ const Overview = () => {
         <BalanceView balance={goal.totalContribution} currency="₦" />
       </div>
       {(goalsFetched && goal.confirmedGoals.length > 0) ||
-      (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
+        (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
         <>
           <div className="mt-6">
-            <NotificationCard amount={goal.totalContribution} />
+            {goal.totalContribution > 0 ? <NotificationCard amount={goal.totalContribution} /> : null}
           </div>
           <div className="mt-6">
             <TabFilter
