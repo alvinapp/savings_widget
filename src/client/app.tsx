@@ -17,6 +17,7 @@ import CreateSavingsGoal from "./pages/goal-creation/CreateSavingsGoal";
 import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
 import SettingsMonthlyIncome from "./pages/settings/SettingsMonthlyIncome";
 import Notifications from "./pages/notications/Notifications";
+import Settings from "./pages/settings/Settings";
 
 declare var AppConfig: AppConfig;
 
@@ -40,7 +41,7 @@ const GoalCreationIntro = lazy(
 const SavingsTrigger = lazy(
   () => import("./pages/savings-triggers/SavingsTrigger")
 );
-const Settings = lazy(() => import("./pages/settings/Settings"));
+// const Settings = lazy(() => import("./pages/settings/Settings"));
 // const GoalSettings = lazy(() => import("./pages/settings/GoalSettings"));
 const SavingsTriggersSettings = lazy(
   () => import("./pages/settings/SavingsTriggersSettings")
