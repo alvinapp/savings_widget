@@ -11,6 +11,7 @@ import CloseButton from "../CloseButton";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import { PauseGoal } from "client/pages/goal-view/PauseGoal";
 import { ChooseSavingsAccount } from "./ChooseSavingsAccount";
+import { AccountTypeCard } from "../AccountTypeCard";
 export type SelectBankProps = {
   updateBank?: boolean;
 };
