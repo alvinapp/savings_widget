@@ -4,9 +4,21 @@ import Account from "client/models/Account";
 
 const useBankAccountStore = create((set) => ({
   accounts: [],
+  savingAccounts: [],
+  checkingAccounts: [],
+  savingAccount: {},
   account: {},
   accountBottomSheet: false,
+  savingsAccountBottomSheet: false,
   updateAccountBottomSheet: false,
+  openSavingsAccountBottomSheet: (open: boolean) => {
+    return set(() => {
+      const results = {
+        savingsAccountBottomSheet: open,
+      };
+      return results;
+    });
+  },
   openAccountBottomSheet: (open: boolean) => {
     return set(() => {
       const results = {
@@ -35,6 +47,30 @@ const useBankAccountStore = create((set) => ({
     return set(() => {
       const results = {
         accounts: list,
+      };
+      return results;
+    });
+  },
+  setCheckingAccounts: (list: any) => {
+    return set(() => {
+      const results = {
+        checkingAccounts: list,
+      };
+      return results;
+    });
+  },
+  setSavingsAccounts: (list: any) => {
+    return set(() => {
+      const results = {
+        savingAccounts: list,
+      };
+      return results;
+    });
+  },
+  setSavingAccount: (detail: any) => {
+    return set(() => {
+      const results = {
+        savingAccount: detail,
       };
       return results;
     });

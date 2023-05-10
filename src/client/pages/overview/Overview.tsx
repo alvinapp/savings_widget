@@ -26,7 +26,10 @@ import TabFilter from "../components/TabFilter";
 import { UpcomingSavings } from "../components/overview/UpcomingSavings";
 import { MyGoals } from "../components/overview/MyGoals";
 import { upcomingSavings, tabs } from "client/utils/MockData";
-import getBankAccounts from "client/api/accounts";
+import getBankAccounts, {
+  getCheckingAccounts,
+  getSavingsAccounts,
+} from "client/api/accounts";
 import useBankAccountStore from "client/store/bankAccountStore";
 import { element } from "prop-types";
 const Overview = () => {
@@ -101,17 +104,6 @@ const Overview = () => {
     { enabled: !!configuration.token }
   );
 
-  const { isFetching: fetchingBankAccounts } = useQuery(
-    "bank-accounts",
-    () =>
-      getBankAccounts(configuration).then((result) => {
-        if (result) {
-          accountStore.setAccounts(result);
-        }
-      }),
-    { enabled: !!configuration.token }
-  );
-
   return (
     <div className="h-screen bg-white overflow-y-auto overflow-x-hidden no-scrollbar px-3.5 relative">
       <div className="mt-4">
@@ -143,9 +135,13 @@ const Overview = () => {
       {(goalsFetched && goal.confirmedGoals.length > 0) ||
       (confirmedGoalsFetching && goal.confirmedGoals.length > 0) ? (
         <>
-          <div className="mt-6">
-            <NotificationCard amount={goal.totalContribution} />
-          </div>
+          {goal.totalContribution > 0 ? (
+            <div className="mt-6">
+              <NotificationCard amount={goal.totalContribution} />
+            </div>
+          ) : (
+            <div></div>
+          )}
           <div className="mt-6">
             <TabFilter
               tabs={tabs}

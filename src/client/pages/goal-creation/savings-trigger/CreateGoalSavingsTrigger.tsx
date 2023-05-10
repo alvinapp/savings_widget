@@ -42,7 +42,11 @@ const CreateGoalSavingsTrigger = () => {
             <div className="flex flex-row justify-between items-center">
               <BackButton
                 background="bg-skin-base"
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  navigate(-1);
+                  goal.setPercentage(0);
+                  goal.setMerchantName("");
+                }}
               />
             </div>
           }

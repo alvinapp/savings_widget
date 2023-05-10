@@ -29,7 +29,11 @@ import deleteUnconfirmed from "client/api/delete-unconfirmed-goals";
 import useUserStore from "client/store/userStore";
 import useBankAccountStore from "client/store/bankAccountStore";
 import { SelectBank } from "../components/goal-creation/SelectBank";
-import getBankAccounts, { linkBankAccount } from "client/api/accounts";
+import getBankAccounts, {
+  getCheckingAccounts,
+  getSavingsAccounts,
+  linkBankAccount,
+} from "client/api/accounts";
 import { convertDate, maskAccountNo } from "client/utils/Formatters";
 import trigger from "client/assets/images/savings/trigger.png";
 import { saveTrigger } from "client/api/savings-triggers";
@@ -159,6 +163,28 @@ const AddGoalDetails = () => {
     }
   );
 
+  const { isFetching: fetchingCheckingAccounts } = useQuery(
+    "checking-accounts",
+    () =>
+      getCheckingAccounts(configuration).then((result) => {
+        if (result) {
+          accountStore.setCheckingAccounts(result);
+        }
+      }),
+    { enabled: !!configuration.token }
+  );
+
+  const { isFetching: fetchingSavingsAccounts } = useQuery(
+    "savings-accounts",
+    () =>
+      getSavingsAccounts(configuration).then((result) => {
+        if (result) {
+          accountStore.setSavingsAccounts(result);
+        }
+      }),
+    { enabled: !!configuration.token }
+  );
+
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">
@@ -286,18 +312,18 @@ const AddGoalDetails = () => {
         </div>
         <div className="mb-6">
           <TextInputWithPopup
-            placeHolder="Link bank or wallet"
-            label="Link an account and track savings with ease"
+            placeHolder="Setup a funding account"
+            label="Setup a savings funding account and track your savings with ease"
             value={
-              accountStore.account.bank_name
+              accountStore.savingAccount.bank_name
                 ? `${
-                    accountStore.account.bank_name
-                      ? accountStore.account.bank_name
+                    accountStore.savingAccount.bank_name
+                      ? accountStore.savingAccount.bank_name
                       : ""
                   }, ${
-                    accountStore.account.account_number
+                    accountStore.savingAccount.account_number
                       ? maskAccountNo(
-                          accountStore.account.account_number.toString(),
+                          accountStore.savingAccount.account_number.toString(),
                           4
                         )
                       : ""
@@ -306,22 +332,27 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={
-              !!accountStore.account.bank_name &&
-              accountStore.account.account_number
+              !!accountStore.savingAccount.bank_name &&
+              accountStore.savingAccount.account_number
             }
-            onClick={() => accountStore.openAccountBottomSheet(true)}
+            onClick={() => {
+              accountStore.openAccountBottomSheet(true);
+            }}
             addValue={(e) => e}
             clearInput={() => {
-              accountStore.setAccount("");
+              accountStore.setSavingAccount({});
             }}
           />
           <BottomSheet
+            onSpringEnd={() =>
+              accountStore.setSavingAccount(accountStore.savingAccounts[0])
+            }
             onDismiss={() => accountStore.openAccountBottomSheet(false)}
             open={accountStore.accountBottomSheet}
             style={{
               borderRadius: 24,
             }}
-            children={<SelectBank accountList={accountStore.accounts} />}
+            children={<SelectBank />}
             defaultSnap={300}
           ></BottomSheet>
         </div>
@@ -333,10 +364,14 @@ const AddGoalDetails = () => {
             value={goal.merchant_name ? `Round it up x${goal.percentage}%` : ""}
             leadingIcon={<img src={trigger} />}
             addValue={(e) => e}
-            onClick={() => navigate("/create-goal-savings-trigger")}
+            onClick={() => {
+              goal.setPercentage(1);
+              goal.setMerchantName("All merchants");
+              navigate("/create-goal-savings-trigger");
+            }}
             clearInput={() => {
-              goal.setPercentage(0);
-              goal.setMerchantName("");
+              goal.setPercentage(1);
+              goal.setMerchantName("All merchants");
             }}
           />
         </div>

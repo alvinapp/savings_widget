@@ -74,7 +74,7 @@ const CreateSavingsGoal = () => {
         </div>
         <div className=" mt-4.5 mx-3.5">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            {predefinedGoals.map((goal: Goal, i) => {
+            {predefinedGoals.map((goal: Goal, i: any) => {
               return (
                 <div className="mb-4">
                   <CreateGoalCard
@@ -85,6 +85,8 @@ const CreateSavingsGoal = () => {
                       goalStore.setGoalImageUrl(goal.imageUrl);
                       goalStore.setGoalName(goal.name);
                       goalStore.setGoalAmount(goal.amount);
+                      goalStore.setPercentage(0);
+                      goalStore.setMerchantName("");
                       setChosenGoal(goal);
                       navigate("/add-goal-details");
                     }}

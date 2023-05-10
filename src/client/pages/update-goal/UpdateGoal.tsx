@@ -235,12 +235,7 @@ const UpdateGoalDetails = () => {
             style={{
               borderRadius: 24,
             }}
-            children={
-              <SelectBank
-                accountList={accountStore.accounts}
-                updateBank={true}
-              />
-            }
+            children={<SelectBank updateBank={true} />}
             defaultSnap={300}
           ></BottomSheet>
         </div>
