@@ -34,7 +34,7 @@ import getBankAccounts, {
   getSavingsAccounts,
   linkBankAccount,
 } from "client/api/accounts";
-import { convertDate, maskAccountNo } from "client/utils/Formatters";
+import { convertDate, maskCreditCardNumber } from "client/utils/Formatters";
 import trigger from "client/assets/images/savings/trigger.png";
 import { saveTrigger } from "client/api/savings-triggers";
 const AddGoalDetails = () => {
@@ -53,7 +53,7 @@ const AddGoalDetails = () => {
   const navigate = useNavigate();
   const isValid =
     !!goalContributionSettings.contributionFrequency &&
-    accountStore.account.bank_name;
+    accountStore.savingAccount.bank_name;
 
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
@@ -103,7 +103,7 @@ const AddGoalDetails = () => {
             configuration: configuration,
             data: {
               goal_id: goalId,
-              bank_account_id: accountStore.account.id,
+              bank_account_id: accountStore.savingAccount.id,
             },
           }),
           saveTrigger({
@@ -146,7 +146,7 @@ const AddGoalDetails = () => {
             goal.setGoalAmount("");
             goalContributionSettings.setContributionFrequency("");
             goal.setGoal({});
-            accountStore.setAccount({});
+            accountStore.setSavingAccount({});
             goal.setPercentage(0);
             goal.setMerchantName("");
             getConfirmedGoals({ configuration: configuration }).then(
@@ -315,16 +315,15 @@ const AddGoalDetails = () => {
             placeHolder="Setup a funding account"
             label="Setup a savings funding account and track your savings with ease"
             value={
-              accountStore.savingAccount.bank_name
+              accountStore.savingAccount && accountStore.savingAccount.bank_name
                 ? `${
                     accountStore.savingAccount.bank_name
                       ? accountStore.savingAccount.bank_name
                       : ""
-                  }, ${
+                  } , ${
                     accountStore.savingAccount.account_number
-                      ? maskAccountNo(
-                          accountStore.savingAccount.account_number.toString(),
-                          4
+                      ? maskCreditCardNumber(
+                          accountStore.savingAccount.account_number.toString()
                         )
                       : ""
                   }`
@@ -344,10 +343,13 @@ const AddGoalDetails = () => {
             }}
           />
           <BottomSheet
-            onSpringEnd={() =>
-              accountStore.setSavingAccount(accountStore.savingAccounts[0])
-            }
-            onDismiss={() => accountStore.openAccountBottomSheet(false)}
+            onSpringEnd={() => {
+              accountStore.setSavingAccount(accountStore.savingAccounts[0]);
+            }}
+            onDismiss={() => {
+              accountStore.openAccountBottomSheet(false);
+              accountStore.setSavingAccount({});
+            }}
             open={accountStore.accountBottomSheet}
             style={{
               borderRadius: 24,
@@ -370,8 +372,8 @@ const AddGoalDetails = () => {
               navigate("/create-goal-savings-trigger");
             }}
             clearInput={() => {
-              goal.setPercentage(1);
-              goal.setMerchantName("All merchants");
+              goal.setPercentage(0);
+              goal.setMerchantName("");
             }}
           />
         </div>

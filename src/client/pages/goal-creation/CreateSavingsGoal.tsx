@@ -61,6 +61,9 @@ const CreateSavingsGoal = () => {
               goalStore.setGoalImageUrl("");
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
+              goalStore.setPercentage(0);
+              goalStore.setMerchantName("");
+              accountStore.setSavingAccount({});
               setChosenGoal({});
               navigate("/add-goal-details");
             }}

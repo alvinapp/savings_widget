@@ -58,6 +58,7 @@
     --color-outline-success-neutral: #d6ead4;
     --color-outline-success-tertiary: #33982a;
     --color-outline-danger: #f45625;
+    --rsbs-backdrop-bg: rgba(0, 0, 0, 0.4);
   }
 }
 

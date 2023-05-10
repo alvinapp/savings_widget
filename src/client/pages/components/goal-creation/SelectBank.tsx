@@ -102,6 +102,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
         />
         <BottomSheet
           onDismiss={() => accountStore.openSavingsAccountBottomSheet(false)}
+          // onSpringStart={() => accountStore.openAccountBottomSheet(false)}
           open={accountStore.savingsAccountBottomSheet}
           style={{
             borderRadius: 24,
@@ -112,12 +113,15 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
               activeIndex={cardId}
             />
           }
-          defaultSnap={300}
+          defaultSnap={600}
+          className="backdrop-blur-bottomSheet"
         ></BottomSheet>
       </div>
       <MainButton
         title="Done"
-        click={() => accountStore.openAccountBottomSheet(false)}
+        click={() => {
+          accountStore.openAccountBottomSheet(false);
+        }}
       />
     </div>
   );

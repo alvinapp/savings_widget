@@ -1,10 +1,16 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 
-export const CreateSavingsAccountCard = () => {
+type CreateSavingsAccountCardProps = {
+  onClick?: () => void;
+};
+export const CreateSavingsAccountCard = ({
+  onClick,
+}: CreateSavingsAccountCardProps) => {
   return (
     <div
       className={`rounded flex flex-col pl-5 pr-2  py-3 border border-skin-primary`}
+      onClick={onClick}
     >
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">

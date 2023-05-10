@@ -119,6 +119,9 @@ module.exports = {
         input: "0 1px 6px -0.5px #9BC1D0",
         knob: "0 2px 6px 0 #C3C3C3;",
       },
+      backdropBlur: {
+        bottomSheet: "var(--rsbs-backdrop-bg)",
+      },
     },
     fontSize: {
       xxxxs: ".619rem",
