@@ -116,7 +116,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
       </div>
       <MainButton
         title="Done"
-        click={() => accountStore.openSavingsAccountBottomSheet(false)}
+        click={() => accountStore.openAccountBottomSheet(false)}
       />
     </div>
   );

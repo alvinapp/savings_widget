@@ -17,7 +17,7 @@ export const ChooseSavingsAccount = ({
 
   return (
     <div className="flex flex-col items-start mx-3.5 mb-5 relative">
-      <div className="absolute top-0 right-2">
+      <div className="absolute top-0">
         <CloseButton
           background="bg-skin-secondaryWithOpacity"
           onClick={() => {
@@ -42,6 +42,7 @@ export const ChooseSavingsAccount = ({
                   click(account);
                 }
                 accountStore.setSavingAccount(account);
+                accountStore.openSavingsAccountBottomSheet(false);
               }}
             />
           );
