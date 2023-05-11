@@ -10,12 +10,18 @@ const saveMonthlyIncome = async ({
   configuration: IConfig;
   amount: number;
 }) => {
-  const res = await postData({
-    endpoint: "/users/income/",
-    data: { amount: amount },
-    token: configuration.token,
-  });
-  return res;
+  try {
+    const res = await postData({
+      endpoint: "/users/income/",
+      data: { amount: amount },
+      token: configuration.token,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
 };
 
 export default saveMonthlyIncome;

@@ -61,13 +61,15 @@ const SavingsTriggersSettings = ({
               }
             )}
       </div>
-      <div className="fixed bottom-4 right-4">
+      {/* TODO: Fix this later to point to savings triggers page and list all goals for selection */}
+
+      {/* <div className="fixed bottom-4 right-4">
         <AddButton
           onClick={() => {
             // navigate("/savings-trigger");
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

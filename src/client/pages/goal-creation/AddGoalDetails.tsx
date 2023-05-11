@@ -343,9 +343,9 @@ const AddGoalDetails = () => {
             }}
           />
           <BottomSheet
-            onSpringEnd={() => {
-              accountStore.setSavingAccount(accountStore.savingAccounts[0]);
-            }}
+            onSpringEnd={() =>
+              accountStore.setSavingAccount(accountStore.savingAccounts[0])
+            }
             onDismiss={() => {
               accountStore.openAccountBottomSheet(false);
               accountStore.setSavingAccount({});
