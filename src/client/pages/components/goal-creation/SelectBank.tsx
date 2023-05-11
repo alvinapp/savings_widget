@@ -94,14 +94,16 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
           </div>
         </div>
         <AccountDropDown
-          accountName={savingAccount.bank_name}
-          accountNumber={savingAccount.account_number}
+          accountName={savingAccount?.bank_name}
+          accountNumber={savingAccount?.account_number}
           onClick={() => {
             accountStore.openSavingsAccountBottomSheet(true);
           }}
         />
         <BottomSheet
-          onDismiss={() => accountStore.openSavingsAccountBottomSheet(false)}
+          onDismiss={() => {
+            accountStore.openSavingsAccountBottomSheet(false);
+          }}
           // onSpringStart={() => accountStore.openAccountBottomSheet(false)}
           open={accountStore.savingsAccountBottomSheet}
           style={{

@@ -29,7 +29,7 @@ export const SavingsAccountCard = ({
         </div>
         <div className="flex flex-col">
           <input
-            type="checkbox"
+            type="radio"
             checked={selected}
             className="w-5 h-5 rounded-full accent-[#056489]"
             readOnly

@@ -331,8 +331,8 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={
-              !!accountStore.savingAccount.bank_name &&
-              accountStore.savingAccount.account_number
+              !!accountStore.savingAccount?.bank_name &&
+              accountStore.savingAccount?.account_number
             }
             onClick={() => {
               accountStore.openAccountBottomSheet(true);
