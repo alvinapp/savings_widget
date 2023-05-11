@@ -10,20 +10,19 @@ export const ClassicAccount = ({ onClick }: ClassicAccountProps) => {
     <div className="flex flex-col items-center mx-3.5 mb-5">
       <IconContainer icon={<BsBank size={55} />} />
       <div className="font-workSans text-base font-bold text-skin-base tracking-title mb-2 mt-3 text-center">
-        Classic savings account
+        Wesley Savings Account
       </div>
       <div className="font-poppins font-medium text-skin-subtitle text-xs text-center md:text-sm lg:text-base xl:text-lg mb-6">
-        Something else that is a bit longer than the other one. Something else
-        that is a bit longer.
+        A flexible accounts where you can earn an extra 2% on your savings to get to your goal faster.
       </div>
       <div className="w-full">
         <Accordion
           title="Interest rate"
-          content="Something else that is a bit longer than the other one"
+          content="A high yield, fee-free savings account that pays you 2% per annum interest toward your savings goal"
         />
         <Accordion
           title="Opening requirement"
-          content="Something else that is a bit longer than the other one. Something else that is a bit longer than the other one"
+          content="If this is your first account with us, we will need a government-issued ID, proof of address and your BVN. If this is an added savings account, click 'Open new account' below to proceed."
           isOpen={true}
         />
       </div>
