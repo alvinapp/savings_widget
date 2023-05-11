@@ -66,37 +66,39 @@ const SavingsTriggerSuccess = lazy(
 const App = () => {
   const queryClient = new QueryClient();
   const userStore = useUserStore((state: any) => state);
-  const notificationStore = useNotificationStore((state: any) => state);
-  const [receivedMessages, setReceivedMessages] = useState<any[]>([]);
-  const receivedMessageIdsRef = useRef<any[]>([]);
-  const userId = userStore.user.user_id ?? "";
-  const eventSource = new EventSource(`${AppConfig.API_URL}/sse`);
+  // const notificationStore = useNotificationStore((state: any) => state);
+  // const [receivedMessages, setReceivedMessages] = useState<any[]>([]);
+  // const receivedMessageIdsRef = useRef<any[]>([]);
+  // const userId = userStore.user.user_id ?? "";
+  // const eventSource = new EventSource(`${AppConfig.API_URL}/sse`);
 
-  eventSource.addEventListener(
-    `schedule ${userId}`,
-    function (event) {
-      const data = JSON.parse(event.data);
-      console.log(
-        `Received a message from server: ${data.message} with id ${data.id}`
-      );
+  // eventSource.addEventListener(
+  //   `schedule ${userId}`,
+  //   function (event) {
+  //     const data = JSON.parse(event.data);
+  //     console.log(
+  //       `Received a message from server: ${data.message} with id ${data.id}`
+  //     );
 
-      if (!receivedMessageIdsRef.current.includes(data.id)) {
-        notificationStore.setNotification(data);
-        setReceivedMessages((prevMessages) => [...prevMessages, data.message]);
-        receivedMessageIdsRef.current = [
-          ...receivedMessageIdsRef.current,
-          data.id,
-        ];
-      }
-    },
-    false
-  );
+  //     if (!receivedMessageIdsRef.current.includes(data.id)) {
+  //       notificationStore.setNotification(data);
+  //       setReceivedMessages((prevMessages) => [...prevMessages, data.message]);
+  //       receivedMessageIdsRef.current = [
+  //         ...receivedMessageIdsRef.current,
+  //         data.id,
+  //       ];
+  //     }
+  //   },
+  //   false
+  // );
 
-  useEffect(() => {
-    return () => {
-      eventSource.close();
-    };
-  }, [userId]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (eventSource.readyState !== EventSource.CLOSED) {
+  //       eventSource.close();
+  //     }
+  //   };
+  // }, [userId]);
 
   return (
     <SkeletonTheme baseColor="#E8E8E8" highlightColor="#C0C0C0">

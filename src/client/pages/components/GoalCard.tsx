@@ -1,15 +1,18 @@
+import React from "react";
 import {
   buildStyles,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
 import Goal from "client/models/Goal";
 import { FiPause, FiPlay } from "react-icons/fi";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getConfirmedGoals, resumeGoal } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import goalStar from "client/assets/images/savings/complete-goal-star.svg";
 import goalGreenFlag from "client/assets/images/savings/attained_flag.svg";
+import { useEffect } from "react";
+
 const GoalCard = ({
   id,
   name,
@@ -25,30 +28,25 @@ const GoalCard = ({
     (state: any) => state.configuration
   ) as IConfig;
   const goal = useGoalStore((state: any) => state);
-  const handleResume = (event: any) => {
+  const queryClient = useQueryClient();
+
+  const handleResume = async (event: any) => {
     event.stopPropagation();
-    resumeTheGoal();
+    resumeTheGoal.mutate();
   };
 
-  const { data, refetch: resumeTheGoal } = useQuery(
-    "resume a goal",
-    () =>
-      resumeGoal({
-        configuration: configuration,
-        goalId: id,
-        data: {},
-      }).then((result) => {
-        if (result) {
-          getConfirmedGoals({ configuration: configuration }).then((result) => {
-            goal.setConfirmedGoals(result);
-          });
-        }
-      }),
+  const resumeTheGoal = useMutation(
+    () => resumeGoal({ configuration, goalId: id, data: {} }),
     {
-      refetchOnWindowFocus: false,
-      enabled: false,
+      onSuccess: async (result) => {
+        if (result) {
+          const confirmedGoals = await getConfirmedGoals({ configuration });
+          goal.setConfirmedGoals(confirmedGoals);
+        }
+      },
     }
   );
+
   return (
     <div
       className="rounded-lg bg-white px-4 py-4 w-auto shadow-card mb-2"
@@ -108,9 +106,8 @@ const GoalCard = ({
         <div className="flex flex-col">
           {is_active ? (
             <div
-              className={`font-poppins text-sm font-medium ${
-                progress == 100 ? "text-skin-success" : "text-skin-base"
-              } flex flex-row items-center`}
+              className={`font-poppins text-sm font-medium ${progress == 100 ? "text-skin-success" : "text-skin-base"
+                } flex flex-row items-center`}
             >
               {progress == 100 ? (
                 <div className="w-3 h-3">
