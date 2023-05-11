@@ -315,15 +315,16 @@ const AddGoalDetails = () => {
             placeHolder="Setup a funding account"
             label="Setup a savings funding account and track your savings with ease"
             value={
-              accountStore.savingAccount && accountStore.savingAccount.bank_name
+              accountStore.savingAccount &&
+              accountStore.savingAccount?.bank_name
                 ? `${
-                    accountStore.savingAccount.bank_name
-                      ? accountStore.savingAccount.bank_name
+                    accountStore.savingAccount?.bank_name
+                      ? accountStore.savingAccount?.bank_name
                       : ""
                   } , ${
                     accountStore.savingAccount.account_number
                       ? maskCreditCardNumber(
-                          accountStore.savingAccount.account_number.toString()
+                          accountStore.savingAccount?.account_number.toString()
                         )
                       : ""
                   }`
@@ -331,8 +332,10 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={
-              !!accountStore.savingAccount?.bank_name &&
-              accountStore.savingAccount?.account_number
+              Object.keys(accountStore.savingAccount).length !== 0
+                ? !!accountStore.savingAccount?.bank_name &&
+                  accountStore.savingAccount?.account_number
+                : false
             }
             onClick={() => {
               accountStore.openAccountBottomSheet(true);
