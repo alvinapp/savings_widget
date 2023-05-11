@@ -66,4 +66,20 @@ export const getSavingsAccounts = async (configuration: IConfig) => {
     return Promise.reject(reason);
   }
 };
+
+//get my total accounts
+export const getMyAccounts = async (configuration: IConfig) => {
+  try {
+    const res = await fetchData({
+      endpoint: "/bank_accounts/my_acounts",
+      token: configuration.token,
+    });
+    return res;
+  } catch (reason: any) {
+    Sentry.captureException(reason);
+    console.debug(reason);
+    return Promise.reject(reason);
+  }
+};
+
 export default getBankAccounts;

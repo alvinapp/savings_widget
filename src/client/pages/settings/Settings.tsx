@@ -18,17 +18,20 @@ import useSavingsTriggerStore from "client/store/savingsTriggerStore";
 import { fetchAllTriggers } from "client/api/savings-triggers";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
+import useMonthlyIncomeStore from "client/store/monthlyIncome";
+import { getMyAccounts } from "client/api/accounts";
+import useBankAccountStore from "client/store/bankAccountStore";
 
 const Settings = () => {
   const navigate = useNavigate();
   const user = useUserStore((state: any) => state.user);
   const goalStore = useGoalStore((state: any) => state);
   const savingsTriggerStore = useSavingsTriggerStore((state: any) => state);
+  const accountSavingsStore = useBankAccountStore((state: any) => state);
   const configuration = useConfigurationStore(
     (state: any) => state.configuration
   ) as IConfig;
   const currencySymbol = "₦";
-  const accounts = 0;
   const { isFetching: fetchingTriggers } = useQuery(
     "goal-triggers",
     () =>
@@ -41,6 +44,19 @@ const Settings = () => {
       }),
     { refetchOnWindowFocus: false }
   );
+
+  const { isFetching: fetchingMyAccounts } = useQuery(
+    "my-accounts",
+    () =>
+      getMyAccounts(configuration).then((result) => {
+        if (result) {
+          accountSavingsStore.setMyAccountsCount(result.total_linked_accounts);
+        }
+      }),
+    { refetchOnWindowFocus: false }
+  );
+  const monthlyIncomeStore = useMonthlyIncomeStore((state: any) => state);
+
   return (
     <div className="pt-6 flex flex-col h-screen w-screen">
       <NavBar
@@ -69,7 +85,9 @@ const Settings = () => {
         </div>
         <SettingsCard
           title="Monthly income"
-          subtitle={`${currencySymbol} ${user.income ?? ""}`}
+          subtitle={`${currencySymbol} ${
+            user.income ?? monthlyIncomeStore.monthlyIncome
+          }`}
           leading={<FiBriefcase />}
           iconBackground={"bg-skin-iconPrimary"}
           iconColor="text-skin-successTertiary"
@@ -79,7 +97,9 @@ const Settings = () => {
         <div className="mt-2">
           <SettingsCard
             title="Accounts"
-            subtitle={`${accounts} accounts`}
+            subtitle={`${accountSavingsStore.myAccountsCount} ${
+              accountSavingsStore.myAccountsCount === 1 ? "account" : "accounts"
+            }`}
             leading={<FiBriefcase />}
             iconBackground={"bg-skin-iconPrimary"}
             iconColor="text-skin-successTertiary"
@@ -97,7 +117,7 @@ const Settings = () => {
             goalStore.confirmedGoals.length > 0
               ? goalStore.confirmedGoals.length
               : 0
-          } goals`}
+          } ${goalStore.confirmedGoals.length === 1 ? "goal" : "goals"}`}
           leading={<FiFlag />}
           iconBackground={"bg-skin-iconSecondary"}
           iconColor="text-skin-iconSecondaryy"
@@ -140,6 +160,7 @@ const Settings = () => {
           iconBackground={"bg-skin-iconTertiary"}
           iconColor="text-skin-iconTertiary"
           trailing={<FiChevronRight />}
+          onClick={() => navigate("/terms-of-use")}
         />
         <div className="mt-2 mb-8">
           <SettingsCard
@@ -148,6 +169,7 @@ const Settings = () => {
             iconBackground={"bg-skin-iconTertiary"}
             iconColor="text-skin-iconTertiary"
             trailing={<FiChevronRight />}
+            onClick={() => navigate("/terms-of-use")}
           />
         </div>
       </div>

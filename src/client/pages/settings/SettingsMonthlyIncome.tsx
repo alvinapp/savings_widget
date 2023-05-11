@@ -20,20 +20,28 @@ const SettingsMonthlyIncome = () => {
   const user = useUserStore((state: any) => state.user);
   const [finalAmount, setFinalAmount] = useState(user.income);
   const monthlyIncome = useMonthlyIncomeStore((state: any) => state);
-  const saveIncome = () => {
-    saveMonthlyIncome({
-      configuration: configuration,
-      amount: finalAmount,
-    }).then((result) => {
-      if (result) {
-        monthlyIncome.setMonthlyIncome(result.income);
-        navigate(-1);
-      }
-    });
-  };
-  const { data, refetch } = useQuery(["saveIncome"], () => saveIncome, {
-    enabled: false,
-  });
+
+  const {
+    isFetching: savingsMonthlyIncome,
+    data,
+    refetch,
+  } = useQuery(
+    ["saveIncome"],
+    () =>
+      saveMonthlyIncome({
+        configuration: configuration,
+        amount: finalAmount,
+      }).then((result) => {
+        if (result) {
+          console.log(result);
+          monthlyIncome.setMonthlyIncome(result.income);
+          navigate("/");
+        }
+      }),
+    {
+      enabled: false,
+    }
+  );
   return (
     <div className="h-screen w-screen relative">
       <div className="bg-curvedBg pt-4 bg-no-repeat h-64 bg-cover">
@@ -75,7 +83,11 @@ const SettingsMonthlyIncome = () => {
         </div>
       </div>
       <div className="fixed bottom-2 right-0 left-0 px-3.5">
-        <MainButton title="Save" click={() => refetch()} />
+        <MainButton
+          title="Save"
+          click={() => refetch()}
+          loading={savingsMonthlyIncome}
+        />
       </div>
     </div>
   );

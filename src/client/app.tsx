@@ -18,6 +18,7 @@ import AddGoalDetails from "./pages/goal-creation/AddGoalDetails";
 import SettingsMonthlyIncome from "./pages/settings/SettingsMonthlyIncome";
 import Notifications from "./pages/notications/Notifications";
 import Settings from "./pages/settings/Settings";
+import { TermsOfUse } from "./pages/settings/TermsOfUse";
 
 declare var AppConfig: AppConfig;
 
@@ -161,6 +162,7 @@ const App = () => {
                 path="/create-goal-savings-trigger"
                 element={<CreateGoalSavingsTrigger />}
               />
+              <Route path="/terms-of-use" element={<TermsOfUse />} />
             </Routes>
           </Suspense>
         </div>

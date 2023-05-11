@@ -9,6 +9,7 @@ const useGoalStore = create((set) => ({
   pauseGoalBottomSheet: false,
   pauseDeleteBottomSheet: false,
   deleteGoalBottomSheet: false,
+  moreBottomSheet: false,
   goalImageUrl: "",
   goalId: 0,
   goalName: "",
@@ -149,6 +150,14 @@ const useGoalStore = create((set) => ({
     return set((state: any) => {
       const result = {
         deleteGoalBottomSheet: open,
+      };
+      return result;
+    });
+  },
+  openMoreBottomSheet: (open: boolean) => {
+    return set((state: any) => {
+      const result = {
+        moreBottomSheet: open,
       };
       return result;
     });

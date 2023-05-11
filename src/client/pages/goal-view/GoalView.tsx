@@ -34,6 +34,7 @@ import { fetchGoalTriggers } from "client/api/savings-triggers";
 import useBankAccountStore from "client/store/bankAccountStore";
 import { AddFunds } from "./AddFunds";
 import useAddFundsStore from "client/store/AddFundsStore";
+import { DeleteIntro } from "../components/goalview/DeleteIntro";
 const GoalView = () => {
   const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
@@ -189,6 +190,7 @@ const GoalView = () => {
             title="Add funds"
           />
           <BottomSheet
+            onDismiss={() => addFundsStore.openAddFundBottomSheet(false)}
             open={addFundsStore.bottomSheet}
             style={{
               borderRadius: 24,
@@ -219,13 +221,28 @@ const GoalView = () => {
               <MoreButton
                 size="h-12 w-12"
                 onClick={() => {
-                  goal.openPauseDeleteBottomSheet(true);
+                  goal.openMoreBottomSheet(true);
                 }}
               />
             }
             title="More"
           />
           <BottomSheet
+            onDismiss={() => goal.openMoreBottomSheet(false)}
+            open={goal.moreBottomSheet}
+            style={{
+              borderRadius: 24,
+            }}
+            children={
+              <DeleteIntro
+                deleteGoal={() => goal.openDeleteBottomSheet(true)}
+                onClick={() => goal.openMoreBottomSheet(false)}
+              />
+            }
+            defaultSnap={300}
+          ></BottomSheet>
+          <BottomSheet
+            onDismiss={() => goal.openDeleteBottomSheet(false)}
             open={goal.deleteGoalBottomSheet}
             style={{
               borderRadius: 24,
@@ -256,6 +273,9 @@ const GoalView = () => {
             defaultSnap={300}
           ></BottomSheet>
           <BottomSheet
+            onDismiss={() => {
+              goal.openPauseDeleteBottomSheet(false);
+            }}
             open={goal.pauseDeleteBottomSheet}
             style={{
               borderRadius: 24,

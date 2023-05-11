@@ -18,7 +18,7 @@ export const TriggersView = ({ triggers }: TriggersViewProps) => {
               triggerName={trigger.merchant_name}
               image={trigger.image}
               percentage={trigger.round_up_percentage}
-              appliedTo={trigger.goal.name}
+              appliedTo={trigger.merchant_name}
               created_at={trigger.created_at}
             />
           );

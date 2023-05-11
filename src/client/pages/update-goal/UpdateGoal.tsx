@@ -96,7 +96,9 @@ const UpdateGoalDetails = () => {
   );
 
   const valid =
-    !!goal.goalAmount && goal.goalName && accountStore.account.bank_account;
+    !!goal.goalAmount &&
+    goal.goalName &&
+    accountStore.savingAccount.savings_account;
   return (
     <div className="h-screen w-screen relative">
       <div className="h-1/2 absolute top-0 left-0 right-0">

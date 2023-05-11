@@ -331,8 +331,8 @@ const AddGoalDetails = () => {
             }
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={
-              !!accountStore.savingAccount.bank_name &&
-              accountStore.savingAccount.account_number
+              !!accountStore.savingAccount?.bank_name &&
+              accountStore.savingAccount?.account_number
             }
             onClick={() => {
               accountStore.openAccountBottomSheet(true);
@@ -343,9 +343,9 @@ const AddGoalDetails = () => {
             }}
           />
           <BottomSheet
-            onSpringEnd={() => {
-              accountStore.setSavingAccount(accountStore.savingAccounts[0]);
-            }}
+            onSpringEnd={() =>
+              accountStore.setSavingAccount(accountStore.savingAccounts[0])
+            }
             onDismiss={() => {
               accountStore.openAccountBottomSheet(false);
               accountStore.setSavingAccount({});

@@ -3,6 +3,7 @@ import create from "zustand";
 import Account from "client/models/Account";
 
 const useBankAccountStore = create((set) => ({
+  myAccountsCount: 0,
   accounts: [],
   savingAccounts: [],
   checkingAccounts: [],
@@ -11,6 +12,14 @@ const useBankAccountStore = create((set) => ({
   accountBottomSheet: false,
   savingsAccountBottomSheet: false,
   updateAccountBottomSheet: false,
+  setMyAccountsCount: (accountsCount: any) => {
+    return set(() => {
+      const results = {
+        myAccountsCount: accountsCount,
+      };
+      return results;
+    });
+  },
   openSavingsAccountBottomSheet: (open: boolean) => {
     return set(() => {
       const results = {
