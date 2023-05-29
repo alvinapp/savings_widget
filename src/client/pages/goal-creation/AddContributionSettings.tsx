@@ -140,6 +140,8 @@ export const AddContributionSettings = ({
         goalId: goal.confirmedGoal.id,
       }).then((result) => {
         if (result.frequency !== "") {
+          // console.log(result.frequency);
+          goal.setGoalFrequency(result.frequency);
           goalContributionSettings.setContributionFrequency(result.frequency);
           goalContributionSettings.openContributionSettingsBottomSheet(false);
         }

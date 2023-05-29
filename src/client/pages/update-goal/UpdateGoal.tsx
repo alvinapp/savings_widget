@@ -168,7 +168,7 @@ const UpdateGoalDetails = () => {
         <div className="mb-6">
           <TextInputWithPopup
             placeHolder="Add contribution"
-            value={`${goal.confirmedGoal.frequency_text}`}
+            value={`${goal?.goalContributionFrequency}`}
             leadingIcon={<FiPocket size="1.375rem" />}
             hasValue={!!goal.goalContributionFrequency}
             onClick={() =>
