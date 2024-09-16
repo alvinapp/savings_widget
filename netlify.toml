@@ -1,6 +1,0 @@
-# Netlify configuration file
-
-[[redirects]]
-  from = "/*"
-  to = "/dist/index.html"
-  status = 200
