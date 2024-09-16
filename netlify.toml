@@ -2,5 +2,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/dist/staging/index.html"
+  to = "/dist/staging/"
   status = 200
