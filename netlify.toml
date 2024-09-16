@@ -1,0 +1,10 @@
+# Netlify configuration file
+
+[build]
+  publish = "dist"
+  command = "yarn stg-build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
