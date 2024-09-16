@@ -10,7 +10,7 @@ export const ClassicAccount = ({ onClick }: ClassicAccountProps) => {
     <div className="flex flex-col items-center mx-3.5 mb-5">
       <IconContainer icon={<BsBank size={55} />} />
       <div className="font-workSans text-base font-bold text-skin-base tracking-title mb-2 mt-3 text-center">
-        Wesley Savings Account
+        Demo Savings Account
       </div>
       <div className="font-poppins font-medium text-skin-subtitle text-xs text-center md:text-sm lg:text-base xl:text-lg mb-6">
         A flexible accounts where you can earn an extra 2% on your savings to get to your goal faster.
