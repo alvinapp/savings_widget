@@ -2,5 +2,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/dist/staging/Widget.js"
+  to = "/dist/staging/"
   status = 200
