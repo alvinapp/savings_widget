@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="43px" viewBox="0 0 42 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>BAB03C03-507D-41D8-80EB-CE7D7962D198@0.5x</title>
+    <defs>
+        <filter x="-96.4%" y="-96.4%" width="292.9%" height="292.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.103269777 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="🚀-General-flow.Firstbank" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="SB.xxii" transform="translate(-31.000000, -598.000000)">
+            <g id="Screens-/-Overview-/-State-#2-(Goals)" transform="translate(0.000000, 24.000000)">
+                <g id="Goals" transform="translate(17.000000, 327.000000)">
+                    <g id="Frigate-/-Cards-/-Card-#1-/-Achieved" transform="translate(0.000000, 252.000000)">
+                        <g id="star-yellow" filter="url(#filter-1)" transform="translate(34.930151, 16.201702) rotate(-75.000000) translate(-34.930151, -16.201702) translate(27.930151, 9.201702)">
+                            <rect id="Box-24pt" x="-1.31718415e-15" y="2.05936044e-15" width="14" height="14"></rect>
+                            <polygon id="🎨-Icon-Style" fill="#FAB15E" points="7 10.4708333 3.22837796 12.7745257 4.25382431 8.4756199 0.897387354 5.60047429 5.30277008 5.24729676 7 1.16666667 8.69722992 5.24729676 13.1026126 5.60047429 9.74617569 8.4756199 10.771622 12.7745257"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
