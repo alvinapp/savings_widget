@@ -234,7 +234,7 @@ export const AddContributionSettings = ({
         {`${goal.percentageOfSavings}% of my monthly net income`}
       </div>
       <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
-        On
+        on
       </div>
       {goalContributionSettings.tabIndex === 1 ? (
         <MonthlyContributionSelector />
@@ -245,8 +245,8 @@ export const AddContributionSettings = ({
         <BottomSheetFooter
           title={
             goalContributionSettings.tabIndex === 0
-              ? `Save ${goalContributionSettings.contributionAmount} weekly to reach your goal on ${goalContributionSettings.maturityDateText}`
-              : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}`
+              ? `Save ${goalContributionSettings.contributionAmount} weekly to reach your goal on ${goalContributionSettings.maturityDateText}.`
+              : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}.`
           }
           onClick={() =>
             updatingGoal ? updateContributionSettings() : getFrequencyText()

@@ -28,7 +28,7 @@ const WeeklyContributionSelector = () => {
       </div>
       <div className="flex flex-row justify-center items-center">
         <SelectDate
-          title="Starting from"
+          title="starting from"
           activeOption={activeDateOption}
           onClick={(selected: number) => {
             if (selected === 0) {

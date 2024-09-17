@@ -60,7 +60,7 @@ const CreateGoalSavingsTrigger = () => {
         </div>
         <div className="flex flex-row justify-center mt-2 mx-12">
           <div className="font-poppins font-medium text-tiny text-skin-subtitle tracking-listtile_subtitle text-center">
-            Automatically save the change from daily transactions
+            Automatically save on your daily spending
           </div>
         </div>
         <div className="flex flex-row justify-center mt-6">

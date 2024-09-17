@@ -33,7 +33,7 @@ export const MonthlyContributionSelector = () => {
       </div>
       <div className="flex flex-row justify-center">
         <SelectDate
-          title="Starting from"
+          title="starting from"
           activeOption={activeDateOption}
           onClick={(selected: number) => {
             if (selected === 0) {

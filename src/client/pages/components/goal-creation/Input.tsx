@@ -185,7 +185,7 @@ export const TextInputWithPopup = ({
     clearInput();
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" onClick={hasValue ? () => {} : onClick}>
       <div className="flex flex-row">
         <div
           className={`font-poppins font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
@@ -193,10 +193,7 @@ export const TextInputWithPopup = ({
           {label}
         </div>
       </div>
-      <div
-        className="flex flex-row relative"
-        onClick={hasValue ? () => {} : onClick}
-      >
+      <div className="flex flex-row relative">
         <div
           className={`rounded flex flex-row items-center  pl-3.5 w-screen ${
             hasValue
@@ -221,7 +218,7 @@ export const TextInputWithPopup = ({
             ) : (
               <div></div>
             )}
-            <input
+            {/* <input
               disabled={hasValue ? false : true}
               type={type}
               placeholder={placeHolder}
@@ -230,7 +227,10 @@ export const TextInputWithPopup = ({
               onChange={(e) => {
                 addValue(e.target.value);
               }}
-            />
+            /> */}
+            <div className="w-64 outline-none text-center">
+              {value ? value : placeHolder}
+            </div>
           </div>
           {hasValue ? (
             <button
