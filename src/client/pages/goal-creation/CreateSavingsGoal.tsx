@@ -58,7 +58,9 @@ const CreateSavingsGoal = () => {
           <BuildGoalCard
             title="Let's build one together"
             click={() => {
-              goalStore.setGoalImageUrl("");
+              goalStore.setGoalImageUrl(
+                "https://images.unsplash.com/photo-1459257831348-f0cdd359235f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
+              );
               goalStore.setGoalName("");
               goalStore.setGoalAmount("");
               goalStore.setPercentage(0);
