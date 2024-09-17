@@ -6,6 +6,7 @@ import tree2 from "client/assets/images/savings/tree2.svg";
 import successFlag from "client/assets/images/savings/success-flag.svg";
 import star from "client/assets/images/savings/star.svg";
 import { BallTriangle, TailSpin } from "react-loader-spinner";
+import { formatDate } from "client/utils/Formatters";
 type BottomSheetFooterProps = {
   title?: string;
   onClick?: () => void;
@@ -16,6 +17,7 @@ export const BottomSheetFooter = ({
   onClick,
   loading,
 }: BottomSheetFooterProps) => {
+  const fullTitle = title ? title : "Calculating...";
   return (
     <div className="bg-bottomSheetFooterBg bg-cover bg-no-repeat h-1/2 relative pb-5 pt-3">
       <div className="absolute -top-5 right-0 left-0 flex flex-row justify-between items-center mx-3.5">
@@ -25,8 +27,8 @@ export const BottomSheetFooter = ({
         <SuccessFlag />
       </div>
       <div className="flex flex-col items-center">
-        <div className="font-semibold text-1.5xl font-workSans tracking-title text-skin-primary mb-5 mt-6 text-center">
-          {title ?? ""}
+        <div className="font-semibold text-1.5xl font-workSans tracking-title text-skin-primary mb-5 mt-6 text-center mx-2">
+          {fullTitle ?? ""}
         </div>
         <button
           className="rounded-full shadow-button bg-skin-primary h-14 w-14 flex items-center justify-center text-white mb-6"

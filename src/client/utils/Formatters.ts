@@ -194,3 +194,36 @@ export function debounce<F extends (...args: any[]) => any>(
     }, wait);
   };
 }
+
+export const formatDate = (dateString: any) => {
+  // Create a mapping for month abbreviations to full names
+  const months: any = {
+    Jan: "January",
+    Feb: "February",
+    Mar: "March",
+    Apr: "April",
+    May: "May",
+    Jun: "June",
+    Jul: "July",
+    Aug: "August",
+    Sep: "September",
+    Oct: "October",
+    Nov: "November",
+    Dec: "December",
+  };
+
+  // Split the input date string into parts (remove the comma)
+  const parts = dateString.replace(",", "").split(" ");
+
+  // Get the day (e.g., 8)
+  const day = parts[0];
+
+  // Get the month abbreviation (e.g., Sep) and convert it to the full name
+  const month = months[parts[1]];
+
+  // Get the year
+  const year = parts[2];
+
+  // Return the formatted string
+  return `${day} ${month} ${year}`;
+};

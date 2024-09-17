@@ -23,9 +23,11 @@ import {
   calculateGoalMaturityDate,
   convertDate,
   debounce,
+  formatDate,
   rightDateFormat,
 } from "client/utils/Formatters";
 import { dateFormat } from "client/utils/Formatters";
+import useCurrencyStore from "client/store/currencyStore";
 type AddContributionSettingsProps = {
   onClick?: () => void;
   updatingGoal?: boolean;
@@ -50,6 +52,7 @@ export const AddContributionSettings = ({
     (state: any) => state.monthlyIncome
   );
   const user = useUserStore((state: any) => state.user);
+  const currencySymbol = useCurrencyStore((state: any) => state.currency);
   const monthlyIncomeAmount = monthlyIncome || user.income;
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
@@ -244,9 +247,19 @@ export const AddContributionSettings = ({
       <div className="mt-12">
         <BottomSheetFooter
           title={
-            goalContributionSettings.tabIndex === 0
-              ? `Save ${goalContributionSettings.contributionAmount} weekly to reach your goal on ${goalContributionSettings.maturityDateText}.`
-              : `Save ${goalContributionSettings.contributionAmount} monthly to reach your goal on ${goalContributionSettings.maturityDateText}.`
+            goalContributionSettings.maturityDateText
+              ? goalContributionSettings.tabIndex === 0
+                ? `Save ${currencySymbol}${goalContributionSettings.contributionAmount.toLocaleString(
+                    "en-US"
+                  )} weekly to reach your goal on ${formatDate(
+                    goalContributionSettings.maturityDateText ?? ""
+                  )}.`
+                : `Save ${goalContributionSettings.contributionAmount.toLocaleString(
+                    "en-US"
+                  )} monthly to reach your goal on ${formatDate(
+                    goalContributionSettings.maturityDateText ?? ""
+                  )}.`
+              : "Calculating goal maturity date..."
           }
           onClick={() =>
             updatingGoal ? updateContributionSettings() : getFrequencyText()

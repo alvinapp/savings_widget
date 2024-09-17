@@ -213,11 +213,11 @@ export const TextInputWithPopup = ({
               hasValue ? "text-skin-base" : "text-skin-inputDisabled"
             }`}
           >
-            {hasCurrencySymbol ? (
+            {/* {hasCurrencySymbol ? (
               <div className="translate-x-12">{hasValue ? "₦ " : ""}</div>
             ) : (
               <div></div>
-            )}
+            )} */}
             {/* <input
               disabled={hasValue ? false : true}
               type={type}
@@ -229,6 +229,7 @@ export const TextInputWithPopup = ({
               }}
             /> */}
             <div className="w-64 outline-none text-center">
+              {hasCurrencySymbol && hasValue ? "₦ " : ""}
               {value ? value : placeHolder}
             </div>
           </div>

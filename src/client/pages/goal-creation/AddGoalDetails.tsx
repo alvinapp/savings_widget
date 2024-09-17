@@ -269,6 +269,7 @@ const AddGoalDetails = () => {
         </div>
         <div className="mb-6">
           <TextInputWithPopup
+            hasCurrencySymbol={true}
             type="button"
             placeHolder="Add contribution"
             label="How would you like to contribute?"
