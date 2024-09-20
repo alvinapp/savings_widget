@@ -43,7 +43,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
         />
       </div>
       <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-6 mt-10 text-center">
-        Setup a savings funding account
+        set up a savings funding account
       </div>
       {/* <div className="ml-3">
         {accountList.map((account) => {

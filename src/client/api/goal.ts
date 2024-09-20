@@ -198,7 +198,6 @@ export const deleteGoal = async ({
       endpoint: `/goals/${goalId}/delete`,
       token: configuration.token,
     });
-    console.log(res);
     return res;
   } catch (reason: any) {
     Sentry.captureException(reason);

@@ -33,7 +33,6 @@ const SettingsMonthlyIncome = () => {
         amount: finalAmount,
       }).then((result) => {
         if (result) {
-          console.log(result);
           monthlyIncome.setMonthlyIncome(result.income);
           navigate("/");
         }

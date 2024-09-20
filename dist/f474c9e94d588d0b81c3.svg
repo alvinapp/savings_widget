@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="330px" height="536px" viewBox="0 0 330 536" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>76B7B634-52F7-47B9-8ED9-ECA49F4D221C@2x</title>
+    <defs>
+        <linearGradient x1="63.2339136%" y1="0%" x2="28.3041136%" y2="105.964992%" id="linearGradient-1">
+            <stop stop-color="#1490C0" offset="0%"></stop>
+            <stop stop-color="#81C7E2" offset="41.9961505%"></stop>
+            <stop stop-color="#C9F1FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="🪴-Overview" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Overview.Get-started.i" transform="translate(-15.000000, -187.000000)">
+            <g id="Screens-/-Overview-/-State-#1-(Income)" transform="translate(0.000000, 23.949646)">
+                <g id="BG" transform="translate(15.000000, 163.050354)">
+                    <g id="Mask:BG">
+                        <rect id="Shadow" x="0" y="0" width="330" height="536" rx="8"></rect>
+                        <rect id="Fill" x="0" y="0" width="330" height="536" rx="8"></rect>
+                        <g id="Outline-Tint">
+                            <rect id="Outline" x="0" y="0" width="330" height="536" rx="8"></rect>
+                        </g>
+                    </g>
+                    <g id="Feature-background-sm" opacity="0.146542504" transform="translate(-13.000000, 0.000000)" fill="url(#linearGradient-1)" fill-opacity="0.5">
+                        <path d="M361.577158,618.977602 L361.577158,0 C273.605621,0.222183437 153.455496,0.525560858 1.12678462,0.910188771 L0,702.816327 C49.6606727,663.600003 22.6917396,681.556803 39.8803045,677.657565 C129.795243,657.260297 332.027899,702.816327 361.577158,618.977602 Z" id="BG"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

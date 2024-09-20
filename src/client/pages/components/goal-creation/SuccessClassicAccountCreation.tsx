@@ -12,7 +12,7 @@ export const SuccessClassicAccountCreation = ({
       <div className="flex flex-col items-center mx-3.5 mb-5">
         <IconContainer icon={<BsBank size={55} />} />
         <div className="font-workSans text-base font-bold text-skin-base tracking-title mb-2 mt-3 text-center">
-          Horray! savings account created successfully.
+          Hooray! savings account created successfully.
         </div>
         <div className="font-poppins font-medium text-skin-subtitle text-xs text-center md:text-sm lg:text-base xl:text-lg mb-6">
           Nice work! Your new savings account has been created. We've sent an

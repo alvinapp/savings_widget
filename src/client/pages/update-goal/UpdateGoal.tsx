@@ -110,7 +110,11 @@ const UpdateGoalDetails = () => {
           <img src={overlay} className="absolute object-cover w-screen h-72" />
           <div className="absolute top-28 left-0 right-0 flex flex-col items-center">
             <div className="mb-3">
-              <AddPhotoButton onClick={() => navigate("/image-selection")} />
+              <AddPhotoButton
+                onClick={() => {
+                  // navigate("/image-selection");
+                }}
+              />
             </div>
             <div className="font-poppins font-medium text-xs text-white tracking-subtitle">
               Tap to personalize cover photo
@@ -167,6 +171,7 @@ const UpdateGoalDetails = () => {
         </div>
         <div className="mb-6">
           <TextInputWithPopup
+            type="button"
             placeHolder="Add contribution"
             value={`${goal?.goalContributionFrequency}`}
             leadingIcon={<FiPocket size="1.375rem" />}

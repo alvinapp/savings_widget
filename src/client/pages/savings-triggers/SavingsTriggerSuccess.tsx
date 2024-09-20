@@ -5,7 +5,6 @@ import Clouds from "client/assets/json_lottie/clouds.json";
 import { BallTriangle } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
-import { showCustomToast } from "client/utils/Toast";
 import successTrigger from "client/assets/images/savings/trigger-success.svg";
 const SavingsTriggerSuccess = () => {
   const navigate = useNavigate();
