@@ -4,9 +4,6 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { CustomDatePicker } from "../CustomDatePicker";
 
-// If you prefer using date-fns for formatting
-// import { format } from 'date-fns';
-
 type CustomDateButtonProps = {
   isActive: boolean;
   click?: () => void;
@@ -28,9 +25,6 @@ export const CustomDateButton = ({
   const dateString = selectedDate
     ? selectedDate.toLocaleDateString('en-GB') // This formats the date as 'dd/MM/yyyy'
     : 'Custom';
-
-  // If you prefer using date-fns for formatting
-  // const dateString = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : 'Custom';
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick }: { value?: any; onClick?: () => void }, ref) => (
