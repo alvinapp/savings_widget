@@ -9,8 +9,9 @@ type AddMonthlyIncomeInputProps = {
   value?: number;
   addValue: (e: any) => void;
 };
+
 export const AddMonthlyIncomeInput = ({
-  value,
+  value = 0,
   increment,
   decrement,
   addValue,
@@ -19,28 +20,49 @@ export const AddMonthlyIncomeInput = ({
     (state: any) => state.currencySymbol
   );
 
+  // Helper function to format numbers with commas
+  const formatNumberWithCommas = (num: number) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center justify-center">
       <div
-        className="flex justify-center items-center p-3.5 rounded-full border border-1 border-skin-primary"
+        className="flex justify-center items-center p-3.5 rounded-full border border-1 border-skin-primary cursor-pointer"
         onClick={decrement}
       >
         <FiMinus color="#6F89A5" />
       </div>
-      <div className="relative rounded-full p-3.5 bg-skin-input mx-2 flex flex-row justify-center items-center">
-        <div>{currencySymbol}</div>
-        <input
-          className="bg-transparent font-workSans text-xl tracking-title text-skin-base text-center font-semibold w-48 focus:border-none focus:outline-none"
-          type="number"
-          value={value}
-          max={25}
-          onChange={(e) => {
-            addValue(parseInt(e.target.value));
-          }}
-        />
+      <div className="relative rounded-full py-3.5 px-12 bg-skin-input mx-2 flex flex-row justify-center items-center" style={{
+        minWidth: "14rem"
+      }}>
+        {/* Flex container for both symbol and value to ensure they're centered together */}
+        <div className="flex flex-row items-center justify-center w-full">
+          {/* Currency symbol and value inside a single flex container */}
+          <span
+            className="text-l font-semibold"
+          >
+            {currencySymbol}
+          </span>
+          <input
+            className="bg-transparent font-workSans text-xl tracking-title text-skin-base font-semibold w-full focus:border-none focus:outline-none"
+            style={{
+              padding: 0, // Remove padding to ensure alignment
+              textAlign: "center", // Center text within the input
+              // make the width of the input dynamic based on the length of the value
+              width: `${value.toString().length * 15}px`
+            }}
+            type="text"
+            value={formatNumberWithCommas(value || 0)}
+            onChange={(e) => {
+              const unformattedValue = e.target.value.replace(/,/g, "");
+              addValue(parseInt(unformattedValue));
+            }}
+          />
+        </div>
       </div>
       <div
-        className="flex justify-center items-center rounded-full p-4 border border-1 border-skin-primary"
+        className="flex justify-center items-center rounded-full p-4 border border-1 border-skin-primary cursor-pointer"
         onClick={increment}
       >
         <FiPlus color="#04506e" />

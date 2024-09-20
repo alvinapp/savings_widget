@@ -10,7 +10,7 @@ export const SelectSavingsType = ({ click }: SelectSavingsTypeProps) => {
       </div>
       <div className="ml-3">
         <AccountTypeCard
-          title="Wesley Savings Account"
+          title="ARM Savings Account"
           description="A flexible accounts where you can earn an extra 2% on your savings to get to your goal faster."
           onClick={click}
         />

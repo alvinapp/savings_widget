@@ -1,6 +1,12 @@
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+import { CustomDatePicker } from "../CustomDatePicker";
+
+// If you prefer using date-fns for formatting
+// import { format } from 'date-fns';
+
 type CustomDateButtonProps = {
   isActive: boolean;
   click?: () => void;
@@ -14,6 +20,18 @@ export const CustomDateButton = ({
   const goalContributionSettings = useGoalContributionSettingsStore(
     (state: any) => state
   );
+
+  // Get the selected date from the store
+  const selectedDate = goalContributionSettings.startingFromDate;
+
+  // Format the date to 'dd/MM/yyyy'
+  const dateString = selectedDate
+    ? selectedDate.toLocaleDateString('en-GB') // This formats the date as 'dd/MM/yyyy'
+    : 'Custom';
+
+  // If you prefer using date-fns for formatting
+  // const dateString = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : 'Custom';
+
   const ExampleCustomInput = forwardRef(
     ({ value, onClick }: { value?: any; onClick?: () => void }, ref) => (
       <div
@@ -29,18 +47,22 @@ export const CustomDateButton = ({
           }`}
         >
           <div className="font-poppins font-medium text-xs tracking-wide text-center">
-            Custom
+            {isActive? dateString: "Custom"}
           </div>
         </div>
       </div>
     )
   );
+
   return (
-    <DatePicker
-      selected={goalContributionSettings.startingFromDate}
-      onChange={(date: Date) => goalContributionSettings.setStartFromDate(date)}
-      customInput={<ExampleCustomInput />}
+    <CustomDatePicker
+      selectedDate={selectedDate}
+      onDateChange={(date: Date) => goalContributionSettings.setStartFromDate(date)}
       minDate={new Date()}
-    />
+    >
+      {({ toggleCalendar }) => (
+        <ExampleCustomInput onClick={toggleCalendar} />
+      )}
+    </CustomDatePicker>
   );
 };
