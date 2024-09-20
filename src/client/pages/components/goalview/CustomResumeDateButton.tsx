@@ -73,7 +73,9 @@ export const CustomResumeDateButton = ({
       selectedDate={selectedDate}
       onDateChange={(date: Date) => {
         goal.setResumeAtDate(date);
-        maturiryDate();
+        setTimeout(() => {
+          maturiryDate();
+        }, 500);
       }}
       minDate={new Date()}
     >
