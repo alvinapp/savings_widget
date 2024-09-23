@@ -54,6 +54,16 @@ const SavingsTriggerSuccess = () => {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SavingsTriggerSuccess);
 
 
+/***/ }),
+
+/***/ "./src/client/assets/images/savings/trigger-success.svg":
+/*!**************************************************************!*\
+  !*** ./src/client/assets/images/savings/trigger-success.svg ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "49762eb9521315a5f18a.svg";
+
 /***/ })
 
 }]);

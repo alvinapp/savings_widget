@@ -254,7 +254,7 @@ export const AddContributionSettings = ({
                   )} weekly to reach your goal on ${formatDate(
                     goalContributionSettings.maturityDateText ?? ""
                   )}.`
-                : `Save ${goalContributionSettings.contributionAmount.toLocaleString(
+                : `Save ${currencySymbol}${goalContributionSettings.contributionAmount.toLocaleString(
                     "en-US"
                   )} monthly to reach your goal on ${formatDate(
                     goalContributionSettings.maturityDateText ?? ""
