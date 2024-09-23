@@ -31,7 +31,7 @@ export const CustomDropDown = ({
 
     // Cleanup the event listener on unmount
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document?.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref]);
   return (

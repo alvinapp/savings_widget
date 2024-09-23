@@ -1,11 +1,12 @@
 import { getMaturityDate } from "client/api/goal";
 import { IConfig, useConfigurationStore } from "client/store/configuration";
-import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import useGoalStore from "client/store/goalStore";
 import { rightDateFormat } from "client/utils/Formatters";
-import React, { forwardRef, useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { forwardRef } from "react";
+import 'react-datepicker/dist/react-datepicker.css';
+import { CustomDatePicker } from "../CustomDatePicker";
 import { useQuery } from "react-query";
+
 type CustomResumeDateButtonProps = {
   isActive: boolean;
   click?: () => void;
@@ -36,6 +37,15 @@ export const CustomResumeDateButton = ({
     { refetchOnWindowFocus: false, enabled: false }
   );
   const goal = useGoalStore((state: any) => state);
+
+  // Get the selected date from the store
+  const selectedDate = goal.resume_at;
+
+  // Format the date to 'dd/MM/yyyy'
+  const dateString = selectedDate
+    ? selectedDate.toLocaleDateString('en-GB')
+    : 'Custom';
+
   const ExampleCustomInput = forwardRef(
     ({ value, onClick }: { value?: any; onClick?: () => void }, ref) => (
       <div
@@ -51,21 +61,27 @@ export const CustomResumeDateButton = ({
           }`}
         >
           <div className="font-poppins font-medium text-xs tracking-wide text-center">
-            Custom
+            {isActive? dateString: "Custom"}
           </div>
         </div>
       </div>
     )
   );
+
   return (
-    <DatePicker
-      selected={goal.resume_at}
-      onChange={(date: Date) => {
+    <CustomDatePicker
+      selectedDate={selectedDate}
+      onDateChange={(date: Date) => {
         goal.setResumeAtDate(date);
-        maturiryDate();
+        setTimeout(() => {
+          maturiryDate();
+        }, 500);
       }}
-      customInput={<ExampleCustomInput />}
       minDate={new Date()}
-    />
+    >
+      {({ toggleCalendar }) => (
+        <ExampleCustomInput onClick={toggleCalendar} />
+      )}
+    </CustomDatePicker>
   );
 };

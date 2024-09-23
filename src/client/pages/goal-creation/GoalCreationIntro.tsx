@@ -47,7 +47,7 @@ const GoalCreationIntro = () => {
           navigate("/monthly-income");
         }
       } else {
-        navigate("/terms-and-conditons");
+        navigate("/terms-and-conditions");
         slideInfoStore.setSlideIndex(0);
       }
     } else {

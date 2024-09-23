@@ -1,6 +1,6 @@
 import { searchImages } from "client/api/goal";
 import useGoalStore from "client/store/goalStore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +11,27 @@ import NavBar from "../components/NavBar";
 
 const CustomImageSelection = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
   const goal = useGoalStore((state: any) => state);
-  const [timer, setTimer] = useState();
+  const [search, setSearch] = useState(goal.goalName); // Initialize with goalName
+  const [timer, setTimer] = useState<any>();
+
+  // Query to search images
+  const {
+    data: images,
+    isLoading,
+    error,
+    refetch: searchTheImages,
+  } = useQuery("search-images", () => searchImages({ searchText: search }), {
+    refetchOnWindowFocus: false,
+    enabled: false, // Disabled so it won't run on every render
+  });
+
+  // Trigger the search when the component mounts using useEffect
+  useEffect(() => {
+    if (goal.goalName) {
+      searchTheImages(); // Initiate search for goal.goalName on mount
+    }
+  }, [goal.goalName, searchTheImages]);
 
   const inputChanged = (e: any) => {
     setSearch(e.target.value);
@@ -26,16 +44,9 @@ const CustomImageSelection = () => {
 
     setTimer(newTimer);
   };
-  const {
-    data: images,
-    isLoading,
-    error,
-    refetch: searchTheImages,
-  } = useQuery("search-images", () => searchImages({ searchText: search }), {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
+
   const unSplashImages = images ?? [];
+
   return (
     <div className="h-screen w-screen bg-skin-base">
       <div className="shadow-card h-20 flex flex-col items-center justify-center px-3">
@@ -83,6 +94,7 @@ const CustomImageSelection = () => {
           unSplashImages.map((image: any) => {
             return (
               <ImageCard
+                key={image.id}
                 image={image.urls.small}
                 onClick={() => {
                   goal.setGoalImageUrl(image.urls.small);
@@ -96,4 +108,5 @@ const CustomImageSelection = () => {
     </div>
   );
 };
+
 export default CustomImageSelection;
