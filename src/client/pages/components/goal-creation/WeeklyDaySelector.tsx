@@ -19,7 +19,7 @@ const WeekdayCircle = ({ day, onClick, isActive }: WeekdayCircleProps) => {
         }`}
         onClick={onClick}
       >
-        <div className="font-semibold font-poppins text-xs">
+        <div className="font-semibold font-custom text-xs">
           {daysOfWeek[day]}
         </div>
       </div>
@@ -74,7 +74,7 @@ const WeekDay = ({
         })}
       </div>
       <div className="flex flex-row justify-center mt-4">
-        <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center">
+        <div className="font-custom font-medium text-xs text-skin-neutral tracking-wide text-center">
           {goalContributionSettings.weekDayToContibute}
         </div>
       </div>

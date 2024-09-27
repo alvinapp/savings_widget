@@ -72,10 +72,10 @@ const CreateSavingsGoal = () => {
           />
         </div>
         <div className="mx-3.5 mt-6">
-          <div className="font-workSans text-skin-base text-sm font-semibold tracking-title mb-3">
+          <div className="font-custom text-skin-base text-sm font-semibold tracking-title mb-3">
             Tailored inspirations just for you
           </div>
-          <div className="tracking-widest font-poppins text-skin-secondary text-xxxs">
+          <div className="tracking-widest font-custom text-skin-secondary text-xxxs">
             We'll help you get to whatever your dream is
           </div>
         </div>

@@ -42,7 +42,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
           }}
         />
       </div>
-      <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-6 mt-10 text-center">
+      <div className="font-custom text-base font-semibold text-skin-base tracking-title mb-6 mt-10 text-center">
         set up a savings funding account
       </div>
       {/* <div className="ml-3">
@@ -72,7 +72,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
       </div> */}
       <div className="mb-4 w-full">
         <div className="flex flex-row justify-start mb-2">
-          <div className="font-workSans text-tiny font-medium text-skin-subtitle tracking-title">
+          <div className="font-custom text-tiny font-medium text-skin-subtitle tracking-title">
             Fund From
           </div>
         </div>
@@ -89,7 +89,7 @@ export const SelectBank = ({ updateBank = false }: SelectBankProps) => {
       </div>
       <div className="mb-5 w-full">
         <div className="flex flex-row justify-start mb-2">
-          <div className="font-workSans text-tiny font-medium text-skin-subtitle tracking-title">
+          <div className="font-custom text-tiny font-medium text-skin-subtitle tracking-title">
             Fund To
           </div>
         </div>

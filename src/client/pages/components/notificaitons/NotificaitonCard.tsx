@@ -21,7 +21,7 @@ export const NotificaitonCard = ({
     <div className="">
       <div className="flex flex-col">
         <div className="flex flex-row items-center justify-start">
-          <div className="font-poppins font-medium text-xxxs tracking-subtitle text-skin-subtitle">
+          <div className="font-custom font-medium text-xxxs tracking-subtitle text-skin-subtitle">
             {dateFormat(createdDate)}
           </div>
         </div>
@@ -34,7 +34,7 @@ export const NotificaitonCard = ({
               <div className="rounded-full absolute top-0 right-3 bg-skin-danger h-2 w-2"></div>
             </div>
           </div>
-          <div className="font-poppins text-xs text-skin-base tracking-wide mr-12">
+          <div className="font-custom text-xs text-skin-base tracking-wide mr-12">
             {description}
           </div>
         </div>
@@ -77,7 +77,7 @@ const ActionButton = ({
 }: ActionButtonProps) => {
   return (
     <div
-      className={`rounded flex items-center justify-center font-poppins text-xs tracking-longtext ${bgColor} px-3.5 py-2`}
+      className={`rounded flex items-center justify-center font-custom text-xs tracking-longtext ${bgColor} px-3.5 py-2`}
     >
       <div className={`${labelColor}`}>{label}</div>
     </div>

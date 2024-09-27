@@ -10,18 +10,26 @@ const CreateGoalCard = ({
   onClick,
 }: CreateGoalCardProps) => {
   return (
-    <div className="rounded-lg shadow-card w-40" onClick={onClick} style={{
-      width: '100%',
-      height: '100%'
-    }}>
+    <div
+      className="rounded-lg shadow-card w-40"
+      onClick={onClick}
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <div className="flex flex-col ">
         <div className="h-32">
-          <img src={goalImage ?? ""} className="h-32 w-40 rounded-t-lg" style={{
-            width: '100%',
-            height: '100%'
-          }} />
+          <img
+            src={goalImage ?? ""}
+            className="h-32 w-40 rounded-t-lg"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </div>
-        <div className="flex flex-row px-2.5 py-2 font-poppins font-medium text-xs -tracking-tight text-skin-primary">
+        <div className="flex flex-row px-2.5 py-2 font-custom font-medium text-xs -tracking-tight text-skin-primary">
           {goalName}
         </div>
       </div>

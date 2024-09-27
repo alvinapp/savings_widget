@@ -76,7 +76,7 @@ const TermsCondition = () => {
         />
       </div>
       <div className="flex flex-col pl-4 pr-6 mt-24">
-        <div className="text-base font-poppins text-black tracking-paragraph leading-6 font-light pb-8">
+        <div className="text-base font-custom text-black tracking-paragraph leading-6 font-light pb-8">
           {parse(data ?? "")}
         </div>
       </div>

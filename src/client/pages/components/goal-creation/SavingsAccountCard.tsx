@@ -20,10 +20,10 @@ export const SavingsAccountCard = ({
     >
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">
-          <div className="font-workSans text-base font-medium text-skin-base tracking-title">
+          <div className="font-custom text-base font-medium text-skin-base tracking-title">
             {accountName}
           </div>
-          <div className="font-workSans text-base font-medium text-skin-subtitle tracking-title">
+          <div className="font-custom text-base font-medium text-skin-subtitle tracking-title">
             {accountNumber}
           </div>
         </div>
@@ -31,7 +31,7 @@ export const SavingsAccountCard = ({
           <input
             type="radio"
             checked={selected}
-            className="w-5 h-5 rounded-full accent-[#056489]"
+            className="w-5 h-5 rounded-full accent-[#0539ec]"
             readOnly
           />
         </div>

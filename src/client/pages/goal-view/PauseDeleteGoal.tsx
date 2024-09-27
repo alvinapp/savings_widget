@@ -31,14 +31,14 @@ export const PauseDeleteGoal = ({
         {isPaused ? (
           <div className="flex flex-row justify-center items-center">
             <FiPlayCircle />
-            <div className="text-base font-semibold font-poppins tracking-longest_text ml-2">
+            <div className="text-base font-semibold font-custom tracking-longest_text ml-2">
               Resume goal
             </div>
           </div>
         ) : (
           <div className="flex flex-row justify-center items-center">
             <FiPauseCircle />
-            <div className="text-base font-semibold font-poppins tracking-longest_text ml-2">
+            <div className="text-base font-semibold font-custom tracking-longest_text ml-2">
               Pause goal
             </div>
           </div>
@@ -50,7 +50,7 @@ export const PauseDeleteGoal = ({
       >
         <div className="flex flex-row justify-center items-center">
           <FiTrash2 />
-          <div className="text-base font-semibold font-poppins tracking-longest_text ml-2">
+          <div className="text-base font-semibold font-custom tracking-longest_text ml-2">
             Delete goal
           </div>
         </div>

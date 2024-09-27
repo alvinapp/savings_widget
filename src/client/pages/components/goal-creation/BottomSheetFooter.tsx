@@ -27,7 +27,7 @@ export const BottomSheetFooter = ({
         <SuccessFlag />
       </div>
       <div className="flex flex-col items-center">
-        <div className="font-semibold text-1.5xl font-workSans tracking-title text-skin-primary mb-5 mt-6 text-center mx-2">
+        <div className="font-semibold text-1.5xl font-custom tracking-title text-skin-primary mb-5 mt-6 text-center mx-2">
           {fullTitle ?? ""}
         </div>
         <button

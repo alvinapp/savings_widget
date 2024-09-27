@@ -23,7 +23,7 @@ const MonthlyDayCircle = ({
         }`}
         onClick={onClick}
       >
-        <div className="font-semibold font-poppins text-xs">
+        <div className="font-semibold font-custom text-xs">
           {weekOfTheMonth[week]}
         </div>
       </div>
@@ -78,7 +78,7 @@ const MonthlyDay = ({
             id="day-dropdown"
             aria-expanded="true"
             aria-haspopup="true"
-            className="text-skin-base border border-1 border-skin-primary text-base font-medium font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
+            className="text-skin-base border border-1 border-skin-primary text-base font-medium font-custom rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
             type="button"
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -105,7 +105,7 @@ const MonthlyDay = ({
                 {exactDaysOfTheWeek.map((day, i) => {
                   return (
                     <li
-                      className="text-base font-poppins font-medium tracking-progress_label"
+                      className="text-base font-custom font-medium tracking-progress_label"
                       key={i}
                       onClick={() => {
                         selectExactDay(day);

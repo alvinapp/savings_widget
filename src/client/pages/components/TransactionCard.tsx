@@ -31,13 +31,13 @@ const TransactionCard = ({
             </div>
             <div className="flex flex-col">
               <div
-                className="font-poppins text-sm font-medium text-black text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
+                className="font-custom text-sm font-medium text-black text-start text-ellipsis overflow-hidden whitespace-nowrap w-40"
                 id="al-transaction-card--merchant-name"
               >
                 {activityName}
               </div>
               <div
-                className={`font-poppins text-xs font-medium ${
+                className={`font-custom text-xs font-medium ${
                   goalName === null
                     ? "text-skin-subtitle"
                     : "text-skin-subtitle"
@@ -51,16 +51,16 @@ const TransactionCard = ({
         </div>
         <div className="flex flex-col">
           <div
-            className="font-poppins text-sm font-medium text-skin-success text-end text-ellipsis overflow-hidden whitespace-nowrap flex-row"
+            className="font-custom text-sm font-medium text-skin-success text-end text-ellipsis overflow-hidden whitespace-nowrap flex-row"
             id="al-transaction-card--amount"
           >
             <span>{checkIfDebitCredit(type)}</span>
-            <span className="font-poppins text-sm font-medium text-skin-success mx-1">
+            <span className="font-custom text-sm font-medium text-skin-success mx-1">
               {currencySymbol}
             </span>
             {Math.round(amount).toLocaleString("en-US")}
           </div>
-          <div className="font-poppins text-xxxs text-skin-subtitle text-end tracking-wide font-medium">
+          <div className="font-custom text-xxxs text-skin-subtitle text-end tracking-wide font-medium">
             {dateFormat(transactedAt)}
           </div>
         </div>

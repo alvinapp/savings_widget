@@ -33,24 +33,23 @@ export const AddMonthlyIncomeInput = ({
       >
         <FiMinus color="#6F89A5" />
       </div>
-      <div className="relative rounded-full py-3.5 px-12 bg-skin-input mx-2 flex flex-row justify-center items-center" style={{
-        minWidth: "14rem"
-      }}>
+      <div
+        className="relative rounded-full py-3.5 px-12 bg-skin-input mx-2 flex flex-row justify-center items-center"
+        style={{
+          minWidth: "14rem",
+        }}
+      >
         {/* Flex container for both symbol and value to ensure they're centered together */}
         <div className="flex flex-row items-center justify-center w-full">
           {/* Currency symbol and value inside a single flex container */}
-          <span
-            className="text-l font-semibold"
-          >
-            {currencySymbol}
-          </span>
+          <span className="text-l font-semibold">{currencySymbol}</span>
           <input
-            className="bg-transparent font-workSans text-xl tracking-title text-skin-base font-semibold w-full focus:border-none focus:outline-none"
+            className="bg-transparent font-custom text-xl tracking-title text-skin-base font-semibold w-full focus:border-none focus:outline-none"
             style={{
               padding: 0, // Remove padding to ensure alignment
               textAlign: "center", // Center text within the input
               // make the width of the input dynamic based on the length of the value
-              width: `${value.toString().length * 15}px`
+              width: `${value.toString().length * 15}px`,
             }}
             type="text"
             value={formatNumberWithCommas(value || 0)}
@@ -107,7 +106,7 @@ export const TextInput = ({
     <div className="flex flex-col">
       <div className="flex flex-row">
         <div
-          className={`font-poppins font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
+          className={`font-custom font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
         >
           {label}
         </div>
@@ -128,7 +127,7 @@ export const TextInput = ({
             {leadingIcon}
           </div>
           <div
-            className={`font-medium font-poppins text-base tracking-progress_label flex flex-row justify-center items-center ${
+            className={`font-medium font-custom text-base tracking-progress_label flex flex-row justify-center items-center ${
               hasValue ? "text-skin-base" : "text-skin-inputDisabled"
             }`}
           >
@@ -159,7 +158,7 @@ export const TextInput = ({
             <TailSpin
               height="20"
               width="20"
-              color="#056489"
+              color="#0539ec"
               ariaLabel="tail-spin-loading"
               wrapperStyle={{}}
               wrapperClass=""
@@ -210,7 +209,7 @@ export const TextInputWithPopup = ({
     <div className="flex flex-col" onClick={hasValue ? () => {} : onClick}>
       <div className="flex flex-row">
         <div
-          className={`font-poppins font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
+          className={`font-custom font-medium text-xs tracking-subtitle mb-2 text-skin-base`}
         >
           {label}
         </div>
@@ -231,7 +230,7 @@ export const TextInputWithPopup = ({
             {leadingIcon}
           </div>
           <div
-            className={`font-medium font-poppins text-base tracking-progress_label flex flex-row justify-center items-center ${
+            className={`font-medium font-custom text-base tracking-progress_label flex flex-row justify-center items-center ${
               hasValue ? "text-skin-base" : "text-skin-inputDisabled"
             }`}
           >
@@ -266,7 +265,7 @@ export const TextInputWithPopup = ({
             <TailSpin
               height="20"
               width="20"
-              color="#056489"
+              color="#0539ec"
               ariaLabel="tail-spin-loading"
               wrapperStyle={{}}
               wrapperClass=""

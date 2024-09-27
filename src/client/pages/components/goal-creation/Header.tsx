@@ -16,10 +16,10 @@ export const Header = ({ children, title, subtitle }: HeaderProps) => {
           <img src={cloud} />
         </div>
       </div>
-      <div className="font-workSans text-skin-base text-xl font-semibold tracking-title mb-4">
+      <div className="font-custom text-skin-base text-xl font-semibold tracking-title mb-4">
         {title}
       </div>
-      <div className="tracking-widest font-poppins text-skin-secondary text-xxxs">
+      <div className="tracking-widest font-custom text-skin-secondary text-xxxs">
         {subtitle}
       </div>
     </div>

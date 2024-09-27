@@ -94,7 +94,7 @@ export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
         />
       </div>
       <div className="flex flex-row justify-center">
-        <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
+        <div className="font-custom text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
           I will resume
         </div>
       </div>
@@ -102,11 +102,11 @@ export const PauseGoal = ({ onClick, goalName }: PauseGoalProps) => {
         <div className="text-skin-primary mr-3">
           <FiFlag />
         </div>
-        <div className="font-workSans font-semibold text-tiny text-skin-base text-center tracking-title">
+        <div className="font-custom font-semibold text-tiny text-skin-base text-center tracking-title">
           {`My ${goalName} goal`}
         </div>
       </div>
-      <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
+      <div className="font-custom font-semibold text-base text-skin-base text-center tracking-title mb-5">
         On the
       </div>
       <div className="flex flex-row justify-center">

@@ -67,17 +67,17 @@ const SavingsTrigger = () => {
       </div>
       <div className="w-screen rounded-t-3xl bg-skin-base absolute right-0 left-0 top-40 bottom-0 px-3.5 pt-12">
         <div className="flex flex-row justify-center">
-          <div className="font-workSans font-semibold text-2xl text-skin-base">
+          <div className="font-custom font-semibold text-2xl text-skin-base">
             Round it up
           </div>
         </div>
         <div className="flex flex-row justify-center mt-2 mx-12">
-          <div className="font-poppins font-medium text-tiny text-skin-subtitle tracking-listtile_subtitle text-center">
+          <div className="font-custom font-medium text-tiny text-skin-subtitle tracking-listtile_subtitle text-center">
             Automatically save on your daily spending
           </div>
         </div>
         <div className="flex flex-row justify-center mt-6">
-          <div className="font-workSans font-semibold text-base text-skin-base tracking-title">
+          <div className="font-custom font-semibold text-base text-skin-base tracking-title">
             I would like to round up by
           </div>
         </div>
@@ -100,13 +100,13 @@ const SavingsTrigger = () => {
           />
         </div>
         {/* <div className="flex flex-row mt-6 justify-center">
-          <div className="font-workSans font-semibold text-base text-skin-base tracking-title mr-2">
+          <div className="font-custom font-semibold text-base text-skin-base tracking-title mr-2">
             or by
           </div>
           <CustomAmountButton />
         </div> */}
         <div className="flex flex-row justify-center mt-6">
-          <div className="font-workSans font-semibold text-base text-skin-base tracking-title">
+          <div className="font-custom font-semibold text-base text-skin-base tracking-title">
             every time I transact at
           </div>
         </div>
@@ -123,7 +123,7 @@ const SavingsTrigger = () => {
         </div>
         <div className="border rounded-full bg-skin-divider mt-5.5 mb-4"></div>
         <div className="flex flex-row justify-center mt-6">
-          <div className="font-workSans font-semibold text-base text-skin-base tracking-title">
+          <div className="font-custom font-semibold text-base text-skin-base tracking-title">
             and fund my
           </div>
         </div>
@@ -136,16 +136,16 @@ const SavingsTrigger = () => {
           />
         </div>
         <div className="flex flex-row justify-center mt-8">
-          <div className="font-poppins font-medium text-xs text-skin-subtitle tracking-listtile_subtitle text-center">
+          <div className="font-custom font-medium text-xs text-skin-subtitle tracking-listtile_subtitle text-center">
             savings goal
           </div>
         </div>
-        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-poppins tracking-widest text-skin-primary justify-center">
+        <div className="flex flex-row mx-3.5 mt-1 mb-8 font-custom tracking-widest text-skin-primary justify-center">
           {savingTrigger ? (
             <TailSpin
               height="30"
               width="30"
-              color="#056489"
+              color="#0539ec"
               ariaLabel="tail-spin-loading"
               wrapperStyle={{}}
               wrapperClass=""

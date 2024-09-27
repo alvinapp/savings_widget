@@ -6,7 +6,11 @@ type AccordionProps = {
   isOpen?: boolean;
 };
 
-export const Accordion = ({ title, content, isOpen = false }: AccordionProps) => {
+export const Accordion = ({
+  title,
+  content,
+  isOpen = false,
+}: AccordionProps) => {
   const [isOpenState, setIsOpenState] = useState(isOpen);
 
   const toggleAccordion = () => {
@@ -19,7 +23,7 @@ export const Accordion = ({ title, content, isOpen = false }: AccordionProps) =>
         className="flex items-center justify-between p-4 bg-gray-100 cursor-pointer"
         onClick={toggleAccordion}
       >
-        <div className="font-poppins font-medium text-skin-base text-tiny md:text-sm lg:text-base xl:text-lg flex-grow">
+        <div className="font-custom font-medium text-skin-base text-tiny md:text-sm lg:text-base xl:text-lg flex-grow">
           {title}
         </div>
         <div className="transform duration-300">
@@ -58,14 +62,12 @@ export const Accordion = ({ title, content, isOpen = false }: AccordionProps) =>
       </div>
       {isOpenState && (
         <div className="p-4">
-          <div className="font-poppins font-medium text-skin-subtitle text-xs md:text-sm lg:text-base xl:text-lg">
+          <div className="font-custom font-medium text-skin-subtitle text-xs md:text-sm lg:text-base xl:text-lg">
             {content}
           </div>
         </div>
       )}
-      {!isOpenState && (
-        <div className="grid w-full"></div>
-      )}
+      {!isOpenState && <div className="grid w-full"></div>}
     </div>
   );
 };

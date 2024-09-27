@@ -14,7 +14,7 @@ export const CreateSavingsAccountCard = ({
     >
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">
-          <div className="font-workSans text-base font-medium text-skin-base tracking-title">
+          <div className="font-custom text-base font-medium text-skin-base tracking-title">
             Create savings account
           </div>
         </div>

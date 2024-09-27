@@ -36,10 +36,10 @@ export default function GoalCreationProgress({
           )}
         </div>
         <div className="flex flex-col ml-3.5">
-          <div className="text-skin-primary text-xs font-poppins tracking-longtext font-semibold">
+          <div className="text-skin-primary text-xs font-custom tracking-longtext font-semibold">
             {title}
           </div>
-          <div className="text-skin-subtitle text-xxxs font-poppins tracking-longest_text font-medium mt-2">
+          <div className="text-skin-subtitle text-xxxs font-custom tracking-longest_text font-medium mt-2">
             {subtitle}
           </div>
         </div>

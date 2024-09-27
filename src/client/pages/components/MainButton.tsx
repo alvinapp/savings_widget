@@ -1,4 +1,3 @@
-import React from "react";
 import { TailSpin } from "react-loader-spinner";
 
 type MainButonProps = {
@@ -6,38 +5,45 @@ type MainButonProps = {
   click?: () => void;
   isDisabled?: boolean;
   loading?: boolean;
+  width?: string;
+  shadow?: boolean;
 };
 
 const MainButton = ({
   title,
   click,
   isDisabled = false,
-  loading,
+  loading = false,
+  width,
+  shadow,
 }: MainButonProps) => {
   return (
     <button
-      className={`my-3.5 bg-skin-primary rounded-lg text-white font-poppins font-semibold tracking-widest w-full h-14 shadow-button text-base ${
-        isDisabled ? "disabled:opacity-25 focus:outline-none" : ""
+      className={`rounded-full text-white font-primary font-medium text-lg tracking-widest w-full h-14 ${
+        shadow ? "shadow-button" : ""
+      } ${
+        isDisabled
+          ? "focus:outline-none bg-[#E7E7E7] text-[#B8B8B8]"
+          : " bg-skin-primary"
       }`}
       disabled={isDisabled}
       onClick={loading ? () => {} : click}
     >
       <div className="flex flex-row justify-center items-center">
-        <div>
-          {loading ? (
-            <TailSpin
-              height="30"
-              width="30"
-              color="#ffffff"
-              ariaLabel="tail-spin-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-            />
-          ) : (
-            <div>{title}</div>
-          )}
-        </div>
+        <div className={`${loading ? "mr-3" : ""}`}>{loading ? "" : title}</div>
+        {loading ? (
+          <TailSpin
+            height="30"
+            width="30"
+            color="#ffffff"
+            ariaLabel="tail-spin-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        ) : (
+          <div></div>
+        )}
       </div>
     </button>
   );

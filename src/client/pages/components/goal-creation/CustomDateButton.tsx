@@ -1,7 +1,7 @@
 import useGoalContributionSettingsStore from "client/store/goalContributionSettingsStore";
 import React, { forwardRef } from "react";
 import DatePicker from "react-datepicker";
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 import { CustomDatePicker } from "../CustomDatePicker";
 
 type CustomDateButtonProps = {
@@ -23,8 +23,8 @@ export const CustomDateButton = ({
 
   // Format the date to 'dd/MM/yyyy'
   const dateString = selectedDate
-    ? selectedDate.toLocaleDateString('en-GB') // This formats the date as 'dd/MM/yyyy'
-    : 'Custom';
+    ? selectedDate.toLocaleDateString("en-GB") // This formats the date as 'dd/MM/yyyy'
+    : "Custom";
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick }: { value?: any; onClick?: () => void }, ref) => (
@@ -40,8 +40,8 @@ export const CustomDateButton = ({
               : "text-skin-neutral bg-skin-base"
           }`}
         >
-          <div className="font-poppins font-medium text-xs tracking-wide text-center">
-            {isActive? dateString: "Custom"}
+          <div className="font-custom font-medium text-xs tracking-wide text-center">
+            {isActive ? dateString : "Custom"}
           </div>
         </div>
       </div>
@@ -51,12 +51,12 @@ export const CustomDateButton = ({
   return (
     <CustomDatePicker
       selectedDate={selectedDate}
-      onDateChange={(date: Date) => goalContributionSettings.setStartFromDate(date)}
+      onDateChange={(date: Date) =>
+        goalContributionSettings.setStartFromDate(date)
+      }
       minDate={new Date()}
     >
-      {({ toggleCalendar }) => (
-        <ExampleCustomInput onClick={toggleCalendar} />
-      )}
+      {({ toggleCalendar }) => <ExampleCustomInput onClick={toggleCalendar} />}
     </CustomDatePicker>
   );
 };

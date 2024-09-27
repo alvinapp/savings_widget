@@ -30,11 +30,11 @@ const TriggerCard = ({
               </div>
             </div>
             <div className="flex flex-col">
-              <div className="font-poppins text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40">
+              <div className="font-custom text-sm font-medium text-skin-base text-start text-ellipsis overflow-hidden whitespace-nowrap w-40">
                 Round it up
               </div>
               <div
-                className={`font-poppins text-xs font-medium text-skin-subtitle tracking-wide text-start`}
+                className={`font-custom text-xs font-medium text-skin-subtitle tracking-wide text-start`}
               >
                 {`x${percentage}%, ${appliedTo}`}
               </div>

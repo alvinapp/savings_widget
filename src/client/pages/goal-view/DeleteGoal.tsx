@@ -20,7 +20,7 @@ export const DeleteGoal = ({
           onClick={onClick}
         />
       </div>
-      <div className="flex flex-row justify-start item-start font-medium text-tiny font-poppins text-skin-base tracking-subtitle mr-4 mb-8">
+      <div className="flex flex-row justify-start item-start font-medium text-tiny font-custom text-skin-base tracking-subtitle mr-4 mb-8">
         {`Are you sure you’d like to delete your ${goalName ?? ""} goal?`}
       </div>
       <button
@@ -28,7 +28,7 @@ export const DeleteGoal = ({
         onClick={deleteGoal}
       >
         <div className="flex flex-row justify-center items-center">
-          <div className="text-base font-semibold font-poppins tracking-longest_text ml-2 text-skin-white">
+          <div className="text-base font-semibold font-custom tracking-longest_text ml-2 text-skin-white">
             Yes, delete goal
           </div>
         </div>
@@ -38,7 +38,7 @@ export const DeleteGoal = ({
         onClick={keepGoal}
       >
         <div className="flex flex-row justify-center items-center">
-          <div className="text-base font-semibold font-poppins tracking-longest_text ml-2 text-skin-primary border border-skin-primary w-screen rounded-lg h-14 flex flex-row items-center justify-center">
+          <div className="text-base font-semibold font-custom tracking-longest_text ml-2 text-skin-primary border border-skin-primary w-screen rounded-lg h-14 flex flex-row items-center justify-center">
             No, let's keep the goal
           </div>
         </div>

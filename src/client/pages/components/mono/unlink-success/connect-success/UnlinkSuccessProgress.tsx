@@ -1,9 +1,9 @@
-import {FiCircle, FiCheckCircle} from 'react-icons/fi';
+import { FiCircle, FiCheckCircle } from "react-icons/fi";
 type ConnectSuccessProps = {
   timer: number;
 };
 
-const UnlinkSuccessProgress = ({timer}: ConnectSuccessProps) => {
+const UnlinkSuccessProgress = ({ timer }: ConnectSuccessProps) => {
   return (
     <>
       <div className="flex flex-row mb-10">
@@ -16,8 +16,8 @@ const UnlinkSuccessProgress = ({timer}: ConnectSuccessProps) => {
         </div>
         <div
           className={`${
-            timer <= 12 && timer >= 1 ? ' text-white/50' : ' text-white '
-          } font-poppins text-base font-medium tracking-progress_label ml-4`}
+            timer <= 12 && timer >= 1 ? " text-white/50" : " text-white "
+          } font-custom text-base font-medium tracking-progress_label ml-4`}
         >
           Unlinking account
         </div>

@@ -10,7 +10,7 @@ export const BuildGoalCard = ({ title, click }: BuildGoalCard) => {
       onClick={click}
     >
       <div className="rounded-full h-10 w-10 bg-skin-secondaryWithOpacity mr-3"></div>
-      <div className="font-workSans font-semibold text-sm text-skin-primary tracking-tab_text">
+      <div className="font-custom font-semibold text-sm text-skin-primary tracking-tab_text">
         {title}
       </div>
     </div>

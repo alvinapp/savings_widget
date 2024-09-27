@@ -12,31 +12,57 @@ import Overview from "./pages/overview/Overview";
 import TermsOfUse from "./pages/terms-condition/TermsCondition";
 
 // Lazy load less frequently used components
-const TermsCondition = lazy(() => import("./pages/terms-condition/TermsCondition"));
-const GoalCreationIntro = lazy(() => import("./pages/goal-creation/GoalCreationIntro"));
-const AddMonthlyIncome = lazy(() => import("./pages/goal-creation/AddMonthlyIncome"));
-const CreateSavingsGoal = lazy(() => import("./pages/goal-creation/CreateSavingsGoal"));
-const AddGoalDetails = lazy(() => import("./pages/goal-creation/AddGoalDetails"));
+const TermsCondition = lazy(
+  () => import("./pages/terms-condition/TermsCondition")
+);
+const GoalCreationIntro = lazy(
+  () => import("./pages/goal-creation/GoalCreationIntro")
+);
+const AddMonthlyIncome = lazy(
+  () => import("./pages/goal-creation/AddMonthlyIncome")
+);
+const CreateSavingsGoal = lazy(
+  () => import("./pages/goal-creation/CreateSavingsGoal")
+);
+const AddGoalDetails = lazy(
+  () => import("./pages/goal-creation/AddGoalDetails")
+);
 const GoalView = lazy(() => import("./pages/goal-view/GoalView"));
-const SavingsTrigger = lazy(() => import("./pages/savings-triggers/SavingsTrigger"));
+const SavingsTrigger = lazy(
+  () => import("./pages/savings-triggers/SavingsTrigger")
+);
 const Settings = lazy(() => import("./pages/settings/Settings"));
 const GoalSettings = lazy(() => import("./pages/settings/GoalSettings"));
-const SavingsTriggersSettings = lazy(() => import("./pages/settings/SavingsTriggersSettings"));
-const NotificationSettings = lazy(() => import("./pages/settings/NotificationSettings"));
+const SavingsTriggersSettings = lazy(
+  () => import("./pages/settings/SavingsTriggersSettings")
+);
+const NotificationSettings = lazy(
+  () => import("./pages/settings/NotificationSettings")
+);
 const Notifications = lazy(() => import("./pages/notications/Notifications"));
-const DeleteGoalSuccess = lazy(() => import("./pages/goal-view/DeleteGoalSuccess"));
-const CustomImageSelection = lazy(() => import("./pages/goal-creation/CustomImageSelection"));
-const SettingsMonthlyIncome = lazy(() => import("./pages/settings/SettingsMonthlyIncome"));
+const DeleteGoalSuccess = lazy(
+  () => import("./pages/goal-view/DeleteGoalSuccess")
+);
+const CustomImageSelection = lazy(
+  () => import("./pages/goal-creation/CustomImageSelection")
+);
+const SettingsMonthlyIncome = lazy(
+  () => import("./pages/settings/SettingsMonthlyIncome")
+);
 const UpdateGoalDetails = lazy(() => import("./pages/update-goal/UpdateGoal"));
-const SavingsTriggerSuccess = lazy(() => import("./pages/savings-triggers/SavingsTriggerSuccess"));
-const CreateGoalSavingsTrigger = lazy(() => import("./pages/goal-creation/savings-trigger/CreateGoalSavingsTrigger"));
+const SavingsTriggerSuccess = lazy(
+  () => import("./pages/savings-triggers/SavingsTriggerSuccess")
+);
+const CreateGoalSavingsTrigger = lazy(
+  () => import("./pages/goal-creation/savings-trigger/CreateGoalSavingsTrigger")
+);
 
 const Loader = () => (
   <div className="flex flex-col w-screen h-screen justify-center items-center">
     <TailSpin
       height="40"
       width="40"
-      color="#056489"
+      color="#0539ec"
       ariaLabel="tail-spin-loading"
       visible={true}
     />

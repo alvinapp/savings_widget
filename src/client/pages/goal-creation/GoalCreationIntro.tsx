@@ -75,7 +75,7 @@ const GoalCreationIntro = () => {
         <div className="mt-20 mb-16">
           <ConnectSlider details={connectDetailsList} index={slideIndex} />
         </div>
-        <div className="flex flex-row mt-16 fixed bottom-0 left-3 right-3">
+        <div className="flex flex-row fixed bottom-0 left-3 right-3 mb-5">
           <MainButton
             title={`${slideIndex === 1 ? "I understand" : "Next"}`}
             click={() => slidePages()}

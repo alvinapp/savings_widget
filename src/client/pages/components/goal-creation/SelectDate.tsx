@@ -27,7 +27,7 @@ export const SelectDateButton = ({
             : "text-skin-neutral bg-skin-base"
         }`}
       >
-        <div className="font-poppins font-medium text-xs tracking-wide text-center">
+        <div className="font-custom font-medium text-xs tracking-wide text-center">
           {label}
         </div>
       </div>
@@ -45,7 +45,7 @@ const SelectDate = ({
     <div className="flex flex-col">
       <div className="flex flex-row justify-center mb-4">
         {title ? (
-          <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
+          <div className="font-custom text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
             {title ?? ""}
           </div>
         ) : (

@@ -3,7 +3,7 @@ import { IConfig, useConfigurationStore } from "client/store/configuration";
 import useGoalStore from "client/store/goalStore";
 import { rightDateFormat } from "client/utils/Formatters";
 import React, { forwardRef } from "react";
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 import { CustomDatePicker } from "../CustomDatePicker";
 import { useQuery } from "react-query";
 
@@ -43,8 +43,8 @@ export const CustomResumeDateButton = ({
 
   // Format the date to 'dd/MM/yyyy'
   const dateString = selectedDate
-    ? selectedDate.toLocaleDateString('en-GB')
-    : 'Custom';
+    ? selectedDate.toLocaleDateString("en-GB")
+    : "Custom";
 
   const ExampleCustomInput = forwardRef(
     ({ value, onClick }: { value?: any; onClick?: () => void }, ref) => (
@@ -60,8 +60,8 @@ export const CustomResumeDateButton = ({
               : "text-skin-neutral bg-skin-base"
           }`}
         >
-          <div className="font-poppins font-medium text-xs tracking-wide text-center">
-            {isActive? dateString: "Custom"}
+          <div className="font-custom font-medium text-xs tracking-wide text-center">
+            {isActive ? dateString : "Custom"}
           </div>
         </div>
       </div>
@@ -79,9 +79,7 @@ export const CustomResumeDateButton = ({
       }}
       minDate={new Date()}
     >
-      {({ toggleCalendar }) => (
-        <ExampleCustomInput onClick={toggleCalendar} />
-      )}
+      {({ toggleCalendar }) => <ExampleCustomInput onClick={toggleCalendar} />}
     </CustomDatePicker>
   );
 };

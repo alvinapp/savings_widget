@@ -17,10 +17,13 @@ export const SettingsCard = ({
   subtitle,
   iconColor,
   trailingColor,
-  onClick
+  onClick,
 }: SettingCardProps) => {
   return (
-    <div className="shadow-card flex flex-row items-center pt-4.5 pb-3.5 pr-4 pl-3 rounded-lg relative" onClick={onClick}>
+    <div
+      className="shadow-card flex flex-row items-center pt-4.5 pb-3.5 pr-4 pl-3 rounded-lg relative"
+      onClick={onClick}
+    >
       <div className="flex flex-col items-center mr-3">
         <div
           className={`h-10 w-10 rounded-full flex items-center justify-center ${iconBackground} ${iconColor}`}
@@ -31,11 +34,11 @@ export const SettingsCard = ({
       <div className="flex flex-col">
         <div className="flex flex-row">
           <div className="flex flex-col">
-            <div className=" font-poppins font-medium text-tiny text-skin-base tracking-listtile_subtitle">
+            <div className=" font-custom font-medium text-tiny text-skin-base tracking-listtile_subtitle">
               {title}
             </div>
             {subtitle ? (
-              <div className=" font-poppins font-medium text-xs text-skin-subtitle tracking-listtile_subtitle">
+              <div className=" font-custom font-medium text-xs text-skin-subtitle tracking-listtile_subtitle">
                 {subtitle}
               </div>
             ) : (

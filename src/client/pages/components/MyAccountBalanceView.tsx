@@ -40,16 +40,16 @@ const MyAccountBalanceView = ({
           </div>
           <div className="flex flex-col">
             <div
-              className="text-gray font-poppins text-xs font-medium tracking-wide text-start"
+              className="text-gray font-custom text-xs font-medium tracking-wide text-start"
               id="al-balance-title"
             >
               Account balance
             </div>
             <div className="flex flex-row">
-              <div className="text-xs text-black font-bold font-workSans mr-1 mt-4">
+              <div className="text-xs text-black font-bold font-custom mr-1 mt-4">
                 KES
               </div>
-              <div className="text-2xl text-black font-semibold font-workSans mt-1">
+              <div className="text-2xl text-black font-semibold font-custom mt-1">
                 {checkNAN(Math.round(balance!)).toLocaleString()}
               </div>
               {/* <div className="mt-4 ml-1">

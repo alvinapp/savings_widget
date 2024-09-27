@@ -29,7 +29,7 @@ const OverviewTrackGoalCreationProgress = () => {
           </div>
         </div>
         <div className="mt-3 pr-14">
-          <div className="text-skin-primary text-base font-workSans tracking-title">
+          <div className="text-skin-primary text-base font-custom tracking-title">
             Start your savings journey with Your Bank.
           </div>
         </div>

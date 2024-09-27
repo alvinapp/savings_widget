@@ -40,11 +40,11 @@ const SavingsTriggerSuccess = () => {
           <img src={successTrigger} />
         </div>
         <div className="flex flex-row justify-center mx-4">
-          <div className="font-workSans text-skin-white text-2xl text-center font-semibold">
+          <div className="font-custom text-skin-white text-2xl text-center font-semibold">
             Whoop! Round It Up activated
           </div>
         </div>
-        <div className="text-xxxs font-poppins tracking-longtext text-skin-white text-center mt-4">
+        <div className="text-xxxs font-custom tracking-longtext text-skin-white text-center mt-4">
           Every time you make a transaction at any merchant in a Category you
           selected, we will round up to the next ₦ 1,000 and contribute this
           change to your selected savings goal.

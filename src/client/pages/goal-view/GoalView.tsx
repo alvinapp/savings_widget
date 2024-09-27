@@ -133,7 +133,7 @@ const GoalView = () => {
                 isActive={currentGoal.is_active}
               />
             </div>
-            <div className="text-white/80 font-semibold font-poppins text-xs tracking-subtitle text-center mt-5">
+            <div className="text-white/80 font-semibold font-custom text-xs tracking-subtitle text-center mt-5">
               {``}
             </div>
           </div>

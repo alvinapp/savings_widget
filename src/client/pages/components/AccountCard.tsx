@@ -63,18 +63,18 @@ const AccountCard = ({
               )}
             </div>
             <div
-              className="uppercase text-lg text-white font-poppins font-light tracking-longtext"
+              className="uppercase text-lg text-white font-custom font-light tracking-longtext"
               id="al-account-card--account-name"
             >
               {account.name}
             </div>
           </div>
           <div className="flex justify-start mb-4">
-            <span className="font-workSans text-xxxxs text-semibold text-white mr-1 mt-2">
+            <span className="font-custom text-xxxxs text-semibold text-white mr-1 mt-2">
               KES
             </span>
             <div
-              className="font-workSans text-lg text-semibold text-white"
+              className="font-custom text-lg text-semibold text-white"
               id="al-account-card--account-balance"
             >
               {Math.round(account.balance).toLocaleString()}
@@ -88,7 +88,7 @@ const AccountCard = ({
               {applyAsterix({ str: accountNumber, mask: "*", n: 4 })}
             </span>
             <div
-              className="font-poppins text-xxs font-medium text-white tracking-widest"
+              className="font-custom text-xxs font-medium text-white tracking-widest"
               id="al-account-card--account-type"
             >
               {account.type.replace("Account", "")}

@@ -13,7 +13,7 @@ export const NotificationCard = ({ amount }: NotificationCardProps) => {
           <div className="text-2xl mr-3">🔥</div>
         </div>
         <div className="flex flex-col">
-          <div className="text-skin-success font-poppins text-sm font-medium tracking-listtile_subtitle">
+          <div className="text-skin-success font-custom text-sm font-medium tracking-listtile_subtitle">
             <span className="text-skin-success">Wow!</span> You're getting it
             <span className="skin-success"> done with </span>
             <span className="text-skin-success mr-1">{currencySymbol}</span>

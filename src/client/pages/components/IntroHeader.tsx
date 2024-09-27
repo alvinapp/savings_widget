@@ -1,4 +1,4 @@
-import {Font} from 'client/utils/Font';
+import { Font } from "client/utils/Font";
 
 type IntroHeaderProps = {
   title?: string;
@@ -15,8 +15,8 @@ const IntroHeader = ({
   return (
     <div className="flex justify-between items-center" onClick={onClick}>
       <div
-        className={`text-black font-semibold font-workSans tracking-wide ${Font.applyFontSize(
-          {fontSize: titleFontSize, defaultFontSize: 'text-base'}
+        className={`text-black font-semibold font-custom tracking-wide ${Font.applyFontSize(
+          { fontSize: titleFontSize, defaultFontSize: "text-base" }
         )}`}
       >
         {title}
@@ -26,7 +26,7 @@ const IntroHeader = ({
           className="rounded-full bg-icon_bg/20 px-3 py-1 flex items-center text-gray_light"
           id="al__secondary-button"
         >
-          <div className="font-poppins font-medium text-xs tracking-longtext">
+          <div className="font-custom font-medium text-xs tracking-longtext">
             View all
           </div>
         </button>

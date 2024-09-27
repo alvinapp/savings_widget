@@ -42,19 +42,19 @@ const UpcomingSavingsCard = ({
               </div>
             </div>
             <div className="flex flex-col">
-              <div className="font-workSans text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text">
+              <div className="font-custom text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text">
                 {goalName}
               </div>
               <div className="flex flex-row items-center mt-1">
                 <div
-                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                  className={`font-custom text-xs font-medium tracking-wide text-start mr-1 ${
                     warning ? "text-skin-warning" : "text-skin-primary"
                   }`}
                 >
                   {currencySymbol}
                 </div>
                 <div
-                  className={`font-poppins text-xs font-medium tracking-wide text-start mr-1 ${
+                  className={`font-custom text-xs font-medium tracking-wide text-start mr-1 ${
                     warning ? "text-skin-warning" : "text-skin-primary"
                   }`}
                 >

@@ -1,9 +1,9 @@
-import {FiCircle, FiCheckCircle} from 'react-icons/fi';
+import { FiCircle, FiCheckCircle } from "react-icons/fi";
 type ConnectSuccessProps = {
   timer: number;
 };
 
-const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
+const ConnectSuccessProgress = ({ timer }: ConnectSuccessProps) => {
   return (
     <>
       <div className="flex flex-row mb-10">
@@ -16,8 +16,8 @@ const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
         </div>
         <div
           className={`${
-            timer <= timer && timer >= 13 ? ' text-white/50' : ' text-white '
-          } font-poppins text-base font-medium tracking-progress_label ml-4`}
+            timer <= timer && timer >= 13 ? " text-white/50" : " text-white "
+          } font-custom text-base font-medium tracking-progress_label ml-4`}
         >
           Syncing transactions
         </div>
@@ -33,8 +33,8 @@ const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
           </div>
           <div
             className={`${
-              timer <= 12 && timer >= 8 ? ' text-white/50' : ' text-white '
-            } font-poppins text-base font-medium tracking-progress_label ml-4`}
+              timer <= 12 && timer >= 8 ? " text-white/50" : " text-white "
+            } font-custom text-base font-medium tracking-progress_label ml-4`}
           >
             Categorizing transactions
           </div>
@@ -44,7 +44,7 @@ const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
           <div>
             <FiCircle color="rgba(255,255,255,0.5)" size="1.4375rem" />
           </div>
-          <div className="font-poppins text-base font-medium tracking-progress_label ml-4 text-white/50">
+          <div className="font-custom text-base font-medium tracking-progress_label ml-4 text-white/50">
             Categorizing transactions
           </div>
         </div>
@@ -60,8 +60,8 @@ const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
           </div>
           <div
             className={`${
-              timer <= 7 && timer >= 4 ? ' text-white/50' : ' text-white '
-            } font-poppins text-base font-medium tracking-progress_label ml-4`}
+              timer <= 7 && timer >= 4 ? " text-white/50" : " text-white "
+            } font-custom text-base font-medium tracking-progress_label ml-4`}
           >
             Preparing your app experience
           </div>
@@ -71,7 +71,7 @@ const ConnectSuccessProgress = ({timer}: ConnectSuccessProps) => {
           <div>
             {<FiCircle color="rgba(255,255,255,0.5)" size="1.4375rem" />}
           </div>
-          <div className="text-white/50 font-poppins text-base font-medium tracking-progress_label ml-4">
+          <div className="text-white/50 font-custom text-base font-medium tracking-progress_label ml-4">
             Preparing your app experience
           </div>
         </div>

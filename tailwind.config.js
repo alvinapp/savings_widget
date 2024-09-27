@@ -8,12 +8,19 @@ module.exports = {
           base: "var(--color-text-base)",
           white: "var(--color-text-white)",
           primary: "var(--color-text-primary)",
+          info: "var(--color-text-info)",
           secondary: "var(--color-text-secondary)",
           neutral: "var(--color-text-neutral)",
+          neutral2: "var(--color-text-neutral2)",
+          accent: "var(--color-text-accent)",
+          accent1: "var(--color-text-accent1)",
+          accent2: "var(--color-text-accent2)",
+          accent3: "var(--color-text-accent3)",
           success: "var(--color-text-success)",
           successSecondary: "var(--color-text-success-secondary)",
           successNeutral: "var(--color-text-success-neutral)",
           successTertiary: "var(--color-text-success-tertiary)",
+          successAccent: "var(--color-text-success-accent)",
           warning: "var(--color-text-warning)",
           danger: "var(--color-text-danger)",
           title: "var(--color-text-title)",
@@ -21,6 +28,8 @@ module.exports = {
           inputDisabled: "var(--color-text-input-disabled)",
           iconTertiary: "var(--color-text-icon-tertiary)",
           iconSecondary: "var(--color-text-icon-secondary)",
+          alvinBrown: "var(--color-text-alvin-brown)",
+          alvinBrownFaded: "var(--color-text-alvin-brown-faded)",
         },
       },
       backgroundColor: {
@@ -31,8 +40,14 @@ module.exports = {
           secondaryWithOpacity: "var(--color-background-secondary-withOpacity)",
           secondary1WithOpacity:
             "var(--color-background-secondary1-withOpacity)",
+          secondary2WithOpacity:
+            "var(--color-background-secondary2-withOpacity)",
+          secondary3WithOpacity:
+            "var(--color-background-secondary2-withOpacity)",
           success: "var(--color-background-success)",
           successNeutral: "var(--color-background-success-neutral)",
+          successNeutralWithOpacity:
+            "var( --color-background-success-neutral-withOpacity)",
           successWithOpacity:
             "var(--color-background-success-neutral-withOpacity)",
           successSecondary: "var(--color-background-success-secondary)",
@@ -40,8 +55,15 @@ module.exports = {
           danger: "var(--color-background-danger)",
           warningWithOpacity: "var(--color-background-warning-withOpacity)",
           accent: "var(--color-background-accent)",
+          accent2: "var(--color-background-accent2)",
+          accent3: "var(--color-background-accent3)",
+          accent4: "var(--color-background-accent4)",
+          accent2WithOpacity: "var(--color-background-accent2-withOpacity)",
+          accent3WithOpacity: "var(--color-background-accent3-withOpacity)",
+          accent4WithOpacity: "var(--color-background-accent4-withOpacity)",
           neutral: "var(--color-background-neutral)",
           tertiary: "var(--color-background-tertiary)",
+          tertiaryWithOpacity: "var(--color-background-tertiaryWithOpacity)",
           input: "var(--color-background-input)",
           inputButton: "var(--color-background-input-button)",
           divider: "var(--color-background-divider)",
@@ -49,6 +71,8 @@ module.exports = {
           iconSecondary: "var(--color-background-icon-secondary)",
           iconTertiary: "var( --color-background-icon-tertiary)",
           path: "var( --color-background-path)",
+          blackBg: "var( --color-background-black)",
+          disabledBg: "var(--color-background-disabled)",
         },
       },
       outlineColor: {
@@ -60,20 +84,27 @@ module.exports = {
           successNeutral: "var(--color-outline-success-neutral)",
         },
       },
+      accentColor: {
+        skin: {
+          base: "var(--color-accent-base)",
+          primary: "var(--color-accent-primary)",
+        },
+      },
       borderColor: {
         skin: {
           base: "var(--color-outline-base)",
           primary: "var(--color-outline-primary)",
           neutral: "var(--color-outline-neutral)",
           secondary: "var(--color-outline-secondary)",
+          accent: "var(--color-outline-accent)",
           successNeutral: "var(--color-outline-success-neutral)",
           successTertiary: "var(--color-outline-success-tertiary)",
           danger: "var(--color-outline-danger)",
         },
       },
       fontFamily: {
-        workSans: "'Work Sans', sans-serif",
-        poppins: "'Poppins', sans-serif",
+        custom: "'NeueMontreal', sans-serif",
+        primary: "'NeueMontreal', sans-serif",
         montserrat: "'Montserrat', sans-serif",
       },
       spacing: {
@@ -100,12 +131,12 @@ module.exports = {
         tab_text: "0.00625em",
       },
       backgroundImage: {
-        cardOverlay: "url('client/assets/images/background-overlay.webp')",
-        connectSuccessBg: "url('client/assets/images/connect-success-bg.svg')",
-        overviewBg: "url('client/assets/images/savings/overviewbg.svg')",
-        curvedBg: "url('client/assets/images/savings/monthly-income-bg.svg')",
-        bottomSheetFooterBg:
-          "url('client/assets/images/savings/bottom-sheet-bg.svg')",
+        addIncomeBg:
+          "url('client/assets/images/budgets-insights/addincomebg.svg')",
+        splitBudgetBg:
+          "url('client/assets/images/budgets-insights/budgetsplitbg.svg')",
+        rainyDayFund:
+          "url('https://images.unsplash.com/photo-1508698308649-689249ec5455?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDcxNTg0OQ&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080')",
       },
       backgroundSize: {
         auto: "auto",
@@ -118,12 +149,12 @@ module.exports = {
         button: "0 2px 4px -1px #9BC1D0, 0 8px 16px -1px #9BC1D0",
         input: "0 1px 6px -0.5px #9BC1D0",
         knob: "0 2px 6px 0 #C3C3C3;",
-      },
-      backdropBlur: {
-        bottomSheet: "var(--rsbs-backdrop-bg)",
+        budgetButton:
+          "inset 0 1px 0 0 rgba(255,255,255,0.1), 0 1px 8px -1px #C3C3C3",
       },
     },
     fontSize: {
+      xxxxxs: ".555rem",
       xxxxs: ".619rem",
       xxxs: ".625rem",
       xxs: ".655rem",
@@ -142,5 +173,4 @@ module.exports = {
       "7xl": "5rem",
     },
   },
-  plugins: [],
 };

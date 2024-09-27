@@ -7,7 +7,7 @@ type NavBarTitleProps = {
 const NavBarTitle = ({ title, titleColor }: NavBarTitleProps) => {
   return (
     <div
-      className={`tracking-title font-workSans font-semibold text-base ${
+      className={`tracking-title font-custom font-semibold text-base ${
         titleColor != null ? titleColor : "text-black"
       }`}
     >

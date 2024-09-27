@@ -58,7 +58,7 @@ const CustomImageSelection = () => {
                   navigate(-1);
                 }}
               />
-              <div className="font-poppins text-base text-skin-subtitle font-medium tracking-progress_label w-56 ml-6">
+              <div className="font-custom text-base text-skin-subtitle font-medium tracking-progress_label w-56 ml-6">
                 <input
                   type="text"
                   className="outline-none"
@@ -83,7 +83,7 @@ const CustomImageSelection = () => {
               height="30"
               width="30"
               radius={2}
-              color="#056489"
+              color="#0539ec"
               ariaLabel="tail-spin-loading"
               wrapperStyle={{}}
               wrapperClass=""

@@ -12,7 +12,7 @@ export const ResumeButton = ({ onClick, size }: ResumeButtonProps) => {
       } border border-1 border-skin-primary text-skin-primary flex items-center justify-center focus:outline-none focus:rounded-full p-2.5 `}
       onClick={onClick}
     >
-      <FiPlay size="1.5rem" color="#056489" fill="#056489" />
+      <FiPlay size="1.5rem" color="#0539ec" fill="#0539ec" />
     </button>
   );
 };

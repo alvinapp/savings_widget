@@ -22,14 +22,14 @@ export const AccountTypeCard = ({
     >
       <div className="flex flex-col justify-start">
         <div
-          className={`font-poppins font-medium text-skin-base text-tiny md:text-sm lg:text-base xl:text-lg mb-2 ${
+          className={`font-custom font-medium text-skin-base text-tiny md:text-sm lg:text-base xl:text-lg mb-2 ${
             disabled ? "text-gray-400" : ""
           }`}
         >
           {title}
         </div>
         <div
-          className={`font-poppins font-medium text-skin-subtitle text-xs md:text-sm lg:text-base xl:text-lg ${
+          className={`font-custom font-medium text-skin-subtitle text-xs md:text-sm lg:text-base xl:text-lg ${
             disabled ? "text-gray-400" : ""
           }`}
         >

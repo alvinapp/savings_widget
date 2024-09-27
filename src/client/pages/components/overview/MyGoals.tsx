@@ -53,7 +53,7 @@ export const MyGoals = ({ goals, completeGoals }: MyGoalsProps) => {
               onClick={() => setOpen(!open)}
             >
               <div className="rounded-full flex justify-center items-center bg-skin-secondary1WithOpacity w-32 py-1">
-                <div className="text-skin-neutral tracking-longtext font-poppins font-semibold text-xs">
+                <div className="text-skin-neutral tracking-longtext font-custom font-semibold text-xs">
                   {open ? " Hide completed" : "Show completed"}
                 </div>
               </div>

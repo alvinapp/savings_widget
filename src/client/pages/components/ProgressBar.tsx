@@ -25,14 +25,14 @@ export const CustomProgressBar = ({
       <div className={`absolute -top-5`} style={{ left: knobPosition }}>
         {isActive ? (
           progressPercentage !== 100 ? (
-            <div className="bg-skin-successSecondary border border-1 border-skin-successNeutral w-11 h-11 rounded-full flex items-center justify-center font-poppins text-xs text-skin-white font-semibold tracking-tight">
+            <div className="bg-skin-successSecondary border border-1 border-skin-successNeutral w-11 h-11 rounded-full flex items-center justify-center font-custom text-xs text-skin-white font-semibold tracking-tight">
               {`${progressPercentage}%`}
             </div>
           ) : (
             <div></div>
           )
         ) : (
-          <div className="bg-skin-accent shadow-knob w-9 h-9 rounded-full flex items-center justify-center font-poppins text-xs font-semibold tracking-tight mt-1 text-skin-primary">
+          <div className="bg-skin-accent shadow-knob w-9 h-9 rounded-full flex items-center justify-center font-custom text-xs font-semibold tracking-tight mt-1 text-skin-primary">
             <FiPause />
           </div>
         )}

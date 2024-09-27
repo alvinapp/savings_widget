@@ -59,7 +59,7 @@ export const ChooseSavingsAccount = ({
       ) : (
         <div className="w-full">
           <div className="flex flex-row justify-start">
-            <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-6 mt-12">
+            <div className="font-custom text-base font-semibold text-skin-base tracking-title mb-6 mt-12">
               Fund to
             </div>
           </div>

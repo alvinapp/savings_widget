@@ -182,7 +182,7 @@ export const AddContributionSettings = ({
         />
       </div>
       <div className="flex flex-row justify-center">
-        <div className="font-workSans text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
+        <div className="font-custom text-base font-semibold text-skin-base tracking-title mb-4 mt-3 text-center">
           I will contribute
         </div>
       </div>
@@ -233,10 +233,10 @@ export const AddContributionSettings = ({
           }}
         />
       </div>
-      <div className="font-poppins font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
+      <div className="font-custom font-medium text-xs text-skin-neutral tracking-wide text-center mb-4">
         {`${goal.percentageOfSavings}% of my monthly net income`}
       </div>
-      <div className="font-workSans font-semibold text-base text-skin-base text-center tracking-title mb-5">
+      <div className="font-custom font-semibold text-base text-skin-base text-center tracking-title mb-5">
         on
       </div>
       {goalContributionSettings.tabIndex === 1 ? (

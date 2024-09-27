@@ -116,7 +116,7 @@ const UpdateGoalDetails = () => {
                 }}
               />
             </div>
-            <div className="font-poppins font-medium text-xs text-white tracking-subtitle">
+            <div className="font-custom font-medium text-xs text-white tracking-subtitle">
               Tap to personalize cover photo
             </div>
           </div>

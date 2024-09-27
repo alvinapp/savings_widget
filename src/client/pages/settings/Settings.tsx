@@ -80,7 +80,7 @@ const Settings = () => {
         }
       />
       <div className="mt-6 mx-3.5">
-        <div className="font-workSans font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
+        <div className="font-custom font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
           Finance
         </div>
         <SettingsCard
@@ -108,7 +108,7 @@ const Settings = () => {
         </div>
       </div>
       <div className="mt-6 mx-3.5">
-        <div className="font-workSans font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
+        <div className="font-custom font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
           Savings preference
         </div>
         <SettingsCard
@@ -151,7 +151,7 @@ const Settings = () => {
         </div>
       </div>
       <div className="mt-6 mx-3.5">
-        <div className="font-workSans font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
+        <div className="font-custom font-semibold tracking-tab_text text-tiny mb-3 text-skin-subtitle">
           More
         </div>
         <SettingsCard

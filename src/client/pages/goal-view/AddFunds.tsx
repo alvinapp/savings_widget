@@ -47,7 +47,7 @@ export const AddFunds = () => {
           }}
         />
       </div>
-      <div className="font-workSans text-skin-base text-base font-semibold tracking-title mt-16">
+      <div className="font-custom text-skin-base text-base font-semibold tracking-title mt-16">
         I would like to fund my goal by depositing
       </div>
       <div className="mt-7 mx-3.5 flex flex-row justify-center">

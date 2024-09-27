@@ -20,7 +20,7 @@ export const DeleteIntro = ({ deleteGoal, onClick }: PauseDeleteGoalProps) => {
       >
         <div className="flex flex-row justify-center items-center">
           <FiTrash2 />
-          <div className="text-base font-semibold font-poppins tracking-longest_text ml-2">
+          <div className="text-base font-semibold font-custom tracking-longest_text ml-2">
             Delete goal
           </div>
         </div>

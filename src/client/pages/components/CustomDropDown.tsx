@@ -40,7 +40,7 @@ export const CustomDropDown = ({
         id="day-dropdown"
         aria-expanded="true"
         aria-haspopup="true"
-        className="text-skin-base border border-1 border-skin-primary text-base font-poppins rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
+        className="text-skin-base border border-1 border-skin-primary text-base font-custom rounded-3xl px-4 py-2.5 text-center inline-flex items-center"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -75,7 +75,7 @@ export const CustomDropDown = ({
             {dataset.map((data, i) => {
               return (
                 <li
-                  className="text-tiny font-poppins font-medium tracking-progress_label block mb-4"
+                  className="text-tiny font-custom font-medium tracking-progress_label block mb-4"
                   key={i}
                   onClick={() => {
                     if (onClick) {

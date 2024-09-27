@@ -75,7 +75,7 @@ const GoalCard = ({
                 {is_active ? (
                   <div></div>
                 ) : (
-                  <div className="absolute bottom-0 left-1 bg-skin-accent shadow-knob w-2.5 h-2.5 rounded-full flex items-center justify-center font-poppins text-xs font-semibold tracking-tight p-0.5 text-skin-neutral">
+                  <div className="absolute bottom-0 left-1 bg-skin-accent shadow-knob w-2.5 h-2.5 rounded-full flex items-center justify-center font-custom text-xs font-semibold tracking-tight p-0.5 text-skin-neutral">
                     <FiPause color="#4E6783" />
                   </div>
                 )}
@@ -90,13 +90,13 @@ const GoalCard = ({
             </div>
             <div className="flex flex-col">
               <div
-                className="font-workSans text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text"
+                className="font-custom text-sm font-semibold text-skin-title text-start text-ellipsis overflow-hidden whitespace-nowrap w-40 tracking-tab_text"
                 id="al-transaction-card--merchant-name"
               >
                 {name}
               </div>
               <div
-                className={`font-poppins text-xs font-medium text-skin-subtitle tracking-wide text-start mt-1`}
+                className={`font-custom text-xs font-medium text-skin-subtitle tracking-wide text-start mt-1`}
               >
                 {status === null ? "" : status}
               </div>
@@ -106,8 +106,9 @@ const GoalCard = ({
         <div className="flex flex-col">
           {is_active ? (
             <div
-              className={`font-poppins text-sm font-medium ${progress == 100 ? "text-skin-success" : "text-skin-base"
-                } flex flex-row items-center`}
+              className={`font-custom text-sm font-medium ${
+                progress == 100 ? "text-skin-success" : "text-skin-base"
+              } flex flex-row items-center`}
             >
               {progress == 100 ? (
                 <div className="w-3 h-3">

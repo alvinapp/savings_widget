@@ -22,10 +22,10 @@ export const AccountDropDown = ({
       >
         <div className="flex flex-row justify-between">
           <div className="flex flex-col">
-            <div className="font-workSans text-base font-medium text-skin-base tracking-title">
+            <div className="font-custom text-base font-medium text-skin-base tracking-title">
               {accountName}
             </div>
-            <div className="font-workSans text-base font-medium text-skin-subtitle tracking-title">
+            <div className="font-custom text-base font-medium text-skin-subtitle tracking-title">
               {accountNumber}
             </div>
           </div>

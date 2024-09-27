@@ -16,7 +16,7 @@ export const GoalViewBalanceView = ({
       <div className="flex flex-row justify-center">
         <Amount balance={contributedAmount} textColor="text-white" />
       </div>
-      <div className="flex flex-row text-white/80 font-semibold font-poppins text-xs tracking-subtitle justify-center">
+      <div className="flex flex-row text-white/80 font-semibold font-custom text-xs tracking-subtitle justify-center">
         <div className="mr-1">of</div>
         <div className="mr-1">🎯</div>
         <div className="mr-1">
