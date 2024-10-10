@@ -60,7 +60,7 @@ const TransactionCard = ({
             </span>
             {Math.round(amount).toLocaleString("en-US")}
           </div>
-          <div className="font-custom text-xxxs text-skin-subtitle text-end tracking-wide font-medium">
+          <div className="font-custom text-xs text-skin-subtitle text-end tracking-wider font-medium">
             {dateFormat(transactedAt)}
           </div>
         </div>
